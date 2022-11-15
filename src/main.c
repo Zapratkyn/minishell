@@ -6,13 +6,13 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/15 17:23:53 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:53:31 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../inc/minish.h"
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	char	*line;
 
