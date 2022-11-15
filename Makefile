@@ -3,32 +3,62 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
+#    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/15 11:29:02 by gponcele         ###   ########.fr        #
+#    Updated: 2022/11/15 17:23:43 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Colors
+
+BLACK		= $(shell tput -Txterm setaf 0)
+RED			= $(shell tput -Txterm setaf 1)
+GREEN		= $(shell tput -Txterm setaf 2)
+YELLOW		= $(shell tput -Txterm setaf 3)
+LIGHTPURPLE	= $(shell tput -Txterm setaf 4)
+PURPLE		= $(shell tput -Txterm setaf 5)
+BLUE		= $(shell tput -Txterm setaf 6)
+WHITE		= $(shell tput -Txterm setaf 7)
+RESET		= $(shell tput -Txterm sgr0)
+
+
+# Name of the executable
+
 NAME						=	minishell
-SRC							=	srcs/main.c
-LIBFT						=	libft/libft.a
-CC							=	gcc
+
+
+# Files
+
+SRC							=	src/main.c
+
+INC							=	-I./inc
+
+
+# Flags
+
+CFLAGS						=	-Wall -Wextra -Werror -lreadline
+
 RM							=	rm -rf
-INCLUDES					=	-I./includes
-CFLAGS						=	-Wall -Wextra -Werror
-OBJS						=	$(SRC:.c=.o)
 
-all: $(NAME)
+CC							=	gcc
 
-$(NAME): $(OBJS)
-			$(CC) $(CFLAGS) $(INCLUDES) $(LIBFT) $(SRC) -o $(NAME)
+
+# Rules
+
+all: 		$(NAME)
+
+$(NAME):
+					@$(CC) $(CFLAGS) $(INC) $(SRC) -o $(NAME)
+					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 clean:
-			$(RM) $(OBJS)
+					@$(RM) $(OBJS)
+					@echo "$(PURPLE)********* Objects removed. $(RESET)"
 
 fclean: clean
-			$(RM) $(NAME)
+			@$(RM) $(NAME)
+			@echo "$(LIGHTPURPLE)********* Executable removed. $(RESET)"
 
 re: fclean all
 
