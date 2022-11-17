@@ -32,12 +32,16 @@ NAME						=	minishell
 
 SRC							=	src/main.c
 
+SRC_LINUX					=	src/main.c libft/ft_strlen.c libft/ft_strnstr.c
+
+LIBFT						=	./libft/libft.a
+
 INC							=	-I./inc
 
 
 # Flags
 
-CFLAGS						=	-Wall -Wextra -Werror -lreadline
+CFLAGS						=	-Wall -Wextra -Werror
 
 RM							=	rm -rf
 
@@ -47,6 +51,9 @@ CC							=	gcc
 # Rules
 
 all: 		$(NAME)
+
+linux:		
+					$(CC) $(CFLAGS) $(INC) $(SRC_LINUX) -o $(NAME)
 
 $(NAME):
 					@$(CC) $(CFLAGS) $(INC) $(SRC) -o $(NAME)

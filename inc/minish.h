@@ -18,9 +18,10 @@
 ** Libraries
 */
 
+#include "../libft/libft.h"
 #include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+//#include <readline/readline.h>
+//#include <readline/history.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -32,16 +33,29 @@
 /*
 ** Structures
 */
-struct s_main
+
+typedef struct s_list   t_list;
+typedef struct s_prompt t_prompt;
+
+struct s_list
+{
+    char    *content;
+    t_list  *next;
+};
+struct s_prompt
 {
     char    *prompt;
-    char    **env;
+    t_list  *var;
     t_list  *cmd;
-}t_main;
+};
 
 /*
 ** Functions
 */
 
+// main.c
+void                        get_var(t_prompt *prompt, char *str);
+void                        get_env(t_prompt *prompt, char **env);
+t_prompt                    *prompt_init(char **env);
 
 #endif

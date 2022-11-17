@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME						=	libft.a
-SRC							=	
+SRC							=	ft_strlen.c ft_strnstr.c	
 CC							=	gcc
 RM							=	rm -rf
 INCLUDES					=	-I./includes
