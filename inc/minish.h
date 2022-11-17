@@ -32,7 +32,12 @@
 /*
 ** Structures
 */
-
+struct s_main
+{
+    char    *prompt;
+    char    **env;
+    t_list  *cmd;
+}t_main;
 
 /*
 ** Functions
