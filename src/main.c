@@ -45,8 +45,8 @@ void    get_var(t_prompt *prompt, char *str)
 void    get_prompt(t_prompt *prompt)
 {
     t_list  *temp;
-    char    s1[1000];
-    char    s2[1000];
+    // char    s1[1000];
+    // char    s2[1000];
 
     temp = prompt->var;
     while (temp)
@@ -70,7 +70,7 @@ t_prompt  *prompt_init(char **env)
     prompt->cmd = NULL;
     while (env && env[i])
         get_var(prompt, env[i++]);
-    get_prompt(main);
+    get_prompt(prompt);
     return (prompt);
 }
 
@@ -79,9 +79,8 @@ int	main(int argc, char **argv, char **env)
     t_prompt  *prompt;
 
     (void)argv;
+    (void)prompt;
     prompt = prompt_init(env);
-    display_env(prompt);
-    exit (0);
 	while (argc)
     {
 

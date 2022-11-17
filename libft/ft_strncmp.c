@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/07/11 14:13:28 by gponcele         ###   ########.fr       */
+/*   Created: 2022/02/11 10:47:01 by gponcele          #+#    #+#             */
+/*   Updated: 2022/07/14 17:41:01 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-#include <stddef.h>
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-size_t	                ft_strlen(const char *s);
-char	                *ft_strnstr(const char *haystack, const char *needle, size_t len);
-int	                    ft_strncmp(const char *s1, const char *s2, size_t n);
-
-#endif
+	i = 0;
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while (i < n && (str1[i] || str2[i]))
+	{
+		if (str1[i] > str2[i])
+			return (1);
+		if (str1[i] < str2[i])
+			return (-1);
+		i++;
+	}
+	return (0);
+}

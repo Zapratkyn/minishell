@@ -32,7 +32,7 @@ NAME						=	minishell
 
 SRC							=	src/main.c
 
-SRC_LINUX					=	src/main.c libft/ft_strlen.c libft/ft_strnstr.c
+SRC_LINUX					=	src/main.c libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c
 
 LIBFT						=	./libft/libft.a
 
