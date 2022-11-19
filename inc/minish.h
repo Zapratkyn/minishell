@@ -68,6 +68,7 @@ struct s_mini
 // main.c
 void                        get_var(t_mini *mini, char *str);
 void                        get_prompt(t_mini *mini);
+char                        **get_env(t_mini *mini);
 t_mini                      *mini_init(char **env);
 
 // ft_exec.c
