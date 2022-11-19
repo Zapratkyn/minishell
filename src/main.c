@@ -46,6 +46,26 @@ void    get_prompt(t_mini *mini)
     mini->prompt = ft_strjoin(mini->prompt, " $ ");
 }
 
+char    **get_env(t_mini *mini)
+{
+    char    **env;
+    int     i;
+    t_var   *temp;
+
+    i = 0;
+    temp = mini->var;
+    env = malloc (sizeof(char *) * mini->env_size);
+    if (!env)
+        return (NULL);
+    while (temp)
+    {
+        if (temp->custom == 0)
+            env[i++] = ft_strdup(temp->content);
+        temp = temp->next;
+    }
+    return (env);
+}
+
 t_mini  *mini_init(char **env)
 {
     t_mini  *mini;
@@ -58,6 +78,7 @@ t_mini  *mini_init(char **env)
         return (0);
     while (env && env[i])
         get_var(mini, env[i++]);
+    mini->env_size = i;
     get_prompt(mini);
     return (mini);
 }
@@ -72,5 +93,6 @@ int	main(int argc, char **argv, char **env)
         mini->cmd->full_path = readline(mini->prompt);
         if (!strncmp(mini->cmd->full_path, "env", 3) && ft_strlen(mini->cmd->full_path) == 3)
             mini_env(mini);
+        free(mini->cmd->full_path);
     }
 }

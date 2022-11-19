@@ -54,6 +54,7 @@ struct s_cmd
 };
 struct s_mini
 {
+    int     env_size;
     char    *prompt;
     t_var   *var;
     t_cmd   *cmd;
