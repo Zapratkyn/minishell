@@ -35,11 +35,10 @@ void    get_var(t_mini *mini, char *str)
     }
 }
 
-void    get_prompt(t_mini *mini, char **env)
+void    get_prompt(t_mini *mini)
 {
     char    *str;
 
-    (void)env;
     mini->prompt = getenv("USER");
     mini->prompt = ft_strjoin(mini->prompt, "@minishell ~");
     str = ft_strnstr2(getenv("PWD"), getenv("USER"), 1000);
@@ -59,7 +58,7 @@ t_mini  *mini_init(char **env)
         return (0);
     while (env && env[i])
         get_var(mini, env[i++]);
-    get_prompt(mini, env);
+    get_prompt(mini);
     return (mini);
 }
 
