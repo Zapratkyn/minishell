@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME						=	libft.a
-SRC							=	ft_strlen.c ft_strnstr.c ft_strncmp.c	
+SRC							=	ft_strlen.c ft_strnstr.c ft_strncmp.c ft_strdup.c ft_strjoin.c	
 CC							=	gcc
 RM							=	rm -rf
 INCLUDES					=	-I./includes
@@ -20,7 +20,7 @@ OBJS						=	$(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME):
 			$(CC) $(CFLAGS) $(INCLUDES) $(LIBFT) $(SRC) -o $(NAME)
 
 clean:

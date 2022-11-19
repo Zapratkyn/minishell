@@ -20,9 +20,8 @@
 
 #include "../libft/libft.h"
 #include <stdio.h>
-//#include <readline/readline.h>
-//#include <readline/history.h>
-#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <unistd.h>
 
 /*
@@ -34,19 +33,31 @@
 ** Structures
 */
 
-typedef struct s_list   t_list;
-typedef struct s_prompt t_prompt;
+typedef struct s_var    t_var;
+typedef struct s_mini   t_mini;
+typedef struct s_cmd    t_cmd;
 
-struct s_list
+struct s_var
 {
     char    *content;
-    t_list  *next;
+    int     custom;
+    t_var   *next;
 };
-struct s_prompt
+
+struct s_cmd
+{
+    char    **full_cmd;
+    char    *full_path;
+    int     infile;
+    int     outfile;
+    t_cmd   *next;
+};
+struct s_mini
 {
     char    *prompt;
-    t_list  *var;
-    t_list  *cmd;
+    t_var   *var;
+    t_cmd   *cmd;
+    pid_t   pid;
 };
 
 /*
@@ -54,8 +65,11 @@ struct s_prompt
 */
 
 // main.c
-void                        get_var(t_prompt *prompt, char *str);
-void                        get_env(t_prompt *prompt, char **env);
-t_prompt                    *prompt_init(char **env);
+void                        get_var(t_mini *mini, char *str);
+void                        get_env(t_mini *mini, char **env);
+t_mini                      *mini_init(char **env);
+
+// ft_exec.c
+void                        mini_env(t_mini *mini);
 
 #endif

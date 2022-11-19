@@ -10,17 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-#include <stddef.h>
-#include <stdlib.h>
+char    *ft_strdup(char *str)
+{
+    char    *result;
+    int     i;
 
-size_t	                ft_strlen(const char *s);
-char	                *ft_strnstr(const char *haystack, const char *needle, size_t len);
-int	                    ft_strncmp(const char *s1, const char *s2, size_t n);
-char	                *ft_strnstr2(const char *haystack, const char *needle, size_t len);
-char                    *ft_strdup(char *str);
-char	                *ft_strjoin(char const *s1, char const *s2);
-
-#endif
+    result = malloc (sizeof(char) * ft_strlen(str) + 1);
+    if (!result)
+        return (0);
+    i = 0;
+    while (str[i])
+    {
+        result[i] = str[i];
+        i++;
+    }
+    result[i] = '\0';
+    return (result);
+}

@@ -37,3 +37,29 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	}
 	return (0);
 }
+
+char	*ft_strnstr2(const char *haystack, const char *needle, size_t len)
+{
+	size_t	i;
+	size_t	k;
+	char	*hs;
+	char	*nd;
+
+	i = 0;
+	hs = (char *)haystack;
+	nd = (char *)needle;
+	if (nd[i] == '\0')
+		return (hs);
+	while (hs[i])
+	{
+		k = 0;
+		while ((hs[i + k] == nd[k]) && ((i + k) < len))
+		{
+			if (nd[k + 1] == '\0')
+				return (&hs[i + k + 1]);
+			k++;
+		}
+		i++;
+	}
+	return (0);
+}

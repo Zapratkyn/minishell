@@ -30,11 +30,11 @@ NAME						=	minishell
 
 # Files
 
-SRC							=	src/main.c
-
-SRC_LINUX					=	src/main.c libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c
+SRC							=	src/main.c src/ft_exec.c
 
 LIBFT						=	./libft/libft.a
+
+LIBFT_LINUX					=	libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c libft/ft_strdup.c libft/ft_strjoin.c
 
 INC							=	-I./inc
 
@@ -53,10 +53,11 @@ CC							=	gcc
 all: 		$(NAME)
 
 linux:		
-					$(CC) $(CFLAGS) $(INC) $(SRC_LINUX) -o $(NAME)
+					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT_LINUX) -lreadline -o $(NAME)
+					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 $(NAME):
-					@$(CC) $(CFLAGS) $(INC) $(SRC) -o $(NAME)
+					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 clean:
