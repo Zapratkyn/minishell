@@ -30,7 +30,7 @@ NAME						=	minishell
 
 # Files
 
-SRC							=	src/main.c src/ft_exec.c
+SRC							=	src/main.c src/ft_exec.c src/minishell_utils.c src/ft_free.c
 
 LIBFT						=	./libft/libft.a
 

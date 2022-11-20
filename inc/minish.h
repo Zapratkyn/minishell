@@ -23,6 +23,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <unistd.h>
+#include <signal.h>
 
 /*
 ** Define constants
@@ -70,8 +71,13 @@ void                        get_var(t_mini *mini, char *str);
 void                        get_prompt(t_mini *mini);
 char                        **get_env(t_mini *mini);
 t_mini                      *mini_init(char **env);
-
 // ft_exec.c
 void                        mini_env(t_mini *mini);
+// ft_free.c
+void                        ft_free_env(t_var *var);
+void                        ft_free_cmd(t_cmd *cmd);
+// minishell_utils.c
+char                        *mini_getenv(t_mini *mini, char *var);
+void                        mini_exit(int sig, siginfo_t *info, t_mini *mini);
 
 #endif

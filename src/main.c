@@ -39,10 +39,13 @@ void    get_prompt(t_mini *mini)
 {
     char    *str;
 
-    mini->prompt = getenv("USER");
+    mini->prompt = mini_getenv(mini, "USER");
     mini->prompt = ft_strjoin(mini->prompt, "@minishell ~");
-    str = ft_strnstr2(getenv("PWD"), getenv("USER"), 1000);
-    mini->prompt = ft_strjoin(mini->prompt, str);
+    str = ft_strnstr2(mini_getenv(mini, "PWD"), mini_getenv(mini, "USER"), 1000);
+    if (str)
+        mini->prompt = ft_strjoin(mini->prompt, str);
+    else
+        mini->prompt = ft_strjoin(mini->prompt, mini_getenv(mini, "PWD"));
     mini->prompt = ft_strjoin(mini->prompt, " $ ");
 }
 
@@ -79,13 +82,14 @@ t_mini  *mini_init(char **env)
     while (env && env[i])
         get_var(mini, env[i++]);
     mini->env_size = i;
+    mini->pid = getpid();
     get_prompt(mini);
     return (mini);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-    t_mini  *mini;
+    t_mini              *mini;
 
     mini = mini_init(env);
 	while (argc && argv[0])
