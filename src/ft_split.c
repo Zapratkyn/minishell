@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 16:18:49 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:13:01 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,11 @@ int	find_next_len(char *str)
 
 	i = 0;
 	len = 0;
-	while (str[i] == ' ' || str[i] == '\t')
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	if (str[i] == '"')
 	{
+		i++;
 		while (str[i++] != '"')
 			len++;
 	}
@@ -97,7 +98,7 @@ static char	*find_next_word(char *s, int len)
 		i++;
 	s = &s[i];
 	i = 0;
-	while (s[i] < len)
+	while (i < len)
 	{
 		str[i] = s[i];
 		i++;
@@ -110,7 +111,9 @@ char	**ft_split(char *s, int i, int index)
 {
 	char	**tab;
 	int		wc;
+	int		j;
 
+	j = 0;
 	if (!ft_quotes(s))
 		return (0);
 	wc = count_words(s);
@@ -119,11 +122,13 @@ char	**ft_split(char *s, int i, int index)
 		return (NULL);
 	while (i < wc)
 	{
-		wc = find_next_len(&s[index]);
-		tab[i] = find_next_word(&s[index], wc);
+		j = find_next_len(&s[index]);
+		tab[i] = find_next_word(&s[index], j);
 		if (!tab[i])
 			ft_free_full_cmd(tab);
-		index += ft_strlen(tab[i]);
+		index += j;
+		while (s[index] == ' ' || s[index] == '\t')
+			index++;
 		i++;
 	}
 	tab[i] = NULL;

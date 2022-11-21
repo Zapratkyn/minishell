@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 16:20:29 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:40:03 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,13 @@ t_mini  *mini_init(char **env)
 int	main(int argc, char **argv, char **env)
 {
     t_mini	*mini;
-	char	*str;
 
 	mini = mini_init(env);
 	while (argc && argv[0])
     {
 		signal(SIGQUIT, SIG_IGN);
-		str = readline(mini->prompt);
-        get_cmd(mini, str);
+		// signal(SIGINT, mini_new_line);
+		get_cmd(mini, readline(mini->prompt));
 		// exec(mini);
-		ft_free_cmd(mini->cmd);
     }
 }
