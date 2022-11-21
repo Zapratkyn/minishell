@@ -1,45 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 16:19:00 by gponcele         ###   ########.fr       */
+/*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
+/*   Updated: 2022/11/21 16:18:11 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void    ft_free_env(t_var *var)
+int	get_cmd(t_mini *mini, char *str)
 {
-    if (var->next)
-        ft_free_env(var->next);
-    free (var);
-}
-
-void    ft_free_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-    if (cmd->next)
-        ft_free_cmd(cmd->next);
-	// while (cmd->full_cmd[i])
-	// 	free (cmd->full_cmd[i++]);
-    free (cmd);
-}
-
-void	ft_free_full_cmd(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free (tab[i]);
-		i++;
-	}
-	free (tab);
+	if (!str)
+		return (0);
+	mini->cmd = malloc (sizeof(t_cmd));
+	if (!mini->cmd)
+		return (0);
+	mini->cmd->infile = 0;
+	mini->cmd->outfile = 1;
+	mini->cmd->full_cmd = ft_split(str, 0, 0);
+	return (1);
 }

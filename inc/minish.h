@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 13:36:23 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/21 16:12:25 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_cmd    t_cmd;
 struct s_var
 {
     char    *content;
-    int     custom;
     t_var   *next;
 };
 
@@ -76,8 +75,13 @@ void                        mini_env(t_mini *mini);
 // ft_free.c
 void                        ft_free_env(t_var *var);
 void                        ft_free_cmd(t_cmd *cmd);
+void						ft_free_full_cmd(char **tab);
 // minishell_utils.c
 char                        *mini_getenv(t_mini *mini, char *var);
 void    					mini_exit(int sig);
+// get_cmd.c
+int							get_cmd(t_mini *mini, char *str);
+// ft_split.c
+char						**ft_split(char *s, int i, int index);
 
 #endif

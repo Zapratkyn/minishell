@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 13:39:51 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:27:35 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	is_var(t_mini *mini, char *var, int len)
 	temp = mini->var;
 	while (temp)
 	{
-		if (ft_strncmp(temp->content, var, len) && temp->content[len] == "=")
-			return (1)
+		if (!ft_strncmp(temp->content, var, len) && temp->content[len] == '=')
+			return (1);
 		temp = temp->next;
 	}
 	return (0);
@@ -40,7 +40,7 @@ int	is_var(t_mini *mini, char *var, int len)
 
 void	edit_var(t_mini *mini, char *var, int len, char *val)
 {
-	t_var	temp;
+	t_var	*temp;
 
 	temp = mini->var;
 	while (ft_strncmp(temp->content, var, len) || temp->content[len] != '=')
@@ -63,7 +63,6 @@ void	mini_export(t_mini *mini, char *var, char *val)
 		if (!temp)
 			exit (EXIT_FAILURE);
 		temp->content = var;
-		temp->custom = 1;
 		while (ft_strncmp(index->content, var, len) < 0)
 			index = index->next;
 		temp->next = index->next;

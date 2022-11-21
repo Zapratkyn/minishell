@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 13:13:59 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/21 16:20:29 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void    get_var(t_mini *mini, char *str)
     temp = malloc (sizeof(t_var));
     if (!temp)
         exit (0);
-    temp->custom = 0;
     temp->content = ft_strdup(str);
     if (!temp->content)
         exit (0);
@@ -49,26 +48,6 @@ void    get_prompt(t_mini *mini)
     mini->prompt = ft_strjoin(mini->prompt, " $ ");
 }
 
-char    **get_env(t_mini *mini)
-{
-    char    **env;
-    int     i;
-    t_var   *temp;
-
-    i = 0;
-    temp = mini->var;
-    env = malloc (sizeof(char *) * mini->env_size);
-    if (!env)
-        return (NULL);
-    while (temp)
-    {
-        if (temp->custom == 0)
-            env[i++] = ft_strdup(temp->content);
-        temp = temp->next;
-    }
-    return (env);
-}
-
 t_mini  *mini_init(char **env)
 {
     t_mini  *mini;
@@ -76,9 +55,9 @@ t_mini  *mini_init(char **env)
 
     i = 0;
     mini = malloc (sizeof(t_mini));
-    mini->cmd = malloc (sizeof(t_cmd));
-    if (!mini || !mini->cmd)
+    if (!mini)
         return (0);
+	mini->cmd = NULL;
     while (env && env[i])
         get_var(mini, env[i++]);
     mini->env_size = i;
@@ -89,16 +68,16 @@ t_mini  *mini_init(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-    t_mini				*mini;
+    t_mini	*mini;
+	char	*str;
 
 	mini = mini_init(env);
 	while (argc && argv[0])
     {
-		write (1, "OK\n", 3);
 		signal(SIGQUIT, SIG_IGN);
-        mini->cmd->full_path = readline(mini->prompt);
-        if (!ft_strncmp(mini->cmd->full_path, "env", 3) && ft_strlen(mini->cmd->full_path) == 3)
-            mini_env(mini);
-        free(mini->cmd->full_path);
+		str = readline(mini->prompt);
+        get_cmd(mini, str);
+		// exec(mini);
+		ft_free_cmd(mini->cmd);
     }
 }

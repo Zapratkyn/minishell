@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/21 13:36:16 by gponcele         ###   ########.fr        #
+#    Updated: 2022/11/21 16:01:55 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,12 @@ NAME						=	minishell
 
 # Files
 
-SRC							=	src/main.c src/ft_env.c src/minishell_utils.c src/ft_free.c
+SRC							=	src/main.c src/ft_env.c src/minishell_utils.c src/ft_free.c src/get_cmd.c src/ft_split.c
 
 LIBFT						=	./libft/libft.a
 
-LIBFT_LINUX					=	libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c libft/ft_strdup.c libft/ft_strjoin.c
+LIBFT_LINUX					=	libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c libft/ft_strdup.c libft/ft_strjoin.c \
+								libft/ft_split.c
 
 INC							=	-I./inc
 
