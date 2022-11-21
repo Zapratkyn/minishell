@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/21 16:01:55 by gponcele         ###   ########.fr        #
+#    Updated: 2022/11/21 17:44:43 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ NAME						=	minishell
 
 # Files
 
-SRC							=	src/main.c src/ft_env.c src/minishell_utils.c src/ft_free.c src/get_cmd.c src/ft_split.c
+SRC							=	src/main.c src/ft_env.c src/minishell_utils.c src/ft_free.c src/get_cmd.c src/ft_split_cmd.c
 
 LIBFT						=	./libft/libft.a
 
