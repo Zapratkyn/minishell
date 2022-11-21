@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/15 11:35:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:19:50 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,9 @@ char    *mini_getenv(t_mini *mini, char *var)
     return (result);
 }
 
-void    mini_exit(int sig, siginfo_t *info, t_mini *mini)
+void    mini_exit(int sig)
 {
-    (void)sig;
-    (void)info;
-    if (mini->cmd)
-        ft_free_cmd(mini->cmd);
-    ft_free_env(mini->var);
-    free (mini->prompt);
-    free (mini);
+	(void)sig;
     write (1, "exit\n", 5);
-    exit(EXIT_SUCCESS);
+    exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/15 11:35:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:13:59 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,15 @@ t_mini  *mini_init(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-    t_mini              *mini;
+    t_mini				*mini;
 
-    mini = mini_init(env);
+	mini = mini_init(env);
 	while (argc && argv[0])
     {
+		write (1, "OK\n", 3);
+		signal(SIGQUIT, SIG_IGN);
         mini->cmd->full_path = readline(mini->prompt);
-        if (!strncmp(mini->cmd->full_path, "env", 3) && ft_strlen(mini->cmd->full_path) == 3)
+        if (!ft_strncmp(mini->cmd->full_path, "env", 3) && ft_strlen(mini->cmd->full_path) == 3)
             mini_env(mini);
         free(mini->cmd->full_path);
     }
