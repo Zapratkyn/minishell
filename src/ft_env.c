@@ -75,7 +75,7 @@ int	is_varname(char *str)
 	i = 1;
 	if (!ft_isalnum(str[0]) && str[0] != '_' && str[0] != ' ')
 	{
-		printf("export: << %s >> : identifiant non valable", str);
+		printf("export: << %s >> : bad variable name", str);
 		return (0);
 	}
 	while (str[i] && str[i] != '=' && str[i] != '$')
@@ -86,7 +86,7 @@ int	is_varname(char *str)
 	}
 	if (str[0] == ' ')
 	{
-		printf("export: << %s >> : identifiant non valable", str);
+		printf("export: << %s >> : bad variable name", str);
 		return (0);
 	}
 	return (1);
