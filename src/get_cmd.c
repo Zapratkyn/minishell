@@ -29,7 +29,6 @@ char	*delete_quotes(char *str)
 		i++;
 		j++;
 	}
-	free (str);
 	return (result);
 }
 
