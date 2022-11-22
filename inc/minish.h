@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 16:12:25 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/22 12:18:53 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,54 +34,59 @@
 ** Structures
 */
 
-typedef struct s_var    t_var;
-typedef struct s_mini   t_mini;
-typedef struct s_cmd    t_cmd;
+typedef struct s_var	t_var;
+typedef struct s_mini	t_mini;
+typedef struct s_cmd	t_cmd;
 
 struct s_var
 {
-    char    *content;
-    t_var   *next;
+	char	*content;
+	t_var	*next;
 };
 
 struct s_cmd
 {
-    char    **full_cmd;
-    char    *full_path;
-    int     infile;
-    int     outfile;
-    t_cmd   *next;
+	char	**cmd;
+	char	*path;
+	int		infile;
+	int		outfile;
+	t_cmd	*next;
 };
 struct s_mini
 {
-    int     env_size;
-    char    *prompt;
-    t_var   *var;
-    t_cmd   *cmd;
-    pid_t   pid;
+	int		env_size;
+	char	*prompt;
+	t_var	*var;
+	t_cmd	*cmd;
+	pid_t	pid;
 };
 
 /*
 ** Functions
 */
 
-// main.c
-void                        get_var(t_mini *mini, char *str);
-void                        get_prompt(t_mini *mini);
-char                        **get_env(t_mini *mini);
-t_mini                      *mini_init(char **env);
-// ft_env.c
-void                        mini_env(t_mini *mini);
-// ft_free.c
-void                        ft_free_env(t_var *var);
-void                        ft_free_cmd(t_cmd *cmd);
-void						ft_free_full_cmd(char **tab);
-// minishell_utils.c
-char                        *mini_getenv(t_mini *mini, char *var);
-void    					mini_exit(int sig);
-// get_cmd.c
-int							get_cmd(t_mini *mini, char *str);
-// ft_split.c
-char						**ft_split(char *s, int i, int index);
+/*	Main	*/
+void						get_var(t_mini *mini, char *str);
+void						get_prompt(t_mini *mini);
+char						**get_env(t_mini *mini);
+t_mini						*mini_init(char **env);
 
+/*	Env	*/
+void						mini_env(t_mini *mini);
+
+/*	Free	*/
+void						ft_free_env(t_var *var);
+void						ft_free_cmd(t_cmd *cmd);
+void						ft_free_full_cmd(char **tab);
+
+/*	Utils	*/
+char						*mini_getenv(t_mini *mini, char *var);
+void						mini_exit(int sig);
+
+/*	Get_Cmd	*/
+int							get_cmd(t_mini *mini, char *str);
+char						**ft_split_cmd(char *s, int i, int index);
+
+/*	Execute */
+void						execute(t_mini *mini);
 #endif
