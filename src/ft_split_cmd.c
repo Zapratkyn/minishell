@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 17:13:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/22 11:48:20 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-int	ft_quotes(char *str)
+static int	ft_quotes(char *str)
 {
 	int	i;
 	int	quotes;
@@ -59,7 +59,7 @@ static int	count_words(char *s)
 	return (count);
 }
 
-int	find_next_len(char *str)
+static int	find_next_len(char *str)
 {
 	int	i;
 	int	len;
@@ -107,7 +107,7 @@ static char	*find_next_word(char *s, int len)
 	return (str);
 }
 
-char	**ft_split(char *s, int i, int index)
+char	**ft_split_cmd(char *s, int i, int index)
 {
 	char	**tab;
 	int		wc;
