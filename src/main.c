@@ -57,13 +57,11 @@ t_mini  *mini_init(char **env)
     i = 0;
     mini = malloc (sizeof(t_mini));
     if (!mini)
-    {
         return (0);
-    }
 	mini->cmd = NULL;
     while (env && env[i])
         get_var(mini, env[i++]);
-    mini->env_size = i;
+    mini->g_status = 0;
     mini->pid = getpid();
     get_prompt(mini);
     return (mini);

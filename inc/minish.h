@@ -48,14 +48,14 @@ struct s_var
 struct s_cmd
 {
     char    **full_cmd;
-    char    *full_path;
+    char    *path;
     int     infile;
     int     outfile;
     t_cmd   *next;
 };
 struct s_mini
 {
-    int     env_size;
+    int     g_status;
     char    *prompt;
     t_var   *var;
     t_cmd   *cmd;

@@ -12,7 +12,7 @@
 
 #include "../inc/minish.h"
 
-char	*delete_quotes(char *str)
+char	*delete_quotes(char *str, char c)
 {
 	char	*result;
 	int		i;
@@ -23,7 +23,7 @@ char	*delete_quotes(char *str)
 	result = malloc(sizeof(char) * ft_strlen(str) + 1);
 	if (!result)
 		return (NULL);
-	while (str[i] != 39 && str[i] != '"')
+	while (str[i] != c)
 	{
 		result[j] = str[i];
 		i++;
@@ -85,7 +85,7 @@ char	*delete_quotes(char *str)
 // 			result = ft_strjoin2(result, index[i++]);
 // 	}
 // 	free (str);
-// 	return (delete_quotes(result));
+// 	return (delete_quotes(result, '"'));
 // }
 
 char	*to_var(t_mini *mini, char *str)
@@ -110,7 +110,7 @@ void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 			while (cmd->full_cmd[i])
 			{
 				if (cmd->full_cmd[i][0] == 39)
-					cmd->full_cmd[i] = delete_quotes(cmd->full_cmd[i]);
+					cmd->full_cmd[i] = delete_quotes(cmd->full_cmd[i], 39);
 				// if (cmd->full_cmd[i][0] == '"')
 				// 	cmd->full_cmd[i] = delete_double_quotes(mini, cmd->full_cmd[i], 0);
 				else if (cmd->full_cmd[i][0] == '$' && !is_var(mini, &cmd->full_cmd[i][1]))
