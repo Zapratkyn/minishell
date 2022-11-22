@@ -89,6 +89,7 @@ void                        mini_add_history(t_mini *mini, t_cmd *cmd, char *str
 // get_cmd.c
 void						get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
 // ft_split.c
+int	                        ft_quotes(char *str);
 char						**ft_split_cmd(char *s, int i, int index);
 
 #endif

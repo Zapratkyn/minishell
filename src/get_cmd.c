@@ -101,7 +101,7 @@ char	*to_var(t_mini *mini, char *str)
 
 void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	if (str)
+	if (str && ft_quotes(str))
 	{
 		cmd = malloc (sizeof(t_cmd));
 		if (cmd)
@@ -121,7 +121,7 @@ void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 					printf("%s\n", cmd->full_cmd[i]);
 				i++;
 			}
-			if (ft_strchr(str, 124))
+			if (cmd->full_cmd && ft_strchr(str, 124))
 				get_cmd(mini, cmd->next, &ft_strchr(str, 124)[1], 0);
 		}
 		// get_path(mini, cmd, str, 0);
