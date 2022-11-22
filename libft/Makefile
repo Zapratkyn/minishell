@@ -6,12 +6,13 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/22 11:45:23 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/22 12:55:05 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME						=	libft.a
-SRC							=	ft_split.c \
+SRC							=	ft_putstr_fd.c \
+								ft_split.c \
 								ft_strdup.c \
 								ft_strjoin.c \
 								ft_strlcpy.c \

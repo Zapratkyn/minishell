@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/22 11:56:37 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/22 15:52:11 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ NAME						=	minishell
 
 # Files
 
-SRC							=	src/exec.c \
+SRC							=	src/error.c \
+								src/exec.c \
 								src/main.c \
 								src/ft_env.c \
 								src/minishell_utils.c \

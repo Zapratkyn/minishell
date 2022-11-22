@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/22 12:18:53 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:46:51 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,16 @@
 ** Define constants
 */
 
+/* Managing erros */
+# define PIPE_ERROR "Error in the creation of a pipe."
+# define FORK_ERROR "Error in the creation of a fork."
+# define MALLOC_ERROR "Error in the memory allocation of a malloc."
+# define DUP_ERROR "Error in the dup2."
+
+/* Characters */
+# define CHILD 0
+# define READ 0
+# define WRITE 1
 
 /*
 ** Structures
@@ -50,10 +60,14 @@ struct s_cmd
 	char	*path;
 	int		infile;
 	int		outfile;
+	pid_t	pid;
+	int		fd[2];
 	t_cmd	*next;
 };
+
 struct s_mini
 {
+	char	**env;
 	int		env_size;
 	char	*prompt;
 	t_var	*var;
@@ -89,4 +103,8 @@ char						**ft_split_cmd(char *s, int i, int index);
 
 /*	Execute */
 void						execute(t_mini *mini);
+
+/* Error */
+void						ft_error(char *type);
+
 #endif
