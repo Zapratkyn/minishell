@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/22 11:50:43 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:49:40 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(int argc, char **argv, char **env)
     t_mini	*mini;
 
 	mini = mini_init(env);
+	mini->env = env;
 	while (argc && argv[0])
     {
 		signal(SIGQUIT, SIG_IGN);
