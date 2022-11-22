@@ -124,6 +124,6 @@ void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 			if (ft_strchr(str, 124))
 				get_cmd(mini, cmd->next, &ft_strchr(str, 124)[1], 0);
 		}
-		// get_path(mini, mini->cmd, str, 0);
+		// get_path(mini, cmd, str, 0);
 	}
 }

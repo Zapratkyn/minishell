@@ -51,3 +51,9 @@ char    *ft_varname(char *str)
     }
     return (ft_strdup(result));
 }
+
+void    mini_add_history(t_mini *mini, t_cmd *cmd, char *str)
+{
+    add_history(str);
+    get_cmd(mini, cmd, str, 0);
+}

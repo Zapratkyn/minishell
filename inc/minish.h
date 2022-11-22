@@ -85,6 +85,7 @@ void						ft_free_full_cmd(char **tab);
 char                        *mini_getenv(t_mini *mini, char *var);
 void    					mini_exit(int sig);
 char                        *ft_varname(char *str);
+void                        mini_add_history(t_mini *mini, t_cmd *cmd, char *str);
 // get_cmd.c
 void						get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
 // ft_split.c
