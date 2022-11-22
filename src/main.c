@@ -56,7 +56,9 @@ t_mini  *mini_init(char **env)
     i = 0;
     mini = malloc (sizeof(t_mini));
     if (!mini)
+    {
         return (0);
+    }
 	mini->cmd = NULL;
     while (env && env[i])
         get_var(mini, env[i++]);
@@ -77,5 +79,6 @@ int	main(int argc, char **argv, char **env)
 		// signal(SIGINT, mini_new_line);
 		get_cmd(mini, readline(mini->prompt));
 		// exec(mini);
+        // ft_free_cmd(mini->cmd);
     }
 }

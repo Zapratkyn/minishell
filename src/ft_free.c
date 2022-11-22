@@ -21,9 +21,9 @@ void    ft_free_env(t_var *var)
 
 void    ft_free_cmd(t_cmd *cmd)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
     if (cmd->next)
         ft_free_cmd(cmd->next);
 	// while (cmd->full_cmd[i])

@@ -82,6 +82,6 @@ void    					mini_exit(int sig);
 // get_cmd.c
 int							get_cmd(t_mini *mini, char *str);
 // ft_split.c
-char						**ft_split(char *s, int i, int index);
+char						**ft_split_cmd(char *s, int i, int index);
 
 #endif

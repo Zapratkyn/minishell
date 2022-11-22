@@ -16,27 +16,26 @@ int	ft_quotes(char *str)
 {
 	int	i;
 	int	quotes;
+	int	double_quotes;
 
 	i = 0;
 	quotes = 0;
+	double_quotes = 0;
 	while (str[i] && str[i] != '|')
 	{
 		if (str[i] == '"')
+			double_quotes++;
+		else if (str[i] == 39)
 			quotes++;
 		i++;
 	}
-	if ((quotes % 2) != 0)
+	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
 		return (0);
 	return (1);
 }
 
-static int	count_words(char *s)
+static int	count_words(char *s, int i, int count)
 {
-	int		i;
-	int		count;
-
-	i = 0;
-	count = 0;
 	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
 	while (s[i] && s[i] != '|')
@@ -51,6 +50,11 @@ static int	count_words(char *s)
 				while (s[i] != '"')
 					i++;
 			}
+			else if (s[i++] == 39)
+			{
+				while (s[i] != 39)
+					i++;
+			}
 		}
 		i++;
 		while (s[i] && s[i] != ' ' && s[i] != '|' && s[i] != '\t')
@@ -59,13 +63,8 @@ static int	count_words(char *s)
 	return (count);
 }
 
-int	find_next_len(char *str)
+int	find_next_len(char *str, int i, int len)
 {
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	if (str[i] == '"')
@@ -73,14 +72,19 @@ int	find_next_len(char *str)
 		i++;
 		while (str[i++] != '"')
 			len++;
+		return (len + 1);
 	}
-	else
+	else if (str[i] == 39)
 	{
-		while (str[i] && str[i] != '|' && str[i] != ' ' && str[i] != '\t')
-		{
+		i++;
+		while (str[i++] != 39)
 			len++;
-			i++;
-		}
+		return (len + 1);
+	}
+	while (str[i] && str[i] != '|' && str[i] != ' ' && str[i] != '\t')
+	{
+		len++;
+		i++;
 	}
 	return (len);
 }
@@ -98,7 +102,7 @@ static char	*find_next_word(char *s, int len)
 		i++;
 	s = &s[i];
 	i = 0;
-	while (i < len)
+	while (i <= len)
 	{
 		str[i] = s[i];
 		i++;
@@ -107,7 +111,7 @@ static char	*find_next_word(char *s, int len)
 	return (str);
 }
 
-char	**ft_split(char *s, int i, int index)
+char	**ft_split_cmd(char *s, int i, int index)
 {
 	char	**tab;
 	int		wc;
@@ -116,13 +120,13 @@ char	**ft_split(char *s, int i, int index)
 	j = 0;
 	if (!ft_quotes(s))
 		return (0);
-	wc = count_words(s);
+	wc = count_words(s, 0, 0);
 	tab = malloc(sizeof(char *) * (wc + 1));
 	if (!tab)
 		return (NULL);
 	while (i < wc)
 	{
-		j = find_next_len(&s[index]);
+		j = find_next_len(&s[index], 0, 0);
 		tab[i] = find_next_word(&s[index], j);
 		if (!tab[i])
 			ft_free_full_cmd(tab);

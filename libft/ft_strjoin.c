@@ -39,3 +39,25 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	result[i] = '\0';
 	return (result);
 }
+
+char	*ft_strjoin2(char *str, char c)
+{
+	size_t	i;
+	char	*result;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	result = malloc (sizeof(char) * ft_strlen(str) + 2);
+	if (!result)
+		return (NULL);
+	while (str[i])
+	{
+		result[i] = str[i];
+		i++;
+	}
+	result[i++] = c;
+	result[i] = '\0';
+	free (str);
+	return (result);
+}
