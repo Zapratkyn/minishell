@@ -34,7 +34,8 @@ SRC							=	src/main.c src/ft_env.c src/minishell_utils.c src/ft_free.c src/get_
 
 LIBFT						=	./libft/libft.a
 
-LIBFT_LINUX					=	libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c libft/ft_strdup.c libft/ft_strjoin.c
+LIBFT_LINUX					=	libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c libft/ft_strdup.c libft/ft_strjoin.c \
+								libft/ft_isalnum.c libft/ft_strchr.c
 
 INC							=	-I./inc
 

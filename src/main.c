@@ -21,6 +21,7 @@ void    get_var(t_mini *mini, char *str)
     temp = malloc (sizeof(t_var));
     if (!temp)
         exit (0);
+    temp->custom = 0;
     temp->content = ft_strdup(str);
     if (!temp->content)
         exit (0);
@@ -77,7 +78,7 @@ int	main(int argc, char **argv, char **env)
     {
 		signal(SIGQUIT, SIG_IGN);
 		// signal(SIGINT, mini_new_line);
-		get_cmd(mini, readline(mini->prompt));
+		get_cmd(mini, mini->cmd, readline(mini->prompt), 0);
 		// exec(mini);
         // ft_free_cmd(mini->cmd);
     }

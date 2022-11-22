@@ -99,30 +99,31 @@ char	*to_var(t_mini *mini, char *str)
 	return (result);
 }
 
-int	get_cmd(t_mini *mini, char *str)
+void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	mini->cmd = malloc (sizeof(t_cmd));
-	if (!mini->cmd)
-		return (0);
-	mini->cmd->infile = 0;
-	mini->cmd->outfile = 1;
-	mini->cmd->full_cmd = ft_split_cmd(str, 0, 0);
-	while (mini->cmd->full_cmd[i])
+	if (str)
 	{
-		if (mini->cmd->full_cmd[i][0] == 39)
-			mini->cmd->full_cmd[i] = delete_quotes(mini->cmd->full_cmd[i]);
-		// if (mini->cmd->full_cmd[i][0] == '"')
-		// 	mini->cmd->full_cmd[i] = delete_double_quotes(mini, mini->cmd->full_cmd[i], 0);
-		else if (mini->cmd->full_cmd[i][0] == '$')
-			mini->cmd->full_cmd[i] = to_var(mini, mini->cmd->full_cmd[i]);
-		printf("%s\n", mini->cmd->full_cmd[i]);
-		i++;
+		cmd = malloc (sizeof(t_cmd));
+		if (cmd)
+		{
+			cmd->full_cmd = ft_split_cmd(str, 0, 0);
+			while (cmd->full_cmd[i])
+			{
+				if (cmd->full_cmd[i][0] == 39)
+					cmd->full_cmd[i] = delete_quotes(cmd->full_cmd[i]);
+				// if (cmd->full_cmd[i][0] == '"')
+				// 	cmd->full_cmd[i] = delete_double_quotes(mini, cmd->full_cmd[i], 0);
+				else if (cmd->full_cmd[i][0] == '$' && !is_var(mini, &cmd->full_cmd[i][1]))
+					free (cmd->full_cmd[i]);
+				else if (cmd->full_cmd[i][0] == '$')
+					cmd->full_cmd[i] = to_var(mini, cmd->full_cmd[i]);
+				if (cmd->full_cmd[i])
+					printf("%s\n", cmd->full_cmd[i]);
+				i++;
+			}
+			if (ft_strchr(str, 124))
+				get_cmd(mini, cmd->next, &ft_strchr(str, 124)[1], 0);
+		}
+		// get_path(mini, mini->cmd, str, 0);
 	}
-	free (str);
-	return (1);
 }

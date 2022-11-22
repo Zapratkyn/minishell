@@ -23,5 +23,7 @@ char	                *ft_strnstr2(const char *haystack, const char *needle, size
 char                    *ft_strdup(char *str);
 char	                *ft_strjoin(char const *s1, char const *s2);
 char	                *ft_strjoin2(char *str, char c);
+int	                    ft_isalnum(int c);
+char                    *ft_strchr(const char *s, int c);
 
 #endif

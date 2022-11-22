@@ -21,7 +21,7 @@ int	ft_quotes(char *str)
 	i = 0;
 	quotes = 0;
 	double_quotes = 0;
-	while (str[i] && str[i] != '|')
+	while (str[i] && str[i] != 124)
 	{
 		if (str[i] == '"')
 			double_quotes++;
@@ -38,11 +38,11 @@ static int	count_words(char *s, int i, int count)
 {
 	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
-	while (s[i] && s[i] != '|')
+	while (s[i] && s[i] != 124)
 	{
 		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
-		if (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '|')
+		if (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != 124)
 		{
 			count++;
 			if (s[i++] == '"')
@@ -55,9 +55,9 @@ static int	count_words(char *s, int i, int count)
 				while (s[i] != 39)
 					i++;
 			}
+			i++;
 		}
-		i++;
-		while (s[i] && s[i] != ' ' && s[i] != '|' && s[i] != '\t')
+		while (s[i] && s[i] != ' ' && s[i] != 124 && s[i] != '\t')
 			i++;
 	}
 	return (count);
@@ -81,7 +81,7 @@ int	find_next_len(char *str, int i, int len)
 			len++;
 		return (len + 1);
 	}
-	while (str[i] && str[i] != '|' && str[i] != ' ' && str[i] != '\t')
+	while (str[i] && str[i] != 124 && str[i] != ' ' && str[i] != '\t')
 	{
 		len++;
 		i++;
