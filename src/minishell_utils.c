@@ -6,26 +6,24 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 12:19:50 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:20:07 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-char    *mini_getenv(t_mini *mini, char *var)
+char    *mini_getenv(t_mini mini, char *var)
 {
-    t_var   *temp;
+    int		i;
     int     len;
-    char    *result;
 
     len = ft_strlen(var);
-    temp = mini->var;
-    while (ft_strncmp(temp->content, var, len) || temp->content[len] != '=')
-        temp = temp->next;
-    if (!temp)
+	i = 0;
+    while (ft_strncmp(mini.env[i], var, len) || mini.env[i][len] != '=')
+        i++;
+    if (!mini.env[i])
         return (NULL);
-    result = &temp->content[len + 1];
-    return (result);
+    return (&mini.env[i][len + 1]);
 }
 
 void    mini_exit(int sig)
@@ -35,25 +33,53 @@ void    mini_exit(int sig)
     exit(0);
 }
 
-char    *ft_varname(char *str)
-{
-    char    result[10000];
-    int     i;
-    int     j;
+// char    *ft_varname(char *str)
+// {
+//     char    result[10000];
+//     int     i;
+//     int     j;
 
-    i = 0;
-    j = 0;
-    while (str[i])
-    {
-        if (str[i] == 92)
-            i++;
-        result[j++] = str[i++];
-    }
-    return (ft_strdup(result));
+//     i = 0;
+//     j = 0;
+//     while (str[i])
+//     {
+//         if (str[i] == 92)
+//             i++;
+//         result[j++] = str[i++];
+//     }
+//     return (ft_strdup(result));
+// }
+
+int	ft_quotes(char *str)
+{
+	int	i;
+	int	quotes;
+	int	double_quotes;
+
+	i = 0;
+	quotes = 0;
+	double_quotes = 0;
+	while (str[i] && str[i] != 124)
+	{
+		if (str[i] == '"')
+			double_quotes++;
+		else if (str[i] == 39)
+			quotes++;
+		i++;
+	}
+	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
+		return (0);
+	return (1);
 }
 
-void    mini_add_history(t_mini *mini, t_cmd *cmd, char *str)
+void    mini_parser(t_mini mini, t_cmd *cmd, char *str)
 {
-    add_history(str);
-    get_cmd(mini, cmd, str, 0);
+    if (ft_quotes(str))
+	{
+		add_history(str);
+    	mini.cmd = get_cmd(mini, cmd, str, 0);
+		// exec(mini);
+	}
+	free (str);
+	get_prompt(mini);
 }

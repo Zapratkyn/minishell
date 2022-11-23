@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 13:56:22 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:57:54 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,8 @@ struct s_cmd
 
 struct s_mini
 {
-	char	**env;
 	int		g_status;
-	char	*prompt;
-	t_var	*var;
+	char	**env;
 	t_cmd	*cmd;
 	pid_t	pid;
 };
@@ -94,29 +92,27 @@ struct s_mini
 */
 
 // main.c
-void                        get_var(t_mini *mini, char *str);
-void                        get_prompt(t_mini *mini);
-char                        **get_env(t_mini *mini);
-t_mini                      *mini_init(char **env);
+void                        get_prompt(t_mini mini);
+t_mini  					mini_init(char **env);
 // ft_env.c
-void                        mini_env(t_mini *mini, int i);
-int	                        is_var(t_mini *mini, char *var);
-void	                    edit_var(t_mini *mini, char *var, char *val);
-int	                        is_varname(char *str);
-void	                    mini_export(t_mini *mini, char *var, char *val);
+void                        mini_env(t_mini mini);
+int	                        is_var(t_mini mini, char *var);
+// void	                    edit_var(t_mini mini, char *var, char *val);
+// int	                        is_varname(char *str);
+// void	                    mini_export(t_mini mini, char *var, char *val);
 // ft_free.c
 void                        ft_free_env(t_var *var);
 void                        ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
 // minishell_utils.c
-char                        *mini_getenv(t_mini *mini, char *var);
+char                        *mini_getenv(t_mini mini, char *var);
 void    					mini_exit(int sig);
-char                        *ft_varname(char *str);
-void                        mini_add_history(t_mini *mini, t_cmd *cmd, char *str);
-// get_cmd.c
-void						get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
-// ft_split.c
 int	                        ft_quotes(char *str);
+char                        *ft_varname(char *str);
+void                        mini_parser(t_mini mini, t_cmd *cmd, char *str);
+// get_cmd.c
+t_cmd						*get_cmd(t_mini mini, t_cmd *cmd, char *str, int i);
+// ft_split.c
 char						**ft_split_cmd(char *s, int i, int index);
 // builtins
 int							is_builtin(t_cmd *cmd);

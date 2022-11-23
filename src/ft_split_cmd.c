@@ -6,33 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 11:32:01 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:58:22 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
-
-static int	ft_quotes(char *str)
-{
-	int	i;
-	int	quotes;
-	int	double_quotes;
-
-	i = 0;
-	quotes = 0;
-	double_quotes = 0;
-	while (str[i] && str[i] != PIPE)
-	{
-		if (str[i] == '"')
-			double_quotes++;
-		else if (str[i] == S_QUOTE)
-			quotes++;
-		i++;
-	}
-	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
-		return (0);
-	return (1);
-}
 
 static int	count_words(char *s, int i, int count)
 {
@@ -118,10 +96,8 @@ char	**ft_split_cmd(char *s, int i, int index)
 	int		j;
 
 	j = 0;
-	if (!ft_quotes(s))
-		return (0);
 	wc = count_words(s, 0, 0);
-	tab = malloc(sizeof(char *) * (wc + 1));
+	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
 		return (NULL);
 	while (i < wc)
