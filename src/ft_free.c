@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:40:24 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:22:48 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void    ft_free_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd->full_cmd[i])
-		free (cmd->full_cmd[i++]);
-	free (cmd->full_cmd);
+	while (cmd->cmd[i])
+		free (cmd->cmd[i++]);
+	free (cmd->cmd);
 	if (cmd->next)
         ft_free_cmd(cmd->next);
     free (cmd);

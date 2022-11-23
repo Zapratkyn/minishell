@@ -6,16 +6,16 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/23 15:03:05 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:35:51 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../inc/minish.h"
 
-void	do_builtin(t_mini *mini, t_cmd *cmd, int builtin)
+void	do_builtin(t_mini *mini, t_cmd *cmd)
 {
 	(void) mini;
-	if (builtin == ECHO)
+	if (!ft_strcmp(cmd->cmd[0], "echo"))
 		ft_echo(cmd);
 	//else if (builtin == CD)
 	//	ft_cd(mini, cmd);
@@ -36,18 +36,18 @@ int	is_builtin(t_cmd *cmd)
 	if (!cmd->cmd[0])
 		ft_error(CMD_ERR);
 	else if (!ft_strcmp("echo", cmd->cmd[0]))
-		return (ECHO);
+		return (1);
 	else if (!ft_strcmp("cd", cmd->cmd[0]))
-		return (CD);
+		return (1);
 	else if (!ft_strcmp("pwd", cmd->cmd[0]))
-		return (PWD);
+		return (1);
 	else if (!ft_strcmp("export", cmd->cmd[0]))
-		return (EXPORT);
+		return (1);
 	else if (!ft_strcmp("unset", cmd->cmd[0]))
-		return (UNSET);
+		return (1);
 	else if (!ft_strcmp("env", cmd->cmd[0]))
-		return (ENV);
+		return (1);
 	else if (!ft_strcmp("exit", cmd->cmd[0]))
-		return (EXIT);
+		return (1);
 	return (0);
 }

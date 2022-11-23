@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/23 13:44:50 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:52:34 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,12 @@ void	redir(t_cmd *cmd)
 
 void	exec_child(t_mini *mini, t_cmd *cmd)
 {
-	int	builtin;
-
 	redir(cmd);
-	builtin = is_builtin(cmd);
-	if (!builtin && cmd->path)
+	if (!is_builtin(cmd) && cmd->path)
 		execve(cmd->path, cmd->cmd, mini->env);
-	else if (builtin)
-		do_builtin(mini, cmd, builtin);
+	if (is_builtin(cmd))
+		do_builtin(mini, cmd);
+	exit(EXIT_SUCCESS);
 }
 
 void	execute(t_mini *mini)
@@ -56,6 +54,7 @@ void	execute(t_mini *mini)
 			ft_error(FORK_ERR);
 		else if (mini->cmd->pid == CHILD)
 			exec_child(mini, mini->cmd);
+		waitpid(mini->cmd->pid, NULL, 0);
 		close(mini->cmd->fd[READ]);
 		if (mini->cmd->next && mini->cmd->infile == STDIN_FILENO)
 			mini->cmd->next->infile = mini->cmd->fd[READ];
