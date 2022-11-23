@@ -6,13 +6,13 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 14:58:37 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:34:06 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void    get_prompt(t_mini mini)
+void    get_prompt(t_mini *mini)
 {
     char    *str;
 	char	*prompt;
@@ -48,11 +48,11 @@ int	main(int argc, char **argv, char **env)
     t_mini	mini;
 
 	mini = mini_init(env);
-	get_prompt(mini);
+	get_prompt(&mini);
 	while (argc && argv[0])
     {
 		signal(SIGQUIT, SIG_IGN);
 		// signal(SIGINT, mini_new_line);
-		mini_parser(mini, mini.cmd, readline(" "));
+		mini_parser(&mini, mini.cmd, readline(" "));
     }
 }
