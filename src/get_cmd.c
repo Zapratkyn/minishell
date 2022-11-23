@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 16:20:58 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:30:39 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,12 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 				cmd->full_cmd[i] = to_empty(cmd->full_cmd[i]);
 			else if (cmd->full_cmd[i][0] == '$' && is_var(mini, &cmd->full_cmd[i][1], 0))
 				cmd->full_cmd[i] = to_var(mini, cmd->full_cmd[i]);
-			printf("%s\n", cmd->full_cmd[i]);
+			// printf("%s\n", cmd->full_cmd[i]);
 			i++;
 		}
+		// get_path(mini, cmd, str, 0);
 		if (cmd->full_cmd && ft_strchr(str, PIPE))
 			cmd->next = get_cmd(mini, cmd->next, &ft_strchr(str, PIPE)[1], 0);
-		// get_path(mini, cmd, str, 0);
 	}
 	return (cmd);
 }
