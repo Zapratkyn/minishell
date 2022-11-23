@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:42:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:19:58 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void    mini_parser(t_mini *mini, char *str)
 	{
 		if (str[1])
 			add_history(str);
-    	get_cmd(mini, mini->cmd, str, 0);
+    	mini->cmd = get_cmd(mini, mini->cmd, str, 0);
 		// exec(mini);
 	}
 	free (str);

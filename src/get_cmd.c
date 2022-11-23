@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:54:47 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:19:51 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,16 @@ char	*ft_var(t_mini *mini, char *str)
 char	*delete_double_quotes(t_mini *mini, char *str, int i)
 {
 	char	*result;
-	char	*index;
 	char	*var;
 	
 	result = malloc(sizeof(char) * 1);
 	if (!result)
 		return (NULL);
-	index = &str[1];
-	while (index[i] != '"')
+	while (str[i + 1] != '"')
 	{
-		if (index[i] == '$')
+		if (str[i + 1] == '$')
 		{
-			var = ft_var(mini, &index[i + 1]);
+			var = ft_var(mini, &str[i + 2]);
 			if (var)
 			{
 				result = ft_strjoin(result, mini_getenv(mini, var));
@@ -82,10 +80,10 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 				free (var);
 			}
 			else
-				i += is_var(mini, &index[i + 1], 1);
+				i += is_var(mini, &str[i + 2], 1);
 		}
 		else
-			result = ft_strjoin2(result, index[i++]);
+			result = ft_strjoin2(result, str[++i]);
 	}
 	free (str);
 	return (result);
@@ -108,7 +106,7 @@ char	*to_empty(char *str)
 	return (" ");
 }
 
-void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
+t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
 	cmd = malloc (sizeof(t_cmd));
 	if (cmd)
@@ -124,12 +122,12 @@ void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 				cmd->full_cmd[i] = to_empty(cmd->full_cmd[i]);
 			else if (cmd->full_cmd[i][0] == '$' && is_var(mini, &cmd->full_cmd[i][1], 0))
 				cmd->full_cmd[i] = to_var(mini, cmd->full_cmd[i]);
-			if (cmd->full_cmd[i])
-				printf("%s\n", cmd->full_cmd[i]);
+			printf("%s\n", cmd->full_cmd[i]);
 			i++;
 		}
 		if (cmd->full_cmd && ft_strchr(str, PIPE))
 			get_cmd(mini, cmd->next, &ft_strchr(str, PIPE)[1], 0);
+		// get_path(mini, cmd, str, 0);
 	}
-	// get_path(mini, cmd, str, 0);
+	return (cmd);
 }
