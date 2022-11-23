@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 12:55:21 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:56:22 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@
 ** Define constants
 */
 
-/* Managing erros */
+/* Managing errors */
 # define PIPE_ERR "Error in the creation of a pipe."
 # define FORK_ERR "Error in the creation of a fork."
 # define MALLOC_ERR "Error in the memory allocation of a malloc."
 # define DUP_ERR "Error in the dup2."
 # define CMD_ERR "Wrong input command."
+# define DIR_ERR "No such file or directory."
 
 /* Characters */
 # define CHILD 0
@@ -117,9 +118,11 @@ void						get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
 // ft_split.c
 int	                        ft_quotes(char *str);
 char						**ft_split_cmd(char *s, int i, int index);
-// builtin.c
+// builtins
 int							is_builtin(t_cmd *cmd);
-void						do_builtin(t_cmd *cmd, int builtin);
+void						do_builtin(t_mini *mini, t_cmd *cmd, int builtin);
+void						ft_echo(t_cmd *cmd);
+void						ft_cd(t_mini *mini, t_cmd *cmd);
 // error
 void						ft_error(char *type);
 #endif

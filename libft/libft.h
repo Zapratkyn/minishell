@@ -6,16 +6,18 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 12:56:55 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:56:30 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-#include <stddef.h>
-#include <unistd.h>
-#include <stdlib.h>
+# include <stddef.h>
+# include <unistd.h>
+# include <stdlib.h>
+
+# define MALLOC_ERR "Error in the memory allocation of a malloc."
 
 int						ft_isalnum(int c);
 void					ft_putstr_fd(char *s, int fd);
