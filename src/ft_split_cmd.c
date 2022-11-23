@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:33:34 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:52:50 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ static char	*find_next_word(char *s, int len)
 	char	*str;
 
 	i = 0;
-	str = malloc (sizeof(char) * len + 1);
+	str = malloc (sizeof(char) * len);
 	if (!str)
 		return (0);
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	s = &s[i];
 	i = 0;
-	while (i <= len)
+	while (i < len)
 	{
 		str[i] = s[i];
 		i++;

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 18:29:37 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:36:48 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void    mini_parser(t_mini *mini, char *str)
 		if (str[1])
 			add_history(str);
     	mini->cmd = get_cmd(mini, mini->cmd, str, 0);
-		if (!ft_strncmp(mini->cmd->full_cmd[0], "echo", 4) && mini->cmd->full_cmd[1])
-			printf("%s\n", mini->cmd->full_cmd[1]);
+		// if (!ft_strncmp(mini->cmd->full_cmd[0], "echo", 4) && mini->cmd->full_cmd[1])
+		// 	printf("%s\n", mini->cmd->full_cmd[1]);
 		// exec(mini);
 	}
 	free (str);
