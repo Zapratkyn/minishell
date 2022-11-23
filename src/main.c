@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/22 15:49:40 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:32:29 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void    get_var(t_mini *mini, char *str)
     temp = malloc (sizeof(t_var));
     if (!temp)
         exit (0);
+    temp->custom = 0;
     temp->content = ft_strdup(str);
     if (!temp->content)
         exit (0);
@@ -56,11 +57,13 @@ t_mini  *mini_init(char **env)
     i = 0;
     mini = malloc (sizeof(t_mini));
     if (!mini)
+    {
         return (0);
+    }
 	mini->cmd = NULL;
     while (env && env[i])
         get_var(mini, env[i++]);
-    mini->env_size = i;
+    mini->g_status = 0;
     mini->pid = getpid();
     get_prompt(mini);
     return (mini);
@@ -76,7 +79,8 @@ int	main(int argc, char **argv, char **env)
     {
 		signal(SIGQUIT, SIG_IGN);
 		// signal(SIGINT, mini_new_line);
-		get_cmd(mini, readline(mini->prompt));
-		execute(mini);
+		mini_add_history(mini, mini->cmd, readline(mini->prompt));
+		// exec(mini);
+        // ft_free_cmd(mini->cmd);
     }
 }

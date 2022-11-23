@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/22 15:52:11 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/23 11:17:36 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,12 +41,8 @@ SRC							=	src/error.c \
 
 LIBFT						=	./libft/libft.a
 
-LIBFT_LINUX					=	libft/ft_strlen.c \
-								libft/ft_strnstr.c \
-								libft/ft_strncmp.c \
-								libft/ft_strdup.c \
-								libft/ft_strjoin.c \
-								libft/ft_split.c
+LIBFT_LINUX					=	libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c libft/ft_strdup.c libft/ft_strjoin.c \
+								libft/ft_isalnum.c libft/ft_strchr.c
 
 INC							=	-I./inc
 

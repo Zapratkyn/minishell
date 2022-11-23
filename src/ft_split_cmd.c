@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/22 11:48:20 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:32:01 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,33 @@ static int	ft_quotes(char *str)
 {
 	int	i;
 	int	quotes;
+	int	double_quotes;
 
 	i = 0;
 	quotes = 0;
-	while (str[i] && str[i] != '|')
+	double_quotes = 0;
+	while (str[i] && str[i] != PIPE)
 	{
 		if (str[i] == '"')
+			double_quotes++;
+		else if (str[i] == S_QUOTE)
 			quotes++;
 		i++;
 	}
-	if ((quotes % 2) != 0)
+	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
 		return (0);
 	return (1);
 }
 
-static int	count_words(char *s)
+static int	count_words(char *s, int i, int count)
 {
-	int		i;
-	int		count;
-
-	i = 0;
-	count = 0;
 	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
-	while (s[i] && s[i] != '|')
+	while (s[i] && s[i] != PIPE)
 	{
 		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
-		if (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '|')
+		if (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != PIPE)
 		{
 			count++;
 			if (s[i++] == '"')
@@ -51,21 +50,21 @@ static int	count_words(char *s)
 				while (s[i] != '"')
 					i++;
 			}
+			else if (s[i++] == S_QUOTE)
+			{
+				while (s[i] != S_QUOTE)
+					i++;
+			}
+			i++;
 		}
-		i++;
-		while (s[i] && s[i] != ' ' && s[i] != '|' && s[i] != '\t')
+		while (s[i] && s[i] != ' ' && s[i] != PIPE && s[i] != '\t')
 			i++;
 	}
 	return (count);
 }
 
-static int	find_next_len(char *str)
+static int	find_next_len(char *str, int i, int len)
 {
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	if (str[i] == '"')
@@ -73,14 +72,19 @@ static int	find_next_len(char *str)
 		i++;
 		while (str[i++] != '"')
 			len++;
+		return (len + 1);
 	}
-	else
+	else if (str[i] == S_QUOTE)
 	{
-		while (str[i] && str[i] != '|' && str[i] != ' ' && str[i] != '\t')
-		{
+		i++;
+		while (str[i++] != S_QUOTE)
 			len++;
-			i++;
-		}
+		return (len + 1);
+	}
+	while (str[i] && str[i] != PIPE && str[i] != ' ' && str[i] != '\t')
+	{
+		len++;
+		i++;
 	}
 	return (len);
 }
@@ -98,7 +102,7 @@ static char	*find_next_word(char *s, int len)
 		i++;
 	s = &s[i];
 	i = 0;
-	while (i < len)
+	while (i <= len)
 	{
 		str[i] = s[i];
 		i++;
@@ -116,13 +120,13 @@ char	**ft_split_cmd(char *s, int i, int index)
 	j = 0;
 	if (!ft_quotes(s))
 		return (0);
-	wc = count_words(s);
+	wc = count_words(s, 0, 0);
 	tab = malloc(sizeof(char *) * (wc + 1));
 	if (!tab)
 		return (NULL);
 	while (i < wc)
 	{
-		j = find_next_len(&s[index]);
+		j = find_next_len(&s[index], 0, 0);
 		tab[i] = find_next_word(&s[index], j);
 		if (!tab[i])
 			ft_free_full_cmd(tab);
