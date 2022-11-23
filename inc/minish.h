@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 11:27:47 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 12:55:21 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@
 */
 
 /* Managing erros */
-# define PIPE_ERROR "Error in the creation of a pipe."
-# define FORK_ERROR "Error in the creation of a fork."
-# define MALLOC_ERROR "Error in the memory allocation of a malloc."
-# define DUP_ERROR "Error in the dup2."
+# define PIPE_ERR "Error in the creation of a pipe."
+# define FORK_ERR "Error in the creation of a fork."
+# define MALLOC_ERR "Error in the memory allocation of a malloc."
+# define DUP_ERR "Error in the dup2."
+# define CMD_ERR "Wrong input command."
 
 /* Characters */
 # define CHILD 0
@@ -41,6 +42,15 @@
 # define WRITE 1
 # define S_QUOTE 39
 # define PIPE 124
+
+/* Builtin */
+# define ECHO 1
+# define CD 2
+# define PWD 3
+# define EXPORT 4
+# define UNSET 5
+# define ENV 6
+# define EXIT 7
 
 /*
 ** Structures
@@ -71,7 +81,7 @@ struct s_cmd
 struct s_mini
 {
 	char	**env;
-	int		env_size;
+	int		g_status;
 	char	*prompt;
 	t_var	*var;
 	t_cmd	*cmd;
@@ -107,5 +117,9 @@ void						get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
 // ft_split.c
 int	                        ft_quotes(char *str);
 char						**ft_split_cmd(char *s, int i, int index);
-
+// builtin.c
+int							is_builtin(t_cmd *cmd);
+void						do_builtin(t_cmd *cmd, int builtin);
+// error
+void						ft_error(char *type);
 #endif

@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/23 11:29:51 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/23 12:47:37 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,14 @@ SRC							=	ft_isalnum.c \
 								ft_putstr_fd.c \
 								ft_split.c \
 								ft_strchr.c \
+								ft_strcmp.c \
 								ft_strdup.c \
 								ft_strjoin.c \
 								ft_strlcpy.c \
 								ft_strlen.c \
 								ft_strncmp.c \
 								ft_strnstr.c \
-								ft_substr.c \
+								ft_substr.c
 CC							=	gcc
 RM							=	rm -rf
 INCLUDES					=	-I./includes
