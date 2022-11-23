@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/23 12:23:55 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:44:50 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	exec_child(t_mini *mini, t_cmd *cmd)
 	if (!builtin && cmd->path)
 		execve(cmd->path, cmd->cmd, mini->env);
 	else if (builtin)
-		do_builtin(cmd, builtin);
+		do_builtin(mini, cmd, builtin);
 }
 
 void	execute(t_mini *mini)
