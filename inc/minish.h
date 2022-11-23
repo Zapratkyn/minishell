@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 14:20:58 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:28:18 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 ** Define constants
 */
 
-
+# define S_QUOTE 39
+# define PIPE 124
 /*
 ** Structures
 */
