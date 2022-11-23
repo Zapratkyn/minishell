@@ -1,38 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 17:13:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:13:56 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
-
-int	ft_quotes(char *str)
-{
-	int	i;
-	int	quotes;
-	int	double_quotes;
-
-	i = 0;
-	quotes = 0;
-	double_quotes = 0;
-	while (str[i] && str[i] != 124)
-	{
-		if (str[i] == '"')
-			double_quotes++;
-		else if (str[i] == 39)
-			quotes++;
-		i++;
-	}
-	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
-		return (0);
-	return (1);
-}
 
 static int	count_words(char *s, int i, int count)
 {
@@ -118,10 +96,8 @@ char	**ft_split_cmd(char *s, int i, int index)
 	int		j;
 
 	j = 0;
-	if (!ft_quotes(s))
-		return (0);
 	wc = count_words(s, 0, 0);
-	tab = malloc(sizeof(char *) * (wc + 1));
+	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
 		return (NULL);
 	while (i < wc)

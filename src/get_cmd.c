@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 17:40:15 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:24:14 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,66 +29,64 @@ char	*delete_quotes(char *str, char c)
 		i++;
 		j++;
 	}
+	free (str);
 	return (result);
 }
 
-// char	*ft_var(char *str)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		len;
-// 	char	*result;
+char	*ft_var(t_mini mini, char *str)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*result;
 
-// 	i = 1;
-// 	j = 0;
-// 	len = 0;
-// 	while (str[i] != '"' && str[i] != ' ')
-// 	{
-// 		len++;
-// 		i++;
-// 	}
-// 	result = malloc (sizeof(char) * len + 1);
-// 	if (!result)
-// 		return (NULL);
-// 	i = 1;
-// 	while (str[i] != '"' && str[i] != ' ')
-// 		result[j++] = str[i++];
-// 	result[i] = '\0';
-// 	return (result);
-// }
+	i = 0;
+	j = 0;
+	len = 0;
+	if (!is_var(mini, str))
+		return (" ");
+	while (ft_isalnum(str[i]) || str[i] != '_')
+	{
+		len++;
+		i++;
+	}
+	result = malloc (sizeof(char) * len + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (str[i] != '"' && str[i] != ' ')
+		result[j++] = str[i++];
+	result[i] = '\0';
+	return (result);
+}
 
-// char	*delete_double_quotes(t_mini *mini, char *str, int i)
-// {
-// 	char	*result;
-// 	char	*index;
-// 	char	*var;
+char	*delete_double_quotes(t_mini mini, char *str, int i)
+{
+	char	*result;
+	char	*index;
+	char	*var;
 	
-	
-// 	result = malloc(sizeof(char) * 2);
-// 	if (!result)
-// 		return (NULL);
-// 	result[0] = '"';
-// 	result[1] = '\0';
-// 	index = &str[1];
-// 	while (index[i] != '"')
-// 	{
-// 		if (index[i] == '$')
-// 		{
-// 			var = ft_var(&index[i]);
-// 			printf("%s\n", var);
-// 			result = ft_strjoin(result, mini_getenv(mini, var));
-// 			i += ft_strlen(var);
-// 			write (1, "OK\n", 3);
-// 			free (var);
-// 		}
-// 		else
-// 			result = ft_strjoin2(result, index[i++]);
-// 	}
-// 	free (str);
-// 	return (delete_quotes(result, '"'));
-// }
+	result = malloc(sizeof(char) * 1);
+	if (!result)
+		return (NULL);
+	index = &str[1];
+	while (index[i] != '"')
+	{
+		if (index[i] == '$')
+		{
+			var = ft_var(mini, &index[i + 1]);
+			result = ft_strjoin(result, mini_getenv(mini, var));
+			i += (ft_strlen(var) + 1);
+			free (var);
+		}
+		else
+			result = ft_strjoin2(result, index[i++]);
+	}
+	free (str);
+	return (result);
+}
 
-char	*to_var(t_mini *mini, char *str)
+char	*to_var(t_mini mini, char *str)
 {
 	char	*result;
 
@@ -99,31 +97,35 @@ char	*to_var(t_mini *mini, char *str)
 	return (result);
 }
 
-void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
+char	*to_empty(char *str)
 {
-	if (str && ft_quotes(str))
+	free (str);
+	return (" ");
+}
+
+t_cmd	*get_cmd(t_mini mini, t_cmd *cmd, char *str, int i)
+{
+	cmd = malloc (sizeof(t_cmd));
+	if (cmd)
 	{
-		cmd = malloc (sizeof(t_cmd));
-		if (cmd)
+		cmd->full_cmd = ft_split_cmd(str, 0, 0);
+		while (cmd->full_cmd[i])
 		{
-			cmd->full_cmd = ft_split_cmd(str, 0, 0);
-			while (cmd->full_cmd[i])
-			{
-				if (cmd->full_cmd[i][0] == 39)
-					cmd->full_cmd[i] = delete_quotes(cmd->full_cmd[i], 39);
-				// if (cmd->full_cmd[i][0] == '"')
-				// 	cmd->full_cmd[i] = delete_double_quotes(mini, cmd->full_cmd[i], 0);
-				else if (cmd->full_cmd[i][0] == '$' && !is_var(mini, &cmd->full_cmd[i][1]))
-					free (cmd->full_cmd[i]);
-				else if (cmd->full_cmd[i][0] == '$')
-					cmd->full_cmd[i] = to_var(mini, cmd->full_cmd[i]);
-				if (cmd->full_cmd[i])
-					printf("%s\n", cmd->full_cmd[i]);
-				i++;
-			}
-			if (cmd->full_cmd && ft_strchr(str, 124))
-				get_cmd(mini, cmd->next, &ft_strchr(str, 124)[1], 0);
+			if (cmd->full_cmd[i][0] == 39)
+				cmd->full_cmd[i] = delete_quotes(cmd->full_cmd[i], 39);
+			else if (cmd->full_cmd[i][0] == '"')
+				cmd->full_cmd[i] = delete_double_quotes(mini, cmd->full_cmd[i], 0);
+			else if (cmd->full_cmd[i][0] == 36 && !is_var(mini, &cmd->full_cmd[i][1]))
+				cmd->full_cmd[i] = to_empty(cmd->full_cmd[i]);
+			else if (cmd->full_cmd[i][0] == 36 && is_var(mini, &cmd->full_cmd[i][1]))
+				cmd->full_cmd[i] = to_var(mini, cmd->full_cmd[i]);
+			if (cmd->full_cmd[i])
+				printf("%s\n", cmd->full_cmd[i]);
+			i++;
 		}
-		// get_path(mini, cmd, str, 0);
+		if (cmd->full_cmd && ft_strchr(str, 124))
+			cmd->next = get_cmd(mini, cmd->next, &ft_strchr(str, 124)[1], 0);
 	}
+	// get_path(mini, cmd, str, 0);
+	return (cmd);
 }

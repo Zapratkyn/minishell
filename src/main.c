@@ -6,80 +6,53 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 17:40:03 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:20:16 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void    get_var(t_mini *mini, char *str)
-{
-    t_var   *index;
-    t_var   *temp;
-
-    index = mini->var;
-    temp = malloc (sizeof(t_var));
-    if (!temp)
-        exit (0);
-    temp->custom = 0;
-    temp->content = ft_strdup(str);
-    if (!temp->content)
-        exit (0);
-    if (!mini->var)
-        mini->var = temp;
-    else if (mini->var)
-    {
-        while (index->next)
-            index = index->next;
-        index->next = temp;
-    }
-}
-
-void    get_prompt(t_mini *mini)
+void    get_prompt(t_mini mini)
 {
     char    *str;
+	char	*prompt;
 
-    mini->prompt = mini_getenv(mini, "USER");
-    mini->prompt = ft_strjoin(mini->prompt, "@minishell ~");
+    prompt = ft_strdup(mini_getenv(mini, "USER"));
+    prompt = ft_strjoin(prompt, "@minishell ");
     str = ft_strnstr2(mini_getenv(mini, "PWD"), mini_getenv(mini, "USER"), 1000);
     if (str)
-        mini->prompt = ft_strjoin(mini->prompt, str);
+	{
+		prompt = ft_strjoin(prompt, "~");
+        prompt = ft_strjoin(prompt, str);
+	}
     else
-        mini->prompt = ft_strjoin(mini->prompt, mini_getenv(mini, "PWD"));
-    mini->prompt = ft_strjoin(mini->prompt, " $ ");
+        prompt = ft_strjoin(prompt, mini_getenv(mini, "PWD"));
+    prompt = ft_strjoin(prompt, " %");
+	printf("%s", prompt);
+	free (prompt);
 }
 
-t_mini  *mini_init(char **env)
+t_mini  mini_init(char **env)
 {
-    t_mini  *mini;
-    int     i;
+    t_mini  mini;
 
-    i = 0;
-    mini = malloc (sizeof(t_mini));
-    if (!mini)
-    {
-        return (0);
-    }
-	mini->cmd = NULL;
-    while (env && env[i])
-        get_var(mini, env[i++]);
-    mini->g_status = 0;
-    mini->pid = getpid();
-    get_prompt(mini);
+	mini.cmd = NULL;
+    mini.env = env;
+    mini.g_status = 0;
+    mini.pid = getpid();
     return (mini);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-    t_mini	*mini;
+    t_mini	mini;
 
 	mini = mini_init(env);
+	get_prompt(mini);
 	while (argc && argv[0])
     {
 		signal(SIGQUIT, SIG_IGN);
 		// signal(SIGINT, mini_new_line);
-		mini_add_history(mini, mini->cmd, readline(mini->prompt));
-		// exec(mini);
-        // ft_free_cmd(mini->cmd);
+		mini_parser(mini, mini.cmd, readline(" "));
     }
 }
