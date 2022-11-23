@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:32:36 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:33:34 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ char	**ft_split_cmd(char *s, int i, int index)
 
 	j = 0;
 	wc = count_words(s, 0, 0);
-	printf("%d\n", wc);
 	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
 		return (NULL);

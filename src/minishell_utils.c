@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:19:54 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:42:38 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,16 @@ int	ft_quotes(char *str)
 	return (1);
 }
 
-void    mini_parser(t_mini *mini, t_cmd *cmd, char *str)
+void    mini_parser(t_mini *mini, char *str)
 {
     if (ft_quotes(str))
 	{
 		if (str[1])
 			add_history(str);
-    	get_cmd(mini, cmd, str, 0);
+    	get_cmd(mini, mini->cmd, str, 0);
 		// exec(mini);
 	}
 	free (str);
-	// ft_free_cmd(mini.cmd);
+	// ft_free_cmd(mini->cmd);
 	get_prompt(mini);
 }

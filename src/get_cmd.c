@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:22:07 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:54:47 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ char	*ft_var(t_mini *mini, char *str)
 	i = 0;
 	j = 0;
 	len = 0;
-	if (!is_var(mini, str))
-		return (" ");
+	if (!is_var(mini, str, 0))
+		return (NULL);
 	while (ft_isalnum(str[i]) || str[i] != '_')
 	{
 		len++;
@@ -75,9 +75,14 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 		if (index[i] == '$')
 		{
 			var = ft_var(mini, &index[i + 1]);
-			result = ft_strjoin(result, mini_getenv(mini, var));
-			i += (ft_strlen(var) + 1);
-			free (var);
+			if (var)
+			{
+				result = ft_strjoin(result, mini_getenv(mini, var));
+				i += (ft_strlen(var) + 1);
+				free (var);
+			}
+			else
+				i += is_var(mini, &index[i + 1], 1);
 		}
 		else
 			result = ft_strjoin2(result, index[i++]);
@@ -111,20 +116,20 @@ void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 		cmd->full_cmd = ft_split_cmd(str, 0, 0);
 		while (cmd->full_cmd[i])
 		{
-			if (cmd->full_cmd[i][0] == 39)
-				cmd->full_cmd[i] = delete_quotes(cmd->full_cmd[i], 39);
+			if (cmd->full_cmd[i][0] == S_QUOTE)
+				cmd->full_cmd[i] = delete_quotes(cmd->full_cmd[i], S_QUOTE);
 			else if (cmd->full_cmd[i][0] == '"')
 				cmd->full_cmd[i] = delete_double_quotes(mini, cmd->full_cmd[i], 0);
-			else if (cmd->full_cmd[i][0] == 36 && !is_var(mini, &cmd->full_cmd[i][1]))
+			else if (cmd->full_cmd[i][0] == '$' && !is_var(mini, &cmd->full_cmd[i][1], 0))
 				cmd->full_cmd[i] = to_empty(cmd->full_cmd[i]);
-			else if (cmd->full_cmd[i][0] == 36 && is_var(mini, &cmd->full_cmd[i][1]))
+			else if (cmd->full_cmd[i][0] == '$' && is_var(mini, &cmd->full_cmd[i][1], 0))
 				cmd->full_cmd[i] = to_var(mini, cmd->full_cmd[i]);
 			if (cmd->full_cmd[i])
 				printf("%s\n", cmd->full_cmd[i]);
 			i++;
 		}
-		if (cmd->full_cmd && ft_strchr(str, 124))
-			get_cmd(mini, cmd->next, &ft_strchr(str, 124)[1], 0);
+		if (cmd->full_cmd && ft_strchr(str, PIPE))
+			get_cmd(mini, cmd->next, &ft_strchr(str, PIPE)[1], 0);
 	}
 	// get_path(mini, cmd, str, 0);
 }

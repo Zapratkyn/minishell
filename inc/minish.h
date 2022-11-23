@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:21:37 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:52:32 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void                        get_prompt(t_mini *mini);
 t_mini  					mini_init(char **env);
 // ft_env.c
 void                        mini_env(t_mini *mini);
-int	                        is_var(t_mini *mini, char *var);
+int	                        is_var(t_mini *mini, char *var, int j);
 // void	                    edit_var(t_mini mini, char *var, char *val);
 // int	                        is_varname(char *str);
 // void	                    mini_export(t_mini mini, char *var, char *val);
@@ -84,7 +84,7 @@ char                        *mini_getenv(t_mini *mini, char *var);
 void    					mini_exit(int sig);
 int	                        ft_quotes(char *str);
 char                        *ft_varname(char *str);
-void                        mini_parser(t_mini *mini, t_cmd *cmd, char *str);
+void                        mini_parser(t_mini *mini, char *str);
 // get_cmd.c
 void						get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
 // ft_split.c
