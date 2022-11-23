@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/23 13:44:57 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:03:05 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	do_builtin(t_mini *mini, t_cmd *cmd, int builtin)
 {
+	(void) mini;
 	if (builtin == ECHO)
 		ft_echo(cmd);
-	else if (builtin == CD)
-		ft_cd(mini, cmd);
+	//else if (builtin == CD)
+	//	ft_cd(mini, cmd);
 	//else if (builtin == PWD)
 	//	cmd_pwd(cmd);
 	//else if (builtin == EXPORT)

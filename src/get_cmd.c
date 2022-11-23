@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 14:58:29 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:06:11 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,22 +108,22 @@ t_cmd	*get_cmd(t_mini mini, t_cmd *cmd, char *str, int i)
 	cmd = malloc (sizeof(t_cmd));
 	if (cmd)
 	{
-		cmd->full_cmd = ft_split_cmd(str, 0, 0);
-		while (cmd->full_cmd[i])
+		cmd->cmd = ft_split_cmd(str, 0, 0);
+		while (cmd->cmd[i])
 		{
-			if (cmd->full_cmd[i][0] == 39)
-				cmd->full_cmd[i] = delete_quotes(cmd->full_cmd[i], 39);
-			else if (cmd->full_cmd[i][0] == '"')
-				cmd->full_cmd[i] = delete_double_quotes(mini, cmd->full_cmd[i], 0);
-			else if (cmd->full_cmd[i][0] == 36 && !is_var(mini, &cmd->full_cmd[i][1]))
-				cmd->full_cmd[i] = to_empty(cmd->full_cmd[i]);
-			else if (cmd->full_cmd[i][0] == 36 && is_var(mini, &cmd->full_cmd[i][1]))
-				cmd->full_cmd[i] = to_var(mini, cmd->full_cmd[i]);
-			if (cmd->full_cmd[i])
-				printf("%s\n", cmd->full_cmd[i]);
+			if (cmd->cmd[i][0] == 39)
+				cmd->cmd[i] = delete_quotes(cmd->cmd[i], 39);
+			else if (cmd->cmd[i][0] == '"')
+				cmd->cmd[i] = delete_double_quotes(mini, cmd->cmd[i], 0);
+			else if (cmd->cmd[i][0] == 36 && !is_var(mini, &cmd->cmd[i][1]))
+				cmd->cmd[i] = to_empty(cmd->cmd[i]);
+			else if (cmd->cmd[i][0] == 36 && is_var(mini, &cmd->cmd[i][1]))
+				cmd->cmd[i] = to_var(mini, cmd->cmd[i]);
+			//if (cmd->cmd[i])
+			//	printf("%s\n", cmd->cmd[i]);
 			i++;
 		}
-		if (cmd->full_cmd && ft_strchr(str, 124))
+		if (cmd->cmd && ft_strchr(str, 124))
 			cmd->next = get_cmd(mini, cmd->next, &ft_strchr(str, 124)[1], 0);
 	}
 	// get_path(mini, cmd, str, 0);

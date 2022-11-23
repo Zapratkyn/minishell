@@ -6,10 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/23 14:32:46 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:01:35 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "../../inc/minish.h"
 
 char	*find_path(t_cmd *cmd)
@@ -35,3 +36,4 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	update_pwd(mini, "PWD");
 	free(path);
 }
+*/

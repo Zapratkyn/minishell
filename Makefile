@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/23 14:56:24 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/23 14:59:34 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,11 @@ RESET		= $(shell tput -Txterm sgr0)
 
 NAME						=	minishell
 
-
 # Files
 
-SRC							=	src/builtin.c \
+SRC							=	src/builtins/builtin.c \
+								src/builtins/ft_cd.c \
+								src/builtins/ft_echo.c \
 								src/error.c \
 								src/exec.c \
 								src/main.c \
