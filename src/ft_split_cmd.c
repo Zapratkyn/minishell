@@ -6,11 +6,21 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 14:28:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:29:21 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
+
+int	is_quote(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != c)
+		i++;
+	return (i);
+}
 
 static int	count_words(char *s, int i, int count)
 {
@@ -23,16 +33,8 @@ static int	count_words(char *s, int i, int count)
 		if (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != PIPE)
 		{
 			count++;
-			if (s[i++] == '"')
-			{
-				while (s[i] != '"')
-					i++;
-			}
-			else if (s[i++] == S_QUOTE)
-			{
-				while (s[i] != S_QUOTE)
-					i++;
-			}
+			if (s[i] == S_QUOTE || s[i] == '"')
+				i += is_quote(&s[i], s[i]);
 			i++;
 		}
 		while (s[i] && s[i] != ' ' && s[i] != PIPE && s[i] != '\t')
@@ -106,7 +108,7 @@ char	**ft_split_cmd(char *s, int i, int index)
 		tab[i] = find_next_word(&s[index], j);
 		if (!tab[i])
 			ft_free_full_cmd(tab);
-		index += j;
+		index += (j + 1);
 		while (s[index] == ' ' || s[index] == '\t')
 			index++;
 		i++;

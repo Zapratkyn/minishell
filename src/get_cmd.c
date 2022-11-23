@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 14:24:14 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:22:07 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*delete_quotes(char *str, char c)
 	return (result);
 }
 
-char	*ft_var(t_mini mini, char *str)
+char	*ft_var(t_mini *mini, char *str)
 {
 	int		i;
 	int		j;
@@ -60,7 +60,7 @@ char	*ft_var(t_mini mini, char *str)
 	return (result);
 }
 
-char	*delete_double_quotes(t_mini mini, char *str, int i)
+char	*delete_double_quotes(t_mini *mini, char *str, int i)
 {
 	char	*result;
 	char	*index;
@@ -86,7 +86,7 @@ char	*delete_double_quotes(t_mini mini, char *str, int i)
 	return (result);
 }
 
-char	*to_var(t_mini mini, char *str)
+char	*to_var(t_mini *mini, char *str)
 {
 	char	*result;
 
@@ -103,7 +103,7 @@ char	*to_empty(char *str)
 	return (" ");
 }
 
-t_cmd	*get_cmd(t_mini mini, t_cmd *cmd, char *str, int i)
+void	get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
 	cmd = malloc (sizeof(t_cmd));
 	if (cmd)
@@ -124,8 +124,7 @@ t_cmd	*get_cmd(t_mini mini, t_cmd *cmd, char *str, int i)
 			i++;
 		}
 		if (cmd->full_cmd && ft_strchr(str, 124))
-			cmd->next = get_cmd(mini, cmd->next, &ft_strchr(str, 124)[1], 0);
+			get_cmd(mini, cmd->next, &ft_strchr(str, 124)[1], 0);
 	}
 	// get_path(mini, cmd, str, 0);
-	return (cmd);
 }

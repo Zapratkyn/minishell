@@ -6,27 +6,25 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 13:27:27 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:17:20 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void    mini_env(t_mini mini)
+void    mini_env(t_mini *mini)
 {
     int		i;
-	char	c;
 
     i = 0;
-	c = 34;
-    while (mini.env[i])
+    while (mini->env[i])
     {
-        printf("%s\n", mini.env[i]);
+        printf("%s\n", mini->env[i]);
         i++;
     }
 }
 
-int	is_var(t_mini mini, char *var)
+int	is_var(t_mini *mini, char *var)
 {
 	int		i;
 	int		len;
@@ -39,9 +37,9 @@ int	is_var(t_mini mini, char *var)
         i++;
     }
 	i = 0;
-	while (mini.env[i])
+	while (mini->env[i])
 	{
-		if (!ft_strncmp(mini.env[i], var, len) && mini.env[i][len] == '=')
+		if (!ft_strncmp(mini->env[i], var, len) && mini->env[i][len] == '=')
 			return (1);
 		i++;
 	}

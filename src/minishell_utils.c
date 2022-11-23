@@ -6,24 +6,24 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 14:46:44 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:19:54 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-char    *mini_getenv(t_mini mini, char *var)
+char    *mini_getenv(t_mini *mini, char *var)
 {
     int		i;
     int     len;
 
     len = ft_strlen(var);
 	i = 0;
-    while (ft_strncmp(mini.env[i], var, len) || mini.env[i][len] != '=')
+    while (ft_strncmp(mini->env[i], var, len) || mini->env[i][len] != '=')
         i++;
-    if (!mini.env[i])
+    if (!mini->env[i])
         return (NULL);
-    return (&mini.env[i][len + 1]);
+    return (&mini->env[i][len + 1]);
 }
 
 void    mini_exit(int sig)
@@ -72,13 +72,13 @@ int	ft_quotes(char *str)
 	return (1);
 }
 
-void    mini_parser(t_mini mini, t_cmd *cmd, char *str)
+void    mini_parser(t_mini *mini, t_cmd *cmd, char *str)
 {
     if (ft_quotes(str))
 	{
 		if (str[1])
 			add_history(str);
-    	mini.cmd = get_cmd(mini, cmd, str, 0);
+    	get_cmd(mini, cmd, str, 0);
 		// exec(mini);
 	}
 	free (str);
