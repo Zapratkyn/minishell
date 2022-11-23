@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/22 16:04:16 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 12:23:55 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,32 @@ void	redir(t_cmd *cmd)
 	if (cmd->infile != STDIN_FILENO)
 	{
 		if (dup2(cmd->infile, STDIN_FILENO == -1))
-			ft_error(DUP_ERROR);
+			ft_error(DUP_ERR);
 		close(cmd->infile);
 	}
 	if (cmd->outfile != STDOUT_FILENO)
 	{
 		if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
-			ft_error(DUP_ERROR);
+			ft_error(DUP_ERR);
 		close(cmd->outfile);
 	}
 	else if (cmd->next)
 		if (dup2(cmd->next->infile, cmd->fd[WRITE]) == -1)
-			ft_error(DUP_ERROR);
+			ft_error(DUP_ERR);
 	close(cmd->fd[WRITE]);
 	close(cmd->fd[READ]);
 }
 
 void	exec_child(t_mini *mini, t_cmd *cmd)
 {
+	int	builtin;
+
 	redir(cmd);
-	if (cmd->path)
+	builtin = is_builtin(cmd);
+	if (!builtin && cmd->path)
 		execve(cmd->path, cmd->cmd, mini->env);
+	else if (builtin)
+		do_builtin(cmd, builtin);
 }
 
 void	execute(t_mini *mini)
@@ -45,10 +50,10 @@ void	execute(t_mini *mini)
 	while (mini->cmd)
 	{
 		if (pipe(mini->cmd->fd) == -1)
-			ft_error(PIPE_ERROR);
+			ft_error(PIPE_ERR);
 		mini->cmd->pid = fork();
 		if (mini->cmd->pid == -1)
-			ft_error(FORK_ERROR);
+			ft_error(FORK_ERR);
 		else if (mini->cmd->pid == CHILD)
 			exec_child(mini, mini->cmd);
 		close(mini->cmd->fd[READ]);
