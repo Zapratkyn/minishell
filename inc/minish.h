@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 16:03:20 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:22:03 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	                        ft_quotes(char *str);
 char                        *ft_varname(char *str);
 void                        mini_parser(t_mini *mini, char *str);
 // get_cmd.c
-void						get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
+t_cmd						*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
 // ft_split.c
 char						**ft_split_cmd(char *s, int i, int index);
 
