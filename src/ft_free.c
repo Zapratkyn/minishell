@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 14:39:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:40:24 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void    ft_free_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-    if (cmd->next)
-        ft_free_cmd(cmd->next);
 	while (cmd->full_cmd[i])
 		free (cmd->full_cmd[i++]);
 	free (cmd->full_cmd);
+	if (cmd->next)
+        ft_free_cmd(cmd->next);
     free (cmd);
 }
 

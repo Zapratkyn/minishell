@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:33:12 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:03:26 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_quote(char *str, char c)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (str[i] != c)
 		i++;
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:33:02 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:03:20 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void						execute(t_mini *mini);
 
 // ft_env.c
 void                        mini_env(t_mini *mini);
-int	                        is_var(t_mini *mini, char *var);
+int	                        is_var(t_mini *mini, char *var, int j);
 // void	                    edit_var(t_mini mini, char *var, char *val);
 
 // int	                        is_varname(char *str);
@@ -120,7 +120,7 @@ char                        *mini_getenv(t_mini *mini, char *var);
 void    					mini_exit(int sig);
 int	                        ft_quotes(char *str);
 char                        *ft_varname(char *str);
-void                        mini_parser(t_mini *mini, t_cmd *cmd, char *str);
+void                        mini_parser(t_mini *mini, char *str);
 // get_cmd.c
 void						get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
 // ft_split.c

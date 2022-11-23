@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:34:06 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:03:42 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int	main(int argc, char **argv, char **env)
     {
 		signal(SIGQUIT, SIG_IGN);
 		// signal(SIGINT, mini_new_line);
-		mini_parser(&mini, mini.cmd, readline(" "));
+		mini_parser(&mini, readline(" "));
     }
 }
