@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/21 17:13:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:13:41 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	ft_quotes(char *str)
 	i = 0;
 	quotes = 0;
 	double_quotes = 0;
-	while (str[i] && str[i] != 124)
+	while (str[i] && str[i] != PIPE)
 	{
 		if (str[i] == '"')
 			double_quotes++;
-		else if (str[i] == 39)
+		else if (str[i] == S_QUOTE)
 			quotes++;
 		i++;
 	}
@@ -38,11 +38,11 @@ static int	count_words(char *s, int i, int count)
 {
 	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
-	while (s[i] && s[i] != 124)
+	while (s[i] && s[i] != PIPE)
 	{
 		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
-		if (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != 124)
+		if (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != PIPE)
 		{
 			count++;
 			if (s[i++] == '"')
@@ -50,14 +50,14 @@ static int	count_words(char *s, int i, int count)
 				while (s[i] != '"')
 					i++;
 			}
-			else if (s[i++] == 39)
+			else if (s[i++] == S_QUOTE)
 			{
-				while (s[i] != 39)
+				while (s[i] != S_QUOTE)
 					i++;
 			}
 			i++;
 		}
-		while (s[i] && s[i] != ' ' && s[i] != 124 && s[i] != '\t')
+		while (s[i] && s[i] != ' ' && s[i] != PIPE && s[i] != '\t')
 			i++;
 	}
 	return (count);
@@ -74,14 +74,14 @@ int	find_next_len(char *str, int i, int len)
 			len++;
 		return (len + 1);
 	}
-	else if (str[i] == 39)
+	else if (str[i] == S_QUOTE)
 	{
 		i++;
-		while (str[i++] != 39)
+		while (str[i++] != S_QUOTE)
 			len++;
 		return (len + 1);
 	}
-	while (str[i] && str[i] != 124 && str[i] != ' ' && str[i] != '\t')
+	while (str[i] && str[i] != PIPE && str[i] != ' ' && str[i] != '\t')
 	{
 		len++;
 		i++;
