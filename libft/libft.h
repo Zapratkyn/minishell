@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 10:15:28 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 10:46:47 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 
 # define MALLOC_ERR "Error in the memory allocation of a malloc."
 
-char                    *ft_calloc(int count, int size);
+void					ft_error(char *type);
+char					*ft_calloc(int count, int size);
+char					*ft_insert(char *s1, char c, char *s2);
 int						ft_isalnum(int c);
 void					ft_putstr_fd(char *s, int fd);
 char					**ft_split(char const *s, char c);
@@ -34,6 +36,6 @@ int						ft_strncmp(const char *s1, const char *s2, size_t n);
 char					*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char					*ft_strnstr2(const char *haystack, const char *needle, size_t len);
 char					*ft_substr(char const *s, unsigned int start, size_t len);
-void                    ft_usleep(int count);
+void					ft_usleep(int count);
 
 #endif
