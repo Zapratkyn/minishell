@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 10:17:06 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:14:39 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 /* Managing errors */
 # define PIPE_ERR "Error in the creation of a pipe."
+# define PWD_ERR "Error in the pwd."
 # define FORK_ERR "Error in the creation of a fork."
 # define MALLOC_ERR "Error in the memory allocation of a malloc."
 # define DUP_ERR "Error in the dup2."
@@ -62,14 +63,13 @@
 */
 
 typedef struct s_var	t_var;
-typedef struct s_mini	t_mini;
 typedef struct s_cmd	t_cmd;
+typedef struct s_mini	t_mini;
 
 struct s_var
 {
-    char    *content;
-    int     custom;
-    t_var   *next;
+	char	*content;
+	t_var	*next;
 };
 
 struct s_cmd
@@ -87,6 +87,7 @@ struct s_mini
 {
 	int		g_status;
 	char	**env;
+	t_var	*var;
 	t_cmd	*cmd;
 	pid_t	pid;
 };
@@ -96,8 +97,8 @@ struct s_mini
 */
 
 // main.c
-void                        get_prompt(t_mini *mini);
-t_mini  					mini_init(char **env);
+void						get_prompt(t_mini *mini);
+void						mini_init(t_mini *mini, char **env);
 
 // execute
 void						execute(t_mini *mini);
@@ -139,6 +140,8 @@ int							is_builtin(t_cmd *cmd);
 void						do_builtin(t_mini *mini, t_cmd *cmd);
 void						ft_echo(t_cmd *cmd);
 void						ft_cd(t_mini *mini, t_cmd *cmd);
+void						ft_pwd(t_cmd *cmd);
+void						update_pwd(t_mini *mini, char *type);
 
 // error
 void						ft_error(char *type);

@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/24 10:10:31 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/24 12:10:13 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ NAME						=	minishell
 SRC							=	src/builtins/builtin.c \
 								src/builtins/ft_cd.c \
 								src/builtins/ft_echo.c \
+								src/builtins/ft_pwd.c \
 								src/error.c \
 								src/exec.c \
 								src/main.c \
@@ -45,9 +46,18 @@ SRC							=	src/builtins/builtin.c \
 
 LIBFT						=	./libft/libft.a
 
-LIBFT_LINUX					=	libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c libft/ft_strdup.c libft/ft_strjoin.c \
-								libft/ft_isalnum.c libft/ft_strchr.c libft/ft_calloc.c libft/ft_usleep.c libft/ft_split.c \
-								libft/ft_substr.c
+LIBFT_LINUX					=	libft/ft_strlen.c \
+								libft/ft_strnstr.c \
+								libft/ft_strncmp.c \
+								libft/ft_strdup.c \
+								libft/ft_strjoin.c \
+								libft/ft_isalnum.c \
+								libft/ft_strchr.c \
+								libft/ft_calloc.c \
+								libft/ft_usleep.c \
+								libft/ft_split.c \
+								libft/ft_substr.c \
+								libft/ft_usleep.c
 
 INC							=	-I./inc
 

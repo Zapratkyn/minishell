@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/23 17:35:51 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:15:20 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	do_builtin(t_mini *mini, t_cmd *cmd)
 {
 	(void) mini;
-	if (!ft_strcmp(cmd->cmd[0], "echo"))
+	if (!ft_strcmp(cmd->cmds[0], "echo"))
 		ft_echo(cmd);
 	//else if (builtin == CD)
 	//	ft_cd(mini, cmd);
-	//else if (builtin == PWD)
-	//	cmd_pwd(cmd);
+	else if (!ft_strcmp(cmd->cmds[0], "pwd"))
+		ft_pwd(cmd);
 	//else if (builtin == EXPORT)
 	//	cmd_export(cmd);
 	//else if (builtin == UNSET)
@@ -33,21 +33,21 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 
 int	is_builtin(t_cmd *cmd)
 {
-	if (!cmd->cmd[0])
+	if (!cmd->cmds[0])
 		ft_error(CMD_ERR);
-	else if (!ft_strcmp("echo", cmd->cmd[0]))
+	else if (!ft_strcmp("echo", cmd->cmds[0]))
 		return (1);
-	else if (!ft_strcmp("cd", cmd->cmd[0]))
+	else if (!ft_strcmp("cd", cmd->cmds[0]))
 		return (1);
-	else if (!ft_strcmp("pwd", cmd->cmd[0]))
+	else if (!ft_strcmp("pwd", cmd->cmds[0]))
 		return (1);
-	else if (!ft_strcmp("export", cmd->cmd[0]))
+	else if (!ft_strcmp("export", cmd->cmds[0]))
 		return (1);
-	else if (!ft_strcmp("unset", cmd->cmd[0]))
+	else if (!ft_strcmp("unset", cmd->cmds[0]))
 		return (1);
-	else if (!ft_strcmp("env", cmd->cmd[0]))
+	else if (!ft_strcmp("env", cmd->cmds[0]))
 		return (1);
-	else if (!ft_strcmp("exit", cmd->cmd[0]))
+	else if (!ft_strcmp("exit", cmd->cmds[0]))
 		return (1);
 	return (0);
 }
