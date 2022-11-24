@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:54:52 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:52:59 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
-
-void    mini_env(t_mini *mini)
-{
-    int		i;
-
-    i = 0;
-    while (mini->env[i])
-    {
-        printf("%s\n", mini->env[i]);
-        i++;
-    }
-}
 
 int	is_var(t_mini *mini, char *var, int j)
 {
