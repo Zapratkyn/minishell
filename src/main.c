@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 13:38:30 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:01:28 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,21 @@ void    get_prompt(t_mini *mini)
 	free (prompt);
 }
 
+void	init_l_env(t_mini *mini)
+{
+	int	i;
+
+	i = 0;
+	mini->l_env = ft_lstnew(mini->env[i]);
+	while (mini->env[++i])
+		ft_lstadd_back(&mini->l_env, ft_lstnew(mini->env[i]));
+}
+
 void  mini_init(t_mini *mini, char **env)
 {
 	mini->cmd = NULL;
 	mini->env = env;
+	init_l_env(mini);
 	mini->g_status = 0;
 	mini->pid = getpid();
 }
@@ -46,7 +57,7 @@ void    mini_parser(t_mini *mini, char *str)
 	{
 		add_history(str);
 		mini->cmd = get_cmd(mini, mini->cmd, str, 0);
-		//execute(mini);
+		execute(mini);
 		//if (mini->cmd->path)
 		//	printf("path : %s\n", mini->cmd->path);
 	}
@@ -65,9 +76,9 @@ int	main(int argc, char **argv, char **env)
 	mini_init(&mini, env);
 	get_prompt(&mini);
 	while (argc && argv[0])
-    {
-		signal(SIGQUIT, SIG_IGN);
+	{
+		//signal(SIGQUIT, SIG_IGN);
 		// signal(SIGINT, mini_new_line);
 		mini_parser(&mini, readline(" "));
-    }
+	}
 }
