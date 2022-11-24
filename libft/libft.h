@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 13:36:59 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:44:58 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ char					*ft_calloc(int count, int size);
 char					*ft_insert(char *s1, char c, char *s2);
 int						ft_isalnum(int c);
 void					ft_lstadd_back(t_list **lst, t_list *new);
+void					ft_lstclear(t_list **lst);
+void					ft_lstdelone(t_list *lst);
+t_list					*ft_lstnew(char *data);
 t_list					*ft_lstlast(t_list *lst);
 void					ft_putstr_fd(char *s, int fd);
 char					**ft_split(char const *s, char c);
