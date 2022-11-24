@@ -58,6 +58,5 @@ char	*ft_strjoin2(char *str, char c)
 	}
 	result[i++] = c;
 	result[i] = '\0';
-	free (str);
 	return (result);
 }

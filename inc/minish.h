@@ -43,7 +43,6 @@ typedef struct s_cmd    t_cmd;
 struct s_var
 {
     char    *content;
-    int     custom;
     t_var   *next;
 };
 
@@ -60,6 +59,8 @@ struct s_mini
 {
     int     g_status;
     char	**env;
+    char    *prompt;
+    t_var   *var;
     t_cmd   *cmd;
     pid_t   pid;
 };
@@ -69,8 +70,9 @@ struct s_mini
 */
 
 // main.c
-void                        get_prompt(t_mini *mini);
+char                        *get_prompt(t_mini *mini);
 t_mini  					mini_init(char **env);
+int                         mini_parser(t_mini *mini, char *str);
 // ft_env.c
 void                        mini_env(t_mini *mini);
 int	                        is_var(t_mini *mini, char *var, int j);
@@ -83,10 +85,10 @@ void						ft_free_full_cmd(char **tab);
 void	                    ft_free_paths(char **paths);
 // minishell_utils.c
 char                        *mini_getenv(t_mini *mini, char *var);
-void    					mini_exit(int sig);
+void                        ft_quit(t_mini *mini);
 int	                        ft_quotes(char *str);
 char                        *ft_varname(char *str);
-void                        mini_parser(t_mini *mini, char *str);
+int	                        is_input(char *str);
 // get_cmd.c
 t_cmd						*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
 // get_cmd_utils.c

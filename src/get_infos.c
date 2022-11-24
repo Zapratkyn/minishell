@@ -33,8 +33,6 @@ void    get_path(t_mini *mini, t_cmd *cmd, int i)
 
     exec = get_exec(cmd);
     cmd->pid = -1;
-    cmd->infile = 0;
-    cmd->outfile = 1;
     if (exec)
     {
         paths = ft_split(mini_getenv(mini, "PATH"), ':');
@@ -43,11 +41,11 @@ void    get_path(t_mini *mini, t_cmd *cmd, int i)
             path = ft_strjoin2(paths[i++], '/');
             path = ft_strjoin(path, exec);
             if (!access(path, F_OK))
-                cmd->path = path;
+                cmd->path = ft_strdup(path);
             free (path);
         }
         if (!cmd->path)
-            printf("%s : invalid command", exec);
+            printf("%s : invalid command\n", exec);
         free (exec);
         ft_free_paths(paths);
     }
@@ -67,6 +65,8 @@ void    get_infile(t_cmd *cmd, int i)
 {
     char    *infile;
 
+    infile = NULL;
+    cmd->infile = 0;
     if (cmd->cmds[0][0] == '<' && !cmd->cmds[0][1] && !cmd->cmds[1])
         cmd->infile = infile_error(1, NULL);
     while (cmd->cmds[++i] && !infile)
@@ -91,6 +91,8 @@ void    get_outfile(t_cmd *cmd, int i)
 {
     char    *outfile;
 
+    outfile = NULL;
+    cmd->outfile = 1;
     if (cmd->cmds[0][0] == '>' && !cmd->cmds[0][1] && !cmd->cmds[1])
     {
         printf("2: Syntax error: newline unexpected");

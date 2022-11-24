@@ -115,11 +115,9 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 				cmd->cmds[i] = to_empty(cmd->cmds[i]);
 			else if (dol(cmd->cmds[i]) && is_var(mini, &cmd->cmds[i][1], 0))
 				cmd->cmds[i] = to_var(mini, cmd->cmds[i]);
-			if (cmd->cmds[i])
-				printf("%s\n", cmd->cmds[i]);
 			i++;
 		}
-		// get_path(mini, cmd, 0);
+		get_path(mini, cmd, 0);
 		if (cmd->cmds && ft_strchr(str, PIPE))
 			cmd->next = get_cmd(mini, cmd->next, &ft_strchr(str, PIPE)[1], 0);
 	}
