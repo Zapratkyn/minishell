@@ -19,8 +19,8 @@ char    *get_exec(t_cmd *cmd)
 
     i = 0;
     while (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>'
-        || (cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
-        || (cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1]))
+        || (i > 0 && cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
+        || (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1]))
         i++;
     exec = ft_strdup(cmd->cmds[i]);
     return (exec);

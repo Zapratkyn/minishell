@@ -83,9 +83,18 @@ int    mini_parser(t_mini *mini, char *str)
 			add_history(str);
     	mini->cmd = get_cmd(mini, mini->cmd, str, 0);
 	}
-	if (mini->cmd->path)
-		printf("%s\n", mini->cmd->path);
-	printf("infile : %d\noutfile : %d\n", mini->cmd->infile, mini->cmd->outfile);
+	if (mini->cmd)
+	{
+		if (mini->cmd->path)
+		{
+			printf("%s\n", mini->cmd->path);
+			free (mini->cmd->path);
+		}
+		if (mini->cmd->infile != -1)
+			printf("infile : %d\n", mini->cmd->infile);
+		if (mini->cmd->outfile)
+			printf("outfile : %d\n", mini->cmd->outfile);
+	}
 	// close(mini->cmd->infile);
 	// close(mini->cmd->outfile);
     // if (mini->cmd)
