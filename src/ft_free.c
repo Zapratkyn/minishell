@@ -17,14 +17,16 @@ void    ft_free_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
+	if (cmd->next)
+        ft_free_cmd(cmd->next);
 	while (cmd->cmds[i])
 	{
 		free (cmd->cmds[i]);
 		i++;
 	}
 	free (cmd->cmds);
-	if (cmd->next)
-        ft_free_cmd(cmd->next);
+	if (cmd->path)
+		free (cmd->path);
     free (cmd);
 }
 
@@ -49,4 +51,11 @@ void	ft_free_paths(char **paths)
 	while (paths[i])
 		free (paths[i++]);
 	free (paths);
+}
+
+void	ft_free_env(t_var *var)
+{
+	if (var->next)
+		ft_free_env(var->next);
+	free(var);
 }

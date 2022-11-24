@@ -83,9 +83,10 @@ int	                        is_var(t_mini *mini, char *var, int j);
 void                        ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
 void	                    ft_free_paths(char **paths);
+void	                    ft_free_env(t_var *var);
 // minishell_utils.c
 char                        *mini_getenv(t_mini *mini, char *var);
-void                        ft_quit(t_mini *mini);
+void                        mini_exit(t_mini *mini);
 int	                        ft_quotes(char *str);
 char                        *ft_varname(char *str);
 int	                        is_input(char *str);

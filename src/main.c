@@ -97,15 +97,6 @@ int    mini_parser(t_mini *mini, char *str)
 	}
 	// close(mini->cmd->infile);
 	// close(mini->cmd->outfile);
-    // if (mini->cmd)
-    // {
-	//     if (mini->cmd->path)
-	//     	printf("path : %s\n", mini->cmd->path);
-	//     printf("infile : %d\n", mini->cmd->infile);
-	//     printf("outfile : %d\n", mini->cmd->outfile);
-    // }
-	// if (!ft_strncmp(mini->cmd->full_cmd[0], "echo", 4) && mini->cmd->full_cmd[1])
-	// 	printf("%s\n", mini->cmd->full_cmd[1]);	
 	// exec(mini);
 	free (str);
 	// ft_free_cmd(mini->cmd);
@@ -131,5 +122,5 @@ int	main(int argc, char **argv, char **env)
 		if (!mini_parser(&mini, readline(mini.prompt)))
 			break;
     }
-	ft_quit(&mini);
+	mini_exit(&mini);
 }

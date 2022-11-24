@@ -26,9 +26,12 @@ char    *mini_getenv(t_mini *mini, char *var)
     return (&mini->env[i][len + 1]);
 }
 
-void ft_quit(t_mini *mini)
+void mini_exit(t_mini *mini)
 {
-	(void)mini;
+	if (mini->cmd)
+		ft_free_cmd(mini->cmd);
+	ft_free_env(mini->var);
+	free (mini->prompt);
 	printf("exit\n");
     exit (0);
 }
