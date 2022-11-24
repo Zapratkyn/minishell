@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 12:14:39 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:39:36 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,9 @@
 ** Structures
 */
 
-typedef struct s_var	t_var;
 typedef struct s_cmd	t_cmd;
 typedef struct s_mini	t_mini;
 
-struct s_var
-{
-	char	*content;
-	t_var	*next;
-};
 
 struct s_cmd
 {
@@ -87,7 +81,7 @@ struct s_mini
 {
 	int		g_status;
 	char	**env;
-	t_var	*var;
+	t_list	*l_env;
 	t_cmd	*cmd;
 	pid_t	pid;
 };
@@ -139,6 +133,7 @@ char						**ft_split_cmd(char *s, int i, int index);
 int							is_builtin(t_cmd *cmd);
 void						do_builtin(t_mini *mini, t_cmd *cmd);
 void						ft_echo(t_cmd *cmd);
+void						ft_env(t_mini *mini, t_cmd *cmd);
 void						ft_cd(t_mini *mini, t_cmd *cmd);
 void						ft_pwd(t_cmd *cmd);
 void						update_pwd(t_mini *mini, char *type);

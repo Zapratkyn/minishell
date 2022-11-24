@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/24 12:10:13 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/24 13:34:05 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +32,14 @@ NAME						=	minishell
 SRC							=	src/builtins/builtin.c \
 								src/builtins/ft_cd.c \
 								src/builtins/ft_echo.c \
+								src/builtins/ft_env.c \
 								src/builtins/ft_pwd.c \
 								src/error.c \
 								src/exec.c \
 								src/main.c \
-								src/ft_env.c \
+								src/env.c \
 								src/minishell_utils.c \
-								src/ft_free.c \
+								src/free.c \
 								src/get_cmd.c \
 								src/get_cmd_utils.c \
 								src/get_infos.c \
