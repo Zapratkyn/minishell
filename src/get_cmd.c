@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 10:16:55 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 10:31:25 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*delete_double_quotes(t_mini *mini, char *str, int a, int i)
 {
 	char	*result;
 	char	*var;
-	
+
 	free (mini->cmd->cmds[i]);
 	result = calloc(1, 1);
 	if (!result)
@@ -115,8 +115,6 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 				cmd->cmds[i] = to_empty(cmd->cmds[i]);
 			else if (dol(cmd->cmds[i]) && is_var(mini, &cmd->cmds[i][1], 0))
 				cmd->cmds[i] = to_var(mini, cmd->cmds[i]);
-			if (cmd->cmds[i])
-				printf("%s\n", cmd->cmds[i]);
 			i++;
 		}
 		// get_path(mini, cmd, 0);
