@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/24 13:36:19 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:01:05 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 	(void) mini;
 	if (!ft_strcmp(cmd->cmds[0], "echo"))
 		ft_echo(cmd);
-	//else if (ft_strcmp(cmd->cmds[0], "cd"))
-	//	ft_cd(mini, cmd);
+	else if (!ft_strcmp(cmd->cmds[0], "env"))
+		ft_env(mini, cmd);
 	else if (!ft_strcmp(cmd->cmds[0], "pwd"))
 		ft_pwd(cmd);
+	//else if (ft_strcmp(cmd->cmds[0], "cd"))
+	//	ft_cd(mini, cmd);
 	//else if (builtin == EXPORT)
 	//	cmd_export(cmd);
 	//else if (builtin == UNSET)
 	//	cmd_unset(cmd);
-	//else if (builtin == ENV)
-	//	ft_env(mini, cmd);
+
 	//else if (builtin == EXIT)
 	//	cmd_exit(cmd);
 }
