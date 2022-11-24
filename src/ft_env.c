@@ -37,9 +37,9 @@ int	is_var(t_mini *mini, char *var, int j)
         i++;
     }
 	if (j == 1)
-		return (len + 1);
+		return (len);
 	i = 0;
-	while (mini->env[i])
+	while (mini->env[i] && j == 0)
 	{
 		if (!ft_strncmp(mini->env[i], var, len) && mini->env[i][len] == '=')
 			return (1);
