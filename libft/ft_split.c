@@ -6,11 +6,30 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:23:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/22 11:42:01 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 10:13:35 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static int	count_words(const char *s, char c)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] && s[i] != c)
+			count++;
+		while (s[i] && s[i] != c)
+			i++;
+	}
+	return (count);
+}
 
 static char	**ft_free(int index, char **split)
 {
@@ -18,27 +37,6 @@ static char	**ft_free(int index, char **split)
 		free(split[index]);
 	free(split);
 	return (NULL);
-}
-
-static int	count_words(const char *s, char c)
-{
-	int		i;
-	int		count;
-	char	*str;
-
-	str = (char *)s;
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		while (str[i] && str[i] == c)
-			i++;
-		if (str[i] && str[i] != c)
-			count++;
-		while (str[i] && str[i] != c)
-			i++;
-	}
-	return (count);
 }
 
 static char	*find_next_word(char *s, char c, int index)
@@ -71,14 +69,18 @@ char	**ft_split(char const *s, char c)
 {
 	char	**str;
 	int		i;
+	int		wc;
 
+	if (!s)
+		return (0);
 	i = -1;
+	wc = count_words(s, c);
 	if (!s)
 		return (NULL);
-	str = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1));
+	str = malloc(sizeof(char *) * (wc + 1));
 	if (!str)
 		return (NULL);
-	while (++i < count_words(s, c))
+	while (++i < wc)
 	{
 		str[i] = find_next_word((char *)s, c, i + 1);
 		if (!str[i])

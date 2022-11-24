@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/23 14:59:34 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/24 10:10:31 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,12 +39,15 @@ SRC							=	src/builtins/builtin.c \
 								src/minishell_utils.c \
 								src/ft_free.c \
 								src/get_cmd.c \
+								src/get_cmd_utils.c \
+								src/get_infos.c \
 								src/ft_split_cmd.c
 
 LIBFT						=	./libft/libft.a
 
 LIBFT_LINUX					=	libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c libft/ft_strdup.c libft/ft_strjoin.c \
-								libft/ft_isalnum.c libft/ft_strchr.c
+								libft/ft_isalnum.c libft/ft_strchr.c libft/ft_calloc.c libft/ft_usleep.c libft/ft_split.c \
+								libft/ft_substr.c
 
 INC							=	-I./inc
 

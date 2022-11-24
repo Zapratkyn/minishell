@@ -6,20 +6,20 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 16:03:26 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 10:16:09 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-int	is_quote(char *str, char c)
+int	quote_len(char *str, char c)
 {
 	int	i;
 
 	i = 1;
 	while (str[i] != c)
 		i++;
-	return (i);
+	return (i + 1);
 }
 
 static int	count_words(char *s, int i, int count)
@@ -34,11 +34,14 @@ static int	count_words(char *s, int i, int count)
 		{
 			count++;
 			if (s[i] == S_QUOTE || s[i] == '"')
-				i += is_quote(&s[i], s[i]);
-			i++;
+				i += quote_len(&s[i], s[i]);
+			else
+			{
+				while (s[i] && s[i] != ' ' && s[i] != PIPE && s[i] != '\t')
+					i++;
+			}
 		}
-		while (s[i] && s[i] != ' ' && s[i] != PIPE && s[i] != '\t')
-			i++;
+		
 	}
 	return (count);
 }
@@ -52,21 +55,21 @@ static int	find_next_len(char *str, int i, int len)
 		i++;
 		while (str[i++] != '"')
 			len++;
-		return (len + 1);
+		return (len + 3);
 	}
 	else if (str[i] == S_QUOTE)
 	{
 		i++;
 		while (str[i++] != S_QUOTE)
 			len++;
-		return (len + 1);
+		return (len + 3);
 	}
 	while (str[i] && str[i] != PIPE && str[i] != ' ' && str[i] != '\t')
 	{
 		len++;
 		i++;
 	}
-	return (len);
+	return (len + 1);
 }
 
 static char	*find_next_word(char *s, int len)
@@ -75,14 +78,14 @@ static char	*find_next_word(char *s, int len)
 	char	*str;
 
 	i = 0;
-	str = malloc (sizeof(char) * len + 1);
+	str = malloc (sizeof(char) * len);
 	if (!str)
 		return (0);
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	s = &s[i];
 	i = 0;
-	while (i <= len)
+	while (i < (len - 1))
 	{
 		str[i] = s[i];
 		i++;
@@ -108,7 +111,7 @@ char	**ft_split_cmd(char *s, int i, int index)
 		tab[i] = find_next_word(&s[index], j);
 		if (!tab[i])
 			ft_free_full_cmd(tab);
-		index += (j + 1);
+		index += (j - 1);
 		while (s[index] == ' ' || s[index] == '\t')
 			index++;
 		i++;
