@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 12:22:03 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:38:30 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,8 @@ void    mini_parser(t_mini *mini, char *str)
 	if (str)
 	{
 		add_history(str);
-		//mini->cmd = get_cmd(mini, mini->cmd, str, 0);
-		mini->cmd = malloc(sizeof(t_cmd));
-		mini->cmd->cmds = malloc(sizeof(char *) * 2);
-		mini->cmd->cmds[0] = "pwd";
-		mini->cmd->cmds[1] = NULL;
-		mini->cmd->infile = STDIN_FILENO;
-		mini->cmd->outfile = STDOUT_FILENO;
-		execute(mini);
+		mini->cmd = get_cmd(mini, mini->cmd, str, 0);
+		//execute(mini);
 		//if (mini->cmd->path)
 		//	printf("path : %s\n", mini->cmd->path);
 	}

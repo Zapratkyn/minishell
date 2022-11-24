@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:52:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/24 12:23:28 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:39:58 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 void	update_pwd(t_mini *mini, char *type)
 {
-	t_var	*var;
+	t_list	*lst;
 	char	*tmp;
 
-	var = mini->var;
+	lst = mini->l_env;
 	tmp = NULL;
-	while (var)
+	while (lst)
 	{
-		if (!ft_strncmp(var->content, type, ft_strlen(type)))
+		if (!ft_strncmp(lst->data, type, ft_strlen(type)))
 		{
 			tmp = getcwd(tmp, 0);
 			if (!tmp)
 				ft_error(PWD_ERR);
-			free(var->content);
-			var->content = ft_strjoin(type, tmp);
+			free(lst->data);
+			lst->data = ft_strjoin(type, tmp);
 			free(tmp);
 		}
-		var = var->next;
+		lst = lst->next;
 	}
 }
 
