@@ -15,13 +15,14 @@
 char    *get_exec(t_cmd *cmd)
 {
     char    *exec;
+    int     i;
 
-    if (cmd->cmds[0][0] == '<' && cmd->cmds[0][1] && cmd->cmds[1])
-        exec = ft_strdup(cmd->cmds[1]);
-    else if (cmd->cmds[0][0] == '<' && !cmd->cmds[0][1] && cmd->cmds[2])
-        exec = ft_strdup(cmd->cmds[2]);
-    else
-        exec = ft_strdup(cmd->cmds[0]);
+    i = 0;
+    while (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>'
+        || (cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
+        || (cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1]))
+        i++;
+    exec = ft_strdup(cmd->cmds[i]);
     return (exec);
 }
 
@@ -44,7 +45,7 @@ void    get_path(t_mini *mini, t_cmd *cmd, int i)
                 cmd->path = ft_strdup(path);
             free (path);
         }
-        if (!cmd->path)
+        if (!cmd->path && exec[1])
             printf("%s : invalid command\n", exec);
         free (exec);
         ft_free_paths(paths);
@@ -100,15 +101,15 @@ void    get_outfile(t_cmd *cmd, int i)
     }
     while (cmd->cmds[i] && !outfile)
     {
-        if (cmd->cmds[i][0] == '<' && cmd->cmds[i][1])
+        if (cmd->cmds[i][0] == '>' && cmd->cmds[i][1])
             outfile = ft_strdup(&cmd->cmds[i][1]);
-        else if (cmd->cmds[i][0] == '<' && !cmd->cmds[i][1] && cmd->cmds[i + 1])
+        else if (cmd->cmds[i][0] == '>' && !cmd->cmds[i][1] && cmd->cmds[i + 1])
             outfile = ft_strdup(cmd->cmds[i + 1]);
         i++;
     }
     if (outfile)
     {
-        cmd->outfile = open(outfile, O_CREAT);
+        cmd->outfile = open(outfile, O_CREAT|O_RDONLY, 0777);
         free (outfile);
     }
 }

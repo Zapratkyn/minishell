@@ -85,6 +85,9 @@ int    mini_parser(t_mini *mini, char *str)
 	}
 	if (mini->cmd->path)
 		printf("%s\n", mini->cmd->path);
+	printf("infile : %d\noutfile : %d\n", mini->cmd->infile, mini->cmd->outfile);
+	// close(mini->cmd->infile);
+	// close(mini->cmd->outfile);
     // if (mini->cmd)
     // {
 	//     if (mini->cmd->path)
