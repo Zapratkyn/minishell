@@ -45,47 +45,44 @@ char	*ft_var(t_mini *mini, char *str)
 	len = 0;
 	if (!is_var(mini, str, 0))
 		return (NULL);
-	while (ft_isalnum(str[i]) || str[i] != '_')
-	{
-		len++;
-		i++;
-	}
-	result = malloc (sizeof(char) * len + 1);
+	len = is_var(mini, str, 1);
+	result = malloc (sizeof(char) * len);
 	if (!result)
 		return (NULL);
 	i = 0;
-	while (str[i] != '"' && str[i] != ' ')
+	while (i < (len - 1))
 		result[j++] = str[i++];
 	result[i] = '\0';
 	return (result);
 }
 
-char	*delete_double_quotes(t_mini *mini, char *str, int i)
+char	*delete_double_quotes(t_mini *mini, char *str, int a, int i)
 {
 	char	*result;
 	char	*var;
 	
-	result = malloc(sizeof(char) * 1);
+	free (mini->cmd->cmds[i]);
+	result = calloc(1, 1);
 	if (!result)
 		return (NULL);
-	while (str[i + 1] != '"')
+	str = &str[1];
+	while (str[a] != '"')
 	{
-		if (str[i + 1] == '$')
+		if (str[a] == '$')
 		{
-			var = ft_var(mini, &str[i + 2]);
+			var = ft_var(mini, &str[a + 1]);
 			if (var)
 			{
 				result = ft_strjoin(result, mini_getenv(mini, var));
-				i += (ft_strlen(var) + 1);
+				a += (ft_strlen(var) + 1);
 				free (var);
 			}
 			else
-				i += is_var(mini, &str[i + 2], 1);
+				a += is_var(mini, &str[a + 1], 1);
 		}
 		else
-			result = ft_strjoin2(result, str[++i]);
+			result = ft_strjoin2(result, str[a++]);
 	}
-	free (str);
 	return (result);
 }
 
@@ -100,33 +97,30 @@ char	*to_var(t_mini *mini, char *str)
 	return (result);
 }
 
-char	*to_empty(char *str)
-{
-	free (str);
-	return (" ");
-}
-
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
 	cmd = malloc (sizeof(t_cmd));
-	if (cmd)
+	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
-		cmd->full_cmd = ft_split_cmd(str, 0, 0);
-		while (cmd->full_cmd[i])
+		cmd->cmds = ft_split_cmd(str, 0, 0);
+		while (cmd->cmds[i])
 		{
-			if (cmd->full_cmd[i][0] == S_QUOTE)
-				cmd->full_cmd[i] = delete_quotes(cmd->full_cmd[i], S_QUOTE);
-			else if (cmd->full_cmd[i][0] == '"')
-				cmd->full_cmd[i] = delete_double_quotes(mini, cmd->full_cmd[i], 0);
-			else if (cmd->full_cmd[i][0] == '$' && !is_var(mini, &cmd->full_cmd[i][1], 0))
-				cmd->full_cmd[i] = to_empty(cmd->full_cmd[i]);
-			else if (cmd->full_cmd[i][0] == '$' && is_var(mini, &cmd->full_cmd[i][1], 0))
-				cmd->full_cmd[i] = to_var(mini, cmd->full_cmd[i]);
-			printf("'%s'\n", cmd->full_cmd[i]);
+			if (!ft_quotes(cmd->cmds[i]))
+				free (cmd->cmds[i]);
+			else if (cmd->cmds[i][0] == S_QUOTE)
+				cmd->cmds[i] = delete_quotes(cmd->cmds[i], S_QUOTE);
+			else if (cmd->cmds[i][0] == '"')
+				cmd->cmds[i] = delete_double_quotes(mini, cmd->cmds[i], 0, i);
+			else if (dol(cmd->cmds[i]) && !is_var(mini, &cmd->cmds[i][1], 0))
+				cmd->cmds[i] = to_empty(cmd->cmds[i]);
+			else if (dol(cmd->cmds[i]) && is_var(mini, &cmd->cmds[i][1], 0))
+				cmd->cmds[i] = to_var(mini, cmd->cmds[i]);
+			if (cmd->cmds[i])
+				printf("%s\n", cmd->cmds[i]);
 			i++;
 		}
-		// get_path(mini, cmd, str, 0);
-		if (cmd->full_cmd && ft_strchr(str, PIPE))
+		// get_path(mini, cmd, 0);
+		if (cmd->cmds && ft_strchr(str, PIPE))
 			cmd->next = get_cmd(mini, cmd->next, &ft_strchr(str, PIPE)[1], 0);
 	}
 	return (cmd);

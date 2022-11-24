@@ -1,52 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 16:26:56 by gponcele         ###   ########.fr       */
+/*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
+/*   Updated: 2022/11/23 18:37:01 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void    ft_free_cmd(t_cmd *cmd)
+char	*to_empty(char *str)
 {
-	int	i;
-
-	i = 0;
-	while (cmd->cmds[i])
-	{
-		free (cmd->cmds[i]);
-		i++;
-	}
-	free (cmd->cmds);
-	if (cmd->next)
-        ft_free_cmd(cmd->next);
-    free (cmd);
+	free (str);
+	return (" ");
 }
 
-void	ft_free_full_cmd(char **tab)
+int dol(char *str)
 {
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free (tab[i]);
-		i++;
-	}
-	free (tab);
-}
-
-void	ft_free_paths(char **paths)
-{
-	int	i;
-
-	i = 0;
-	while (paths[i])
-		free (paths[i++]);
-	free (paths);
+    if (str[0] == '$')
+        return (1);
+    return (0);
 }

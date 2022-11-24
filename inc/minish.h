@@ -24,6 +24,7 @@
 #include <readline/history.h>
 #include <unistd.h>
 #include <signal.h>
+#include <fcntl.h>
 
 /*
 ** Define constants
@@ -48,10 +49,11 @@ struct s_var
 
 struct s_cmd
 {
-    char    **full_cmd;
+    char    **cmds;
     char    *path;
     int     infile;
     int     outfile;
+    pid_t   pid;
     t_cmd   *next;
 };
 struct s_mini
@@ -76,9 +78,9 @@ int	                        is_var(t_mini *mini, char *var, int j);
 // int	                        is_varname(char *str);
 // void	                    mini_export(t_mini mini, char *var, char *val);
 // ft_free.c
-void                        ft_free_env(t_var *var);
 void                        ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
+void	                    ft_free_paths(char **paths);
 // minishell_utils.c
 char                        *mini_getenv(t_mini *mini, char *var);
 void    					mini_exit(int sig);
@@ -87,7 +89,15 @@ char                        *ft_varname(char *str);
 void                        mini_parser(t_mini *mini, char *str);
 // get_cmd.c
 t_cmd						*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
-// ft_split.c
+// get_cmd_utils.c
+char	                    *to_empty(char *str);
+int                         dol(char *str);
+// get_infos.c
+char                        *get_exec(t_cmd *cmd);
+void                        get_path(t_mini *mini, t_cmd *cmd, int i);
+void                        get_infile(t_cmd *cmd, int i);
+void                        get_outfile(t_cmd *cmd, int i);
+// ft_split_cmd.c
 char						**ft_split_cmd(char *s, int i, int index);
 
 #endif

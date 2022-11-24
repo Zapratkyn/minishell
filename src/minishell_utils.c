@@ -74,15 +74,19 @@ int	ft_quotes(char *str)
 
 void    mini_parser(t_mini *mini, char *str)
 {
-    if (ft_quotes(str))
+	if (str)
 	{
-		if (str[1])
-			add_history(str);
+		ft_usleep(10000);
+		add_history(str);
     	mini->cmd = get_cmd(mini, mini->cmd, str, 0);
-		// if (!ft_strncmp(mini->cmd->full_cmd[0], "echo", 4) && mini->cmd->full_cmd[1])
-		// 	printf("%s\n", mini->cmd->full_cmd[1]);
-		// exec(mini);
+		if (mini->cmd->path)
+			printf("path : %s\n", mini->cmd->path);
+		printf("infile : %d\n", mini->cmd->infile);
+		printf("outfile : %d\n", mini->cmd->outfile);
 	}
+	// if (!ft_strncmp(mini->cmd->full_cmd[0], "echo", 4) && mini->cmd->full_cmd[1])
+	// 	printf("%s\n", mini->cmd->full_cmd[1]);
+	// exec(mini);
 	free (str);
 	// ft_free_cmd(mini->cmd);
 	get_prompt(mini);
