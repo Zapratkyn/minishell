@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 13:51:34 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:31:29 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,21 @@ int	ft_quotes(char *str)
 	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
 		return (0);
 	return (1);
+}
+
+int	start_with_pipe(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == PIPE)
+		{
+			printf("parse error near '|'\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
