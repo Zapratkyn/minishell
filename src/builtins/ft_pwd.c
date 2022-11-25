@@ -6,11 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:52:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:52:31 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:36:28 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/minish.h"
+#include "../../inc/minish.h"
 
 void	ft_pwd(t_cmd *cmd)
 {

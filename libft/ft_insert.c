@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:44:21 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:50:44 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:34:43 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_insert(char *s1, char c, char *s2)
 {
-	char *ins;
+	char	*ins;
 	int		l1;
 	int		l2;
 	int		i;

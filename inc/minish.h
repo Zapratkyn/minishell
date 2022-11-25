@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 16:59:09 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:34:30 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ struct s_cmd
 
 struct s_mini
 {
-    int     g_status;
-    char    *prompt;
-    t_var   *var;
-    t_cmd   *cmd;
+	int		g_status;
+	char	*prompt;
+	t_var	*var;
+	t_cmd	*cmd;
 };
 
 /*
@@ -83,8 +83,8 @@ struct s_mini
 
 // main.c
 char						*get_prompt(t_mini *mini);
-t_mini  					mini_init(char **env);
-int                         mini_parser(t_mini *mini, char *str);
+t_mini						mini_init(char **env);
+int							mini_parser(t_mini *mini, char *str);
 // execute
 void						execute(t_mini *mini);
 

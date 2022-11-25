@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 17:08:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:35:52 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	redir(t_cmd *cmd)
 void	exec_child(t_mini *mini, t_cmd *cmd)
 {
 	redir(cmd);
-	//if (!is_builtin(cmd) && cmd->path)
-	//	execve(cmd->path, cmd->cmds, mini->env);
+	if (!is_builtin(cmd) && cmd->path)
+		execve(cmd->path, cmd->cmds, mini->env);
 	if (is_builtin(cmd))
 		do_builtin(mini, cmd);
 	exit(EXIT_SUCCESS);

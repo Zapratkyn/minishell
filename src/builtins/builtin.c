@@ -6,11 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:58:48 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:37:21 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/minish.h"
+#include "../../inc/minish.h"
 
 void	do_builtin(t_mini *mini, t_cmd *cmd)
 {
@@ -23,15 +23,6 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 		ft_pwd(cmd);
 	else if (!ft_strcmp(cmd->cmds[0], "exit"))
 		ft_exit(mini);
-	//else if (ft_strcmp(cmd->cmds[0], "cd"))
-	//	ft_cd(mini, cmd);
-	//else if (builtin == EXPORT)
-	//	cmd_export(cmd);
-	//else if (builtin == UNSET)
-	//	cmd_unset(cmd);
-
-	//else if (builtin == EXIT)
-	//	cmd_exit(cmd);
 }
 
 int	is_builtin(t_cmd *cmd)
