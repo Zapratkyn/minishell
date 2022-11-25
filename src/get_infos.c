@@ -18,11 +18,13 @@ char    *get_exec(t_cmd *cmd)
     int     i;
 
     i = 0;
-    while (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>'
+    exec = NULL;
+    while (cmd->cmds[i] && (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>'
         || (i > 0 && cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
-        || (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1]))
+        || (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1])))
         i++;
-    exec = ft_strdup(cmd->cmds[i]);
+    if (cmd->cmds[i])
+        exec = ft_strdup(cmd->cmds[i]);
     return (exec);
 }
 
@@ -32,6 +34,7 @@ void    get_path(t_mini *mini, t_cmd *cmd, int i)
     char    *path;
     char    **paths;
 
+    exec = NULL;
     exec = get_exec(cmd);
     cmd->pid = -1;
     if (exec)
@@ -56,9 +59,9 @@ void    get_path(t_mini *mini, t_cmd *cmd, int i)
 int infile_error(int i, char *infile)
 {
     if (i == 1)
-        printf("2: Syntax error: newline unexpected");
+        printf("2: Syntax error: newline unexpected\n");
     else if (i == 2)
-        printf("3: cannot open %s: No such file", infile);
+        printf("3: cannot open %s: No such file\n", infile);
     return (-1);
 }
 
@@ -72,7 +75,7 @@ void    get_infile(t_cmd *cmd, int i)
         cmd->infile = infile_error(1, NULL);
     while (cmd->cmds[++i] && !infile)
     {
-        if (cmd->cmds[i][0] == '<' && cmd->cmds[i][1])
+        if (cmd->cmds[i][0] == '<' && cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
             infile = ft_strdup(&cmd->cmds[i][1]);
         else if (cmd->cmds[i][0] == '<' && !cmd->cmds[i][1] && cmd->cmds[i + 1])
             infile = ft_strdup(cmd->cmds[i + 1]);
@@ -101,7 +104,7 @@ void    get_outfile(t_cmd *cmd, int i)
     }
     while (cmd->cmds[i] && !outfile)
     {
-        if (cmd->cmds[i][0] == '>' && cmd->cmds[i][1])
+        if (cmd->cmds[i][0] == '>' && cmd->cmds[i][1] && cmd->cmds[i][1] != '>')
             outfile = ft_strdup(&cmd->cmds[i][1]);
         else if (cmd->cmds[i][0] == '>' && !cmd->cmds[i][1] && cmd->cmds[i + 1])
             outfile = ft_strdup(cmd->cmds[i + 1]);
