@@ -6,44 +6,45 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 15:54:52 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:02:08 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void    mini_env(t_mini *mini)
+void	mini_env(t_mini *mini)
 {
-    int		i;
+	int	i;
 
-    i = 0;
-    while (mini->env[i])
-    {
-        printf("%s\n", mini->env[i]);
-        i++;
-    }
+	i = 0;
+	while (mini->env[i])
+	{
+		printf("%s\n", mini->env[i]);
+		i++;
+	}
 }
 
 int	is_var(t_mini *mini, char *var, int j)
 {
 	int		i;
 	int		len;
+	t_var	*temp;
 
 	i = 0;
 	len = 0;
+	temp = mini->var;
 	while (ft_isalnum(var[i]) || var[i] == '_')
-    {
-        len++;
-        i++;
-    }
+	{
+		len++;
+		i++;
+	}
 	if (j == 1)
 		return (len);
-	i = 0;
-	while (mini->env[i] && j == 0)
+	while (temp->next && j == 0)
 	{
-		if (!ft_strncmp(mini->env[i], var, len) && mini->env[i][len] == '=')
+		if (!ft_strncmp(temp->content, var, len) && temp->content[len] == '=')
 			return (1);
-		i++;
+		temp = temp->next;
 	}
 	return (0);
 }

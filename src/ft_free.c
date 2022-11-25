@@ -6,19 +6,19 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 16:26:56 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 13:41:39 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void    ft_free_cmd(t_cmd *cmd)
+void	ft_free_cmd(t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
 	if (cmd->next)
-        ft_free_cmd(cmd->next);
+		ft_free_cmd(cmd->next);
 	while (cmd->cmds[i])
 	{
 		free (cmd->cmds[i]);
@@ -27,7 +27,7 @@ void    ft_free_cmd(t_cmd *cmd)
 	free (cmd->cmds);
 	if (cmd->path)
 		free (cmd->path);
-    free (cmd);
+	free (cmd);
 }
 
 void	ft_free_full_cmd(char **tab)

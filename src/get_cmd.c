@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 18:37:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:08:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 {
 	char	*result;
 	char	*var;
-	
+
 	result = calloc(1, 1);
 	if (!result)
 		return (NULL);
@@ -81,7 +81,6 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 		else
 			result = ft_strjoin2(result, str[i]);
 	}
-	
 	return (result);
 }
 
@@ -98,7 +97,7 @@ char	*to_var(t_mini *mini, char *str)
 
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	cmd = malloc (sizeof(t_cmd));
+	cmd = cmd_init();
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
 		cmd->cmds = ft_split_cmd(str, 0, 0);
@@ -114,6 +113,7 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 				cmd->cmds[i] = to_empty(cmd->cmds[i]);
 			else if (dol(cmd->cmds[i]) && is_var(mini, &cmd->cmds[i][1], 0))
 				cmd->cmds[i] = to_var(mini, cmd->cmds[i]);
+			printf("'%s'\n", cmd->cmds[i]);
 			i++;
 		}
 		get_path(mini, cmd, 0);

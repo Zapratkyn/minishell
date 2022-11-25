@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/23 11:15:16 by gponcele         ###   ########.fr        #
+#    Updated: 2022/11/25 13:36:13 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRC							=	src/main.c src/ft_env.c src/minishell_utils.c src/ft_free.c src/get_
 LIBFT						=	./libft/libft.a
 
 LIBFT_LINUX					=	libft/ft_strlen.c libft/ft_strnstr.c libft/ft_strncmp.c libft/ft_strdup.c libft/ft_strjoin.c \
-								libft/ft_isalnum.c libft/ft_strchr.c libft/ft_calloc.c libft/ft_usleep.c libft/ft_split.c \
+								libft/ft_isalnum.c libft/ft_strchr.c libft/ft_calloc.c libft/ft_split.c \
 								libft/ft_substr.c
 
 INC							=	-I./inc

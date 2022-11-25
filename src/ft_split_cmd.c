@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/23 18:52:50 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 13:41:54 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static int	count_words(char *s, int i, int count)
 					i++;
 			}
 		}
-		
 	}
 	return (count);
 }
