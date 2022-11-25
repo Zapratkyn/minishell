@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 10:16:09 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:28:15 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static int	count_words(char *s, int i, int count)
 					i++;
 			}
 		}
-		
 	}
 	return (count);
 }

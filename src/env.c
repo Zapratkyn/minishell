@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 12:52:59 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:28:02 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,23 @@ int	is_var(t_mini *mini, char *var, int j)
 {
 	int		i;
 	int		len;
+	t_var	*temp;
 
 	i = 0;
 	len = 0;
+	temp = mini->var;
 	while (ft_isalnum(var[i]) || var[i] == '_')
-    {
-        len++;
-        i++;
-    }
+	{
+		len++;
+		i++;
+	}
 	if (j == 1)
 		return (len);
-	i = 0;
-	while (mini->env[i] && j == 0)
+	while (temp->next && j == 0)
 	{
-		if (!ft_strncmp(mini->env[i], var, len) && mini->env[i][len] == '=')
+		if (!ft_strncmp(temp->content, var, len) && temp->content[len] == '=')
 			return (1);
-		i++;
+		temp = temp->next;
 	}
 	return (0);
 }

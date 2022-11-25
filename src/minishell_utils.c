@@ -6,34 +6,34 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 10:26:21 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:29:08 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-char    *mini_getenv(t_mini *mini, char *var)
+char	*mini_getenv(t_mini *mini, char *var)
 {
-    int		i;
-    int     len;
+	int	i;
+	int	len;
 
-    len = ft_strlen(var);
+	len = ft_strlen(var);
 	i = 0;
-    while (ft_strncmp(mini->env[i], var, len) || mini->env[i][len] != '=')
-        i++;
-    if (!mini->env[i])
-        return (NULL);
-    return (&mini->env[i][len + 1]);
+	while (ft_strncmp(mini->env[i], var, len) || mini->env[i][len] != '=')
+		i++;
+	if (!mini->env[i])
+		return (NULL);
+	return (&mini->env[i][len + 1]);
 }
 
-void mini_exit(t_mini *mini)
+void	mini_exit(t_mini *mini)
 {
 	if (mini->cmd)
 		ft_free_cmd(mini->cmd);
 	ft_free_env(mini->var);
 	free (mini->prompt);
-	printf("exit\n");
-    exit (0);
+	printf("\nexit\n");
+	exit (0);
 }
 
 int	is_input(char *str)
@@ -41,6 +41,8 @@ int	is_input(char *str)
 	int	i;
 
 	i = 0;
+	if (ft_strlen(str) == 0)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] != ' ')
@@ -50,22 +52,11 @@ int	is_input(char *str)
 	return (0);
 }
 
-// char    *ft_varname(char *str)
-// {
-//     char    result[10000];
-//     int     i;
-//     int     j;
-
-//     i = 0;
-//     j = 0;
-//     while (str[i])
-//     {
-//         if (str[i] == 92)
-//             i++;
-//         result[j++] = str[i++];
-//     }
-//     return (ft_strdup(result));
-// }
+void	mini_new_line(int sig)
+{
+	(void)sig;
+	write (1, "\n", 1);
+}
 
 int	ft_quotes(char *str)
 {
@@ -87,4 +78,21 @@ int	ft_quotes(char *str)
 	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
 		return (0);
 	return (1);
+}
+
+int	start_with_pipe(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == PIPE)
+		{
+			printf("parse error near '|'\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
