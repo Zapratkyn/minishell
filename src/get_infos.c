@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 16:49:23 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:04:48 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,24 @@ int	get_infos_error(int i, char *s)
 
 	str = NULL;
 	if (i == 1)
-		ft_error("2: Syntax error: newline unexpected", 0);
+	{
+		ft_error("syntax error near unexpected token `newline'", 0);
+		g_status = 258;
+	}
 	else if (i == 2)
 	{
 		str = ft_strjoin("3: cannot open ", s);
-		str = ft_strjoin(str, ": No such file");
+		str = ft_strjoin(str, ": No such file or directory");
 		ft_error(str, 0);
 		free (str);
+		g_status = 1;
 	}
 	else if (i == 3)
 	{
-		str = ft_strjoin(s, " : invalid command");
+		str = ft_strjoin(s, " : command not found");
 		ft_error(str, 0);
 		free (str);
+		g_status = 127;
 	}
 	return (-1);
 }
@@ -112,8 +117,9 @@ void	get_outfile(t_cmd *cmd, int i)
 	outfile = NULL;
 	if (cmd->cmds[0][0] == '>' && !cmd->cmds[0][1] && !cmd->cmds[1])
 	{
-		ft_error("2: Syntax error: newline unexpected", 0);
+		ft_error("syntax error near unexpected token `newline'", 0);
 		cmd->outfile = -1;
+		g_status = 258;
 	}
 	while (cmd->cmds[i] && !outfile && cmd->outfile != -1)
 	{

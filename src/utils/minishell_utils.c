@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 16:20:21 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:38:13 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	mini_exit(t_mini *mini)
 	ft_free_env(mini->var);
 	free (mini->prompt);
 	printf("\nexit\n");
-	exit (0);
+	exit (g_status);
 }
 
 int	is_input(char *str)
@@ -54,8 +54,13 @@ int	is_input(char *str)
 
 void	mini_new_line(int sig)
 {
+	char	*str;
+
 	(void)sig;
-	write (1, "\n", 1);
+	g_status = 1;
+	str = ft_strdup("\nSalut ");
+	write (1, str, ft_strlen(str));
+	free (str);
 }
 
 int	ft_quotes(char *str)
@@ -89,7 +94,8 @@ int	start_with_pipe(char *str)
 	{
 		if (str[i] == PIPE)
 		{
-			printf("parse error near '|'\n");
+			ft_error("syntax error near unexpected token `|'", 0);
+			g_status = 258;
 			return (1);
 		}
 		i++;

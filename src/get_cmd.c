@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 16:28:30 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:39:35 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ char	*to_var(t_mini *mini, char *str)
 {
 	char	*result;
 
+	if (str[1] == '?')
+		return (ft_itoa(g_status));
 	result = ft_strdup(mini_getenv(mini, &str[1]));
 	if (!result)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 16:47:36 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:13:08 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ struct s_mini
     t_var   *var;
     t_cmd   *cmd;
 };
+
+int	g_status;
 
 /*
 ** Functions
