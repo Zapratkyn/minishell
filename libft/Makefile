@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/25 15:27:38 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/25 16:16:50 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,7 @@ SRC							=	ft_calloc.c \
 								ft_strlen.c \
 								ft_strncmp.c \
 								ft_strnstr.c \
-								ft_substr.c \
-								ft_usleep.c
+								ft_substr.c
 
 CC							=	gcc
 RM							=	rm -rf

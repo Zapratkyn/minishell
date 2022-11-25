@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:27:32 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:15:56 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,23 @@
 
 # define MALLOC_ERR "Error in the memory allocation of a malloc."
 
+typedef struct s_var	t_var;
+
+struct s_var
+{
+	char	*content;
+	t_var	*next;
+};
+
 void					ft_error(char *type);
 char					*ft_calloc(int count, int size);
 char					*ft_insert(char *s1, char c, char *s2);
 int						ft_isalnum(int c);
-void					ft_lstadd_back(t_list **lst, t_list *new);
-void					ft_lstclear(t_list **lst);
-void					ft_lstdelone(t_list *lst);
-t_list					*ft_lstnew(char *data);
-t_list					*ft_lstlast(t_list *lst);
+void					ft_lstadd_back(t_var **var, t_var *new);
+void					ft_lstclear(t_var **var);
+void					ft_lstdelone(t_var *var);
+t_var					*ft_lstnew(char *content);
+t_var					*ft_lstlast(t_var *var);
 void					ft_putstr_fd(char *s, int fd);
 char					**ft_split(char const *s, char c);
 char					*ft_strchr(const char *s, int c);

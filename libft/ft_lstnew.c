@@ -6,20 +6,20 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:39:40 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/24 15:41:21 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:15:56 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(char *data)
+t_var	*ft_lstnew(char *content)
 {
-	t_list	*lst;
+	t_var	*var;
 
-	lst = (t_list *)malloc(sizeof(t_list));
-	if (!lst)
+	var = (t_var *)malloc(sizeof(t_var));
+	if (!var)
 		return (NULL);
-	lst->data = data;
-	lst->next = NULL;
-	return (lst);
+	var->content = content;
+	var->next = NULL;
+	return (var);
 }
