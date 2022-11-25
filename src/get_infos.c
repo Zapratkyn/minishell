@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 13:46:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:17:33 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,23 @@ void	get_outfile(t_cmd *cmd, int i)
 	{
 		cmd->outfile = open(outfile, O_CREAT | O_RDONLY, 0777);
 		free (outfile);
+	}
+	clean_files(cmd);
+}
+
+void	clean_files(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->cmds[i])
+	{
+		if (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>'
+		|| (i > 0 && cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
+		|| (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1]))
+		{
+			free (cmd->cmds[i]);
+			cmd->cmds[i] = ft_strdup("");
+		}
 	}
 }

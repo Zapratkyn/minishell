@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 14:31:13 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:17:51 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ char						*get_exec(t_cmd *cmd);
 void						get_path(t_mini *mini, t_cmd *cmd, int i);
 void						get_infile(t_cmd *cmd, int i);
 void						get_outfile(t_cmd *cmd, int i);
+void						clean_files(t_cmd *cmd);
 // ft_split_cmd.c
 char						**ft_split_cmd(char *s, int i, int index);
 
