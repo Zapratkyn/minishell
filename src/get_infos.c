@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:20:34 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:49:23 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 			free (path);
 		}
 		if (!cmd->path && exec[1])
-			printf("%s : invalid command\n", exec);
+			get_infos_error(3, exec);
 		free (exec);
 		ft_free_paths(paths);
 	}
@@ -56,12 +56,26 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 		get_infile(cmd, -1);
 }
 
-int	infile_error(int i, char *infile)
+int	get_infos_error(int i, char *s)
 {
+	char	*str;
+
+	str = NULL;
 	if (i == 1)
-		printf("2: Syntax error: newline unexpected\n");
+		ft_error("2: Syntax error: newline unexpected", 0);
 	else if (i == 2)
-		printf("3: cannot open %s: No such file\n", infile);
+	{
+		str = ft_strjoin("3: cannot open ", s);
+		str = ft_strjoin(str, ": No such file");
+		ft_error(str, 0);
+		free (str);
+	}
+	else if (i == 3)
+	{
+		str = ft_strjoin(s, " : invalid command");
+		ft_error(str, 0);
+		free (str);
+	}
 	return (-1);
 }
 
@@ -71,7 +85,7 @@ void	get_infile(t_cmd *cmd, int i)
 
 	infile = NULL;
 	if (cmd->cmds[0][0] == '<' && !cmd->cmds[0][1] && !cmd->cmds[1])
-		cmd->infile = infile_error(1, NULL);
+		cmd->infile = get_infos_error(1, NULL);
 	while (cmd->cmds[++i] && !infile)
 	{
 		if (cmd->cmds[i][0] == '<' && cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
@@ -84,7 +98,7 @@ void	get_infile(t_cmd *cmd, int i)
 		if (!access(infile, F_OK))
 			cmd->infile = open(infile, O_RDONLY);
 		else
-			cmd->infile = infile_error(2, infile);
+			cmd->infile = get_infos_error(2, infile);
 		free (infile);
 	}
 	if (cmd->infile != -1)
@@ -98,7 +112,7 @@ void	get_outfile(t_cmd *cmd, int i)
 	outfile = NULL;
 	if (cmd->cmds[0][0] == '>' && !cmd->cmds[0][1] && !cmd->cmds[1])
 	{
-		printf("2: Syntax error: newline unexpected\n");
+		ft_error("2: Syntax error: newline unexpected", 0);
 		cmd->outfile = -1;
 	}
 	while (cmd->cmds[i] && !outfile && cmd->outfile != -1)

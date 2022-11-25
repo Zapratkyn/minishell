@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 13:58:56 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:34:31 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_cmd	*cmd_init(void)
 		return (NULL);
 	cmd->path = NULL;
 	cmd->cmds = NULL;
-	cmd->infile = 0;
-	cmd->outfile = 1;
+	cmd->infile = STDIN_FILENO;
+	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
 	return (cmd);
 }

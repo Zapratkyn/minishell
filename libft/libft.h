@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 16:15:56 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:48:30 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ struct s_var
 	t_var	*next;
 };
 
-void					ft_error(char *type);
+void					ft_error(char *type, int is_exit);
 char					*ft_calloc(int count, int size);
 char					*ft_insert(char *s1, char c, char *s2);
 int						ft_isalnum(int c);

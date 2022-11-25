@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:28:18 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:28:30 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 				cmd->cmds[i] = to_empty(cmd->cmds[i]);
 			else if (dol(cmd->cmds[i]) && is_var(mini, &cmd->cmds[i][1], 0))
 				cmd->cmds[i] = to_var(mini, cmd->cmds[i]);
-			printf("'%s'\n", cmd->cmds[i]);
 			i++;
 		}
 		get_path(mini, cmd, 0);

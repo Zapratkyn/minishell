@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 16:18:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:47:36 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ t_cmd						*cmd_init(void);
 // get_infos.c
 char						*get_exec(t_cmd *cmd);
 void						get_path(t_mini *mini, t_cmd *cmd, int i);
+int							get_infos_error(int i, char *s);
 void						get_infile(t_cmd *cmd, int i);
 void						get_outfile(t_cmd *cmd, int i);
 void						clean_files(t_cmd *cmd);
@@ -141,5 +142,5 @@ void						ft_cd(t_mini *mini, t_cmd *cmd);
 void						ft_pwd(t_cmd *cmd);
 
 // error
-void						ft_error(char *type);
+void						ft_error(char *type, int is_exit);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/24 16:01:05 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:51:29 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 int	is_builtin(t_cmd *cmd)
 {
 	if (!cmd->cmds[0])
-		ft_error(CMD_ERR);
+		ft_error(CMD_ERR, 1);
 	else if (!ft_strcmp("echo", cmd->cmds[0]))
 		return (1);
 	else if (!ft_strcmp("cd", cmd->cmds[0]))
