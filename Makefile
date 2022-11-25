@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/25 15:25:54 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/25 15:46:12 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,14 +34,14 @@ SRC							=	src/builtins/builtin.c \
 								src/builtins/ft_echo.c \
 								src/builtins/ft_env.c \
 								src/builtins/ft_pwd.c \
+								src/utils/minishell_utils.c \
+								src/utils/get_cmd_utils.c \
 								src/error.c \
 								src/exec.c \
 								src/main.c \
 								src/env.c \
-								src/minishell_utils.c \
 								src/free.c \
 								src/get_cmd.c \
-								src/get_cmd_utils.c \
 								src/get_infos.c \
 								src/ft_split_cmd.c
 

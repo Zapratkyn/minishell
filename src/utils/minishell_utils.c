@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:29:08 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:02:11 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,7 @@
 
 char	*mini_getenv(t_mini *mini, char *var)
 {
-	int	i;
-	int	len;
-
-	len = ft_strlen(var);
-	i = 0;
-	while (ft_strncmp(mini->env[i], var, len) || mini->env[i][len] != '=')
-		i++;
-	if (!mini->env[i])
-		return (NULL);
-	return (&mini->env[i][len + 1]);
+	// code avec liste chaînée
 }
 
 void	mini_exit(t_mini *mini)
