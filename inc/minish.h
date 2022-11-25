@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:17:51 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:32:27 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,34 @@
 ** Define constants
 */
 
+/* Debug */
+# define ICI printf("ici\n");
+
+/* Managing errors */
+# define PIPE_ERR "Error in the creation of a pipe."
+# define PWD_ERR "Error in the pwd."
+# define FORK_ERR "Error in the creation of a fork."
+# define MALLOC_ERR "Error in the memory allocation of a malloc."
+# define DUP_ERR "Error in the dup2."
+# define CMD_ERR "Wrong input command."
+# define DIR_ERR "No such file or directory."
+
+/* Characters */
+# define CHILD 0
+# define READ 0
+# define WRITE 1
 # define S_QUOTE 39
 # define PIPE 124
+
+/* Builtin */
+# define ECHO 1
+# define CD 2
+# define PWD 3
+# define EXPORT 4
+# define UNSET 5
+# define ENV 6
+# define EXIT 7
+
 /*
 ** Structures
 */
@@ -53,8 +79,10 @@ struct s_cmd
 	int		infile;
 	int		outfile;
 	pid_t	pid;
+	int		fd[2];
 	t_cmd	*next;
 };
+
 struct s_mini
 {
 	int		g_status;
@@ -70,15 +98,21 @@ struct s_mini
 */
 
 // main.c
-char						*get_prompt(t_mini *mini);
-t_mini						mini_init(char **env);
-int							mini_parser(t_mini *mini, char *str);
+void						get_prompt(t_mini *mini);
+void						mini_init(t_mini *mini, char **env);
+
+// execute
+void						execute(t_mini *mini);
+
 // ft_env.c
 void						mini_env(t_mini *mini);
 int							is_var(t_mini *mini, char *var, int j);
 // void	                    edit_var(t_mini mini, char *var, char *val);
+
 // int	                        is_varname(char *str);
+
 // void	                    mini_export(t_mini mini, char *var, char *val);
+
 // ft_free.c
 void						ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
@@ -107,4 +141,15 @@ void						clean_files(t_cmd *cmd);
 // ft_split_cmd.c
 char						**ft_split_cmd(char *s, int i, int index);
 
+// builtins
+int							is_builtin(t_cmd *cmd);
+void						do_builtin(t_mini *mini, t_cmd *cmd);
+void						ft_echo(t_cmd *cmd);
+void						ft_env(t_mini *mini, t_cmd *cmd);
+void						ft_cd(t_mini *mini, t_cmd *cmd);
+void						ft_pwd(t_cmd *cmd);
+void						update_pwd(t_mini *mini, char *type);
+
+// error
+void						ft_error(char *type);
 #endif

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 14:28:54 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:36:03 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,10 @@ t_mini	mini_init(char **env)
 
 	i = 0;
 	mini.cmd = NULL;
-	mini.env = env;
 	mini.var = NULL;
 	while (env && env[i])
 		get_var(&mini, env[i++]);
 	mini.g_status = 0;
-	mini.pid = getpid();
 	mini.prompt = NULL;
 	mini.prompt = get_prompt(&mini);
 	return (mini);

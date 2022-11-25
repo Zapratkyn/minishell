@@ -1,41 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 18:22:47 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/24 10:14:15 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/23 12:32:02 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/23 12:32:56 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char	*substr;
-	size_t	i;
-	size_t	j;
-	size_t	str_len;
+	int	i;
 
-	if (!s)
-		return (NULL);
-	if (len >= ft_strlen(s))
-		str_len = ft_strlen(s);
-	else
-		str_len = len;
-	substr = malloc (sizeof(char) * (str_len + 1));
-	if (!substr)
-		return (NULL);
-	i = ((size_t)start);
-	j = 0;
-	while (i < ft_strlen(s) && j < len)
-	{
-		substr[j] = s[i];
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
-		j++;
-	}
-	substr[j] = '\0';
-	return (substr);
+	return (s1[i] - s2[i]);
 }

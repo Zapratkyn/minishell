@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:32:35 by gponcele         ###   ########.fr       */
+/*   Created: 2022/11/24 12:53:23 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/24 15:56:33 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minish.h"
 
-int	ft_isalnum(int c)
+void	ft_env(t_mini *mini, t_cmd *cmd)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'));
+	t_list	*lst;
+
+	lst = mini->l_env;
+	while (lst)
+	{
+		ft_putstr_fd(lst->data, cmd->outfile);
+		write(cmd->outfile, "\n", 1);
+		lst = lst->next;
+	}
 }
