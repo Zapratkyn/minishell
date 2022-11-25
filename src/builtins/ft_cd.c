@@ -6,13 +6,34 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/24 12:15:53 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:10:49 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-/*
+void	update_pwd(t_mini *mini, char *type)
+{
+	t_var	*var;
+	char	*tmp;
+
+	var = mini->var;
+	tmp = NULL;
+	while (var)
+	{
+		if (!ft_strncmp(var->content, type, ft_strlen(type)))
+		{
+			tmp = getcwd(tmp, 0);
+			if (!tmp)
+				ft_error(PWD_ERR);
+			free(var->content);
+			var->content = ft_strjoin(type, tmp);
+			free(tmp);
+		}
+		var = var->next;
+	}
+}
+
 char	*find_path(t_mini *mini, t_cmd *cmd)
 {
 	char	*path;
@@ -46,4 +67,3 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	update_pwd(mini, "PWD");
 	free(path);
 }
-*/

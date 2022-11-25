@@ -26,11 +26,28 @@ char    *mini_getenv(t_mini *mini, char *var)
     return (&mini->env[i][len + 1]);
 }
 
-void    mini_exit(int sig)
+void mini_exit(t_mini *mini)
 {
-	(void)sig;
-    write (1, "exit\n", 5);
-    exit(0);
+	if (mini->cmd)
+		ft_free_cmd(mini->cmd);
+	ft_free_env(mini->var);
+	free (mini->prompt);
+	printf("exit\n");
+    exit (0);
+}
+
+int	is_input(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 // char    *ft_varname(char *str)

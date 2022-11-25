@@ -6,13 +6,35 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 16:01:28 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:49:19 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void    get_prompt(t_mini *mini)
+void    get_var(t_mini *mini, char *str)
+{
+    t_var   	*index;
+    t_var   	*temp;
+
+    index = mini->var;
+    temp = malloc (sizeof(t_var));
+    if (!temp)
+        exit (0);
+    temp->content = ft_strdup(str);
+    if (!temp->content)
+        exit (0);
+    if (mini->var)
+        mini->var = temp;
+    else
+    {
+        while (index->next)
+            index = index->next;
+        index->next = temp;
+    }
+}
+
+char	*get_prompt(t_mini *mini)
 {
     char    *str;
 	char	*prompt;
@@ -27,58 +49,60 @@ void    get_prompt(t_mini *mini)
 	}
     else
         prompt = ft_strjoin(prompt, mini_getenv(mini, "PWD"));
-    prompt = ft_strjoin(prompt, " %");
-	printf("%s", prompt);
-	free (prompt);
+    prompt = ft_strjoin(prompt, " % ");
+	return (prompt);
 }
 
-void	init_l_env(t_mini *mini)
+int	mini_parser(t_mini *mini, char *str)
 {
-	int	i;
-
-	i = 0;
-	mini->l_env = ft_lstnew(mini->env[i]);
-	while (mini->env[++i])
-		ft_lstadd_back(&mini->l_env, ft_lstnew(mini->env[i]));
-}
-
-void  mini_init(t_mini *mini, char **env)
-{
-	mini->cmd = NULL;
-	mini->env = env;
-	init_l_env(mini);
-	mini->g_status = 0;
-	mini->pid = getpid();
-}
-
-void    mini_parser(t_mini *mini, char *str)
-{
-	if (str)
+	if (!str)
+		return (0);
+	if (start_with_pipe(str))
+		return (1);
+	if (is_input(str))
 	{
 		add_history(str);
 		mini->cmd = get_cmd(mini, mini->cmd, str, 0);
 		execute(mini);
-		//if (mini->cmd->path)
-		//	printf("path : %s\n", mini->cmd->path);
 	}
-	// if (!ft_strncmp(mini->cmd->full_cmd[0], "echo", 4) && mini->cmd->full_cmd[1])
-	// 	printf("%s\n", mini->cmd->full_cmd[1]);
-	//
 	free (str);
-	// ft_free_cmd(mini->cmd);
-	get_prompt(mini);
+	mini->prompt = get_prompt(mini);
+	return (1);
+}
+
+void	mini_new_line(int sig)
+{
+	(void)sig;
+	write (1, "\n", 1);
+}
+
+t_mini	mini_init(char **env)
+{
+	t_mini	mini;
+	int		i;
+
+	i = 0;
+	mini.cmd = NULL;
+	mini.var = NULL;
+	while (env && env[i])
+		get_var(&mini, env[i++]);
+	mini.g_status = 0;
+	mini.prompt = NULL;
+	mini.prompt = get_prompt(&mini);
+	return (mini);
 }
 
 int	main(int argc, char **argv, char **env)
 {
     t_mini	mini;
 
-	mini_init(&mini, env);
-	get_prompt(&mini);
+	mini = mini_init(env);
 	while (argc && argv[0])
-	{
-		//signal(SIGQUIT, SIG_IGN);
-		// signal(SIGINT, mini_new_line);
-		mini_parser(&mini, readline(" "));
-	}
+    {
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, mini_new_line);
+		if (!mini_parser(&mini, readline(mini.prompt)))
+			break;
+    }
+	mini_exit(&mini);
 }

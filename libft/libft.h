@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 15:44:58 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:01:59 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@
 # include <stdlib.h>
 
 # define MALLOC_ERR "Error in the memory allocation of a malloc."
-
-typedef struct s_list	t_list;
-struct	s_list
-{
-	char	*data;
-	t_list	*next;
-};
 
 void					ft_error(char *type);
 char					*ft_calloc(int count, int size);

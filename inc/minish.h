@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/24 13:39:36 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:48:13 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,13 @@
 
 typedef struct s_cmd	t_cmd;
 typedef struct s_mini	t_mini;
+typedef struct s_var	t_var;
 
+struct s_var
+{
+    char    *content;
+    t_var   *next;
+};
 
 struct s_cmd
 {
@@ -79,11 +85,10 @@ struct s_cmd
 
 struct s_mini
 {
-	int		g_status;
-	char	**env;
-	t_list	*l_env;
-	t_cmd	*cmd;
-	pid_t	pid;
+    int     g_status;
+    char    *prompt;
+    t_var   *var;
+    t_cmd   *cmd;
 };
 
 /*
@@ -92,8 +97,8 @@ struct s_mini
 
 // main.c
 void						get_prompt(t_mini *mini);
-void						mini_init(t_mini *mini, char **env);
-
+t_mini  					mini_init(char **env)
+int                         mini_parser(t_mini *mini, char *str);
 // execute
 void						execute(t_mini *mini);
 
@@ -110,12 +115,13 @@ int	                        is_var(t_mini *mini, char *var, int j);
 void                        ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
 void	                    ft_free_paths(char **paths);
+void	                    ft_free_env(t_var *var);
 // minishell_utils.c
 char                        *mini_getenv(t_mini *mini, char *var);
-void    					mini_exit(int sig);
+void                        mini_exit(t_mini *mini);
 int	                        ft_quotes(char *str);
 char                        *ft_varname(char *str);
-void                        mini_parser(t_mini *mini, char *str);
+int	                        is_input(char *str);
 // get_cmd.c
 t_cmd						*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i);
 // get_cmd_utils.c

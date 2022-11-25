@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 12:53:23 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/24 15:56:33 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:02:21 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	ft_env(t_mini *mini, t_cmd *cmd)
 {
-	t_list	*lst;
+	t_var	*var;
 
-	lst = mini->l_env;
-	while (lst)
+	var = mini->var;
+	while (var)
 	{
-		ft_putstr_fd(lst->data, cmd->outfile);
+		ft_putstr_fd(var->content, cmd->outfile);
 		write(cmd->outfile, "\n", 1);
-		lst = lst->next;
+		var = var->next;
 	}
 }
