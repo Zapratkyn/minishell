@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 16:18:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:59:09 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define DUP_ERR "Error in the dup2."
 # define CMD_ERR "Wrong input command."
 # define DIR_ERR "No such file or directory."
+# define NO_EXIT 0
+# define EXIT 1
 
 /* Characters */
 # define CHILD 0
@@ -48,15 +50,6 @@
 # define WRITE 1
 # define S_QUOTE 39
 # define PIPE 124
-
-/* Builtin */
-# define ECHO 1
-# define CD 2
-# define PWD 3
-# define EXPORT 4
-# define UNSET 5
-# define ENV 6
-# define EXIT 7
 
 /*
 ** Structures
@@ -137,9 +130,10 @@ int							is_builtin(t_cmd *cmd);
 void						do_builtin(t_mini *mini, t_cmd *cmd);
 void						ft_echo(t_cmd *cmd);
 void						ft_env(t_mini *mini, t_cmd *cmd);
+void						ft_exit(t_mini *mini);
 void						ft_cd(t_mini *mini, t_cmd *cmd);
 void						ft_pwd(t_cmd *cmd);
 
 // error
-void						ft_error(char *type);
+void						ft_error(char *type, int is_exit);
 #endif

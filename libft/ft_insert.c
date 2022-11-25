@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:44:21 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/24 10:46:07 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:50:44 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_insert(char *s1, char c, char *s2)
 	l2 = ft_strlen(s2);
 	ins = malloc (sizeof(char) * (l1 + l2 + 2));
 	if (!ins)
-		ft_error(MALLOC_ERR);
+		ft_error(MALLOC_ERR, EXIT);
 	i = -1;
 	while (++i < l1)
 		ins[i] = s1[i];

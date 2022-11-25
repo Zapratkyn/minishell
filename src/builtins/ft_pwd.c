@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:52:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:17:39 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:52:31 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_pwd(t_cmd *cmd)
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (!pwd)
-		ft_error(PWD_ERR);
+		ft_error(PWD_ERR, EXIT);
 	ft_putstr_fd(pwd, cmd->outfile);
 	write(cmd->outfile, "\n", 1);
 	free(pwd);
