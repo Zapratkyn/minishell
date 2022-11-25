@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:17:33 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:20:34 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,6 @@ void	clean_files(t_cmd *cmd)
 			free (cmd->cmds[i]);
 			cmd->cmds[i] = ft_strdup("");
 		}
+		i++;
 	}
 }
