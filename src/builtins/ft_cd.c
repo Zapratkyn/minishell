@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:01:41 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:20:31 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	update_pwd(t_mini *mini)
 	char	*tmp;
 	char	*pwd;
 
-	pwd = "PWD";
+	pwd = "PWD=";
 	var = mini->var;
 	tmp = NULL;
 	while (var)

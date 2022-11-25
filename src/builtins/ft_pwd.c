@@ -6,13 +6,13 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:52:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 15:07:20 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:17:39 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../inc/minish.h"
 
-void	ft_pwd(t_mini *mini, t_cmd *cmd)
+void	ft_pwd(t_cmd *cmd)
 {
 	char	*pwd;
 
