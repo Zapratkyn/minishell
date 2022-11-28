@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 17:13:08 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:08:03 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	g_status;
 */
 
 // main.c
-char						*get_prompt(t_mini *mini);
+char						*get_prompt();
 t_mini  					mini_init(char **env);
 int                         mini_parser(t_mini *mini, char *str);
 // execute
