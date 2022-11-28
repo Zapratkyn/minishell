@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 11:29:43 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 11:59:26 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,15 @@ int	is_input(char *str)
 
 void	mini_new_line(int sig)
 {
-	char	*str;
+	char	*prompt;
 
+	prompt = NULL;
 	(void)sig;
 	g_status = 1;
-	str = ft_strdup("\nSalut ");
-	write (1, str, ft_strlen(str));
-	free (str);
+	prompt = get_prompt(NULL);
+	write (1, "\n", 1);
+	write (1, prompt, ft_strlen(prompt));
+	free (prompt);
 }
 
 int	ft_quotes(char *str)

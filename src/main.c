@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 11:28:56 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:05:38 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,22 @@ void	get_var(t_mini *mini, char *str)
 	}
 }
 
-char	*get_prompt(t_mini *mini)
+char	*get_prompt()
 {
 	char	*str;
 	char	*prompt;
 
-	if (mini->prompt)
-		free (mini->prompt);
-	prompt = ft_strdup(mini_getenv(mini, "USER"));
+	prompt = ft_strdup(getenv("USER"));
 	prompt = ft_strjoin(prompt, "@minishell ");
-	str = ft_strnstr2(mini_getenv(mini, "PWD"),
-			mini_getenv(mini, "USER"), 1000);
+	str = ft_strnstr2(getenv("PWD"),
+			getenv("USER"), 1000);
 	if (str)
 	{
 		prompt = ft_strjoin(prompt, "~");
 		prompt = ft_strjoin(prompt, str);
 	}
 	else
-		prompt = ft_strjoin(prompt, mini_getenv(mini, "PWD"));
+		prompt = ft_strjoin(prompt, getenv("PWD"));
 	prompt = ft_strjoin(prompt, " % ");
 	return (prompt);
 }
@@ -68,7 +66,7 @@ t_mini	mini_init(char **env)
 		get_var(&mini, env[i++]);
 	mini.g_status = 0;
 	mini.prompt = NULL;
-	mini.prompt = get_prompt(&mini);
+	mini.prompt = get_prompt();
 	return (mini);
 }
 
@@ -76,7 +74,7 @@ int	mini_parser(t_mini *mini, char *str)
 {
 	if (!str)
 		return (0);
-	if (start_with_pipe(str))
+	if (start_with_pipe(str) || !mini)
 		return (1);
 	if (is_input(str))
 	{
