@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:28:02 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/28 11:24:15 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	is_var(t_mini *mini, char *var, int j)
 	i = 0;
 	len = 0;
 	temp = mini->var;
+	if (var[0] == '?')
+		return (1);
 	while (ft_isalnum(var[i]) || var[i] == '_')
 	{
 		len++;

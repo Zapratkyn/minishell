@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 17:38:13 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 11:29:43 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	is_input(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_strlen(str) == 0)
+	if (ft_strlen(str) == 0 || !ft_quotes(str))
 		return (0);
 	while (str[i])
 	{

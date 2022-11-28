@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 16:48:30 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 10:56:56 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ char					*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char					*ft_strnstr2(const char *haystack, const char *needle, size_t len);
 char					*ft_substr(char const *s, unsigned int start, size_t len);
 void					ft_usleep(int count);
+char					*ft_itoa(int n);
 
 #endif

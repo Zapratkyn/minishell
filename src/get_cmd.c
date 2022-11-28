@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 17:39:35 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 11:26:34 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*ft_var(t_mini *mini, char *str)
 	i = 0;
 	j = 0;
 	len = 0;
+	result = NULL;
 	if (!is_var(mini, str, 0))
 		return (NULL);
 	len = is_var(mini, str, 1);
@@ -87,12 +88,17 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 char	*to_var(t_mini *mini, char *str)
 {
 	char	*result;
+	char	*var;
 
 	if (str[1] == '?')
-		return (ft_itoa(g_status));
-	result = ft_strdup(mini_getenv(mini, &str[1]));
-	if (!result)
-		return (NULL);
+	{
+		result = ft_itoa(g_status);
+		result = ft_strjoin(result, &str[2]);
+		return (result);
+	}
+	var = ft_var(mini, &str[1]);
+	result = ft_strjoin("", mini_getenv(mini, var));
+	result = ft_strjoin(result, &str[ft_strlen(var) + 1]);
 	free (str);
 	return (result);
 }
