@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 16:46:53 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:56:18 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	get_outfile(t_cmd *cmd, int i)
 	}
 	if (outfile)
 	{
-		cmd->outfile = open(outfile, O_CREAT | O_RDWR, 0777);
+		cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
 		free (outfile);
 	}
 	clean_files(cmd);
