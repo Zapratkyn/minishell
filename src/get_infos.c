@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_infos.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:20:34 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:46:53 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	get_outfile(t_cmd *cmd, int i)
 	}
 	if (outfile)
 	{
-		cmd->outfile = open(outfile, O_CREAT | O_RDONLY, 0777);
+		cmd->outfile = open(outfile, O_CREAT | O_RDWR, 0777);
 		free (outfile);
 	}
 	clean_files(cmd);
@@ -124,12 +124,20 @@ void	clean_files(t_cmd *cmd)
 	i = 0;
 	while (cmd->cmds[i])
 	{
-		if (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>'
-		|| (i > 0 && cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
-		|| (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1]))
+		if (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>')
 		{
-			free (cmd->cmds[i]);
-			cmd->cmds[i] = ft_strdup("");
+			if (cmd->cmds[i][1])
+			{
+				free(cmd->cmds[i]);
+				cmd->cmds[i] = ft_strdup("");
+			}
+			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
+			{
+				free (cmd->cmds[i]);
+				free (cmd->cmds[i + 1]);
+				cmd->cmds[i] = ft_strdup("");
+				cmd->cmds[i + 1] = ft_strdup("");
+			}
 		}
 		i++;
 	}

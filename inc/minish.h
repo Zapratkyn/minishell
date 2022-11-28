@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 10:39:31 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:17:28 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define EXIT 1
 
 /* Characters */
-# define CHILD 0
+# define CHILD_PROC 0
 # define READ 0
 # define WRITE 1
 # define S_QUOTE 39
@@ -88,6 +88,9 @@ int							mini_parser(t_mini *mini, char *str);
 
 // execute
 void						execute(t_mini *mini);
+
+// execute utils
+int							n_of_cmd(t_cmd *cmd);
 
 // ft_env.c
 void						mini_env(t_mini *mini);
