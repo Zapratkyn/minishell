@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:28:15 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:31:34 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ static int	count_words(char *s, int i, int count)
 	{
 		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
-		if (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != PIPE)
+		if (s[i] && s[i] != ' ' && s[i] != '<' && s[i] != '>' && s[i] != PIPE)
 		{
 			count++;
 			if (s[i] == S_QUOTE || s[i] == '"')
 				i += quote_len(&s[i], s[i]);
 			else
 			{
-				while (s[i] && s[i] != ' ' && s[i] != PIPE && s[i] != '\t')
+				while (s[i] && s[i] != ' ' && s[i] != PIPE
+					&& s[i] != '<' && s[i] != '>')
 					i++;
 			}
 		}
@@ -63,7 +64,8 @@ static int	find_next_len(char *str, int i, int len)
 			len++;
 		return (len + 3);
 	}
-	while (str[i] && str[i] != PIPE && str[i] != ' ' && str[i] != '\t')
+	while (str[i] && str[i] != PIPE && str[i] != ' '
+		&& str[i] != '<' && str[i] != '>')
 	{
 		len++;
 		i++;

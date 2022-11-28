@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 17:04:48 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 14:55:02 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,17 @@ void	get_infile(t_cmd *cmd, int i)
 	char	*infile;
 
 	infile = NULL;
-	if (cmd->cmds[0][0] == '<' && !cmd->cmds[0][1] && !cmd->cmds[1])
-		cmd->infile = get_infos_error(1, NULL);
 	while (cmd->cmds[++i] && !infile)
 	{
-		if (cmd->cmds[i][0] == '<' && cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
-			infile = ft_strdup(&cmd->cmds[i][1]);
-		else if (cmd->cmds[i][0] == '<' && !cmd->cmds[i][1] && cmd->cmds[i + 1])
-			infile = ft_strdup(cmd->cmds[i + 1]);
+		if (cmd->cmds[i][0] == '<')
+		{
+			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
+				infile = ft_strdup(&cmd->cmds[i][1]);
+			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
+				infile = ft_strdup(cmd->cmds[i + 1]);
+			else
+				cmd->infile = get_infos_error(1, NULL);
+		}
 	}
 	if (infile)
 	{
@@ -115,19 +118,17 @@ void	get_outfile(t_cmd *cmd, int i)
 	char	*outfile;
 
 	outfile = NULL;
-	if (cmd->cmds[0][0] == '>' && !cmd->cmds[0][1] && !cmd->cmds[1])
+	while (cmd->cmds[++i] && !outfile)
 	{
-		ft_error("syntax error near unexpected token `newline'", 0);
-		cmd->outfile = -1;
-		g_status = 258;
-	}
-	while (cmd->cmds[i] && !outfile && cmd->outfile != -1)
-	{
-		if (cmd->cmds[i][0] == '>' && cmd->cmds[i][1] && cmd->cmds[i][1] != '>')
-			outfile = ft_strdup(&cmd->cmds[i][1]);
-		else if (cmd->cmds[i][0] == '>' && !cmd->cmds[i][1] && cmd->cmds[i + 1])
-			outfile = ft_strdup(cmd->cmds[i + 1]);
-		i++;
+		if (cmd->cmds[i][0] == '>')
+		{
+			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '>')
+				outfile = ft_strdup(&cmd->cmds[i][1]);
+			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
+				outfile = ft_strdup(cmd->cmds[i + 1]);
+			else
+				cmd->outfile = get_infos_error(1, NULL);
+		}
 	}
 	if (outfile)
 	{
@@ -135,22 +136,4 @@ void	get_outfile(t_cmd *cmd, int i)
 		free (outfile);
 	}
 	clean_files(cmd);
-}
-
-void	clean_files(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd->cmds[i])
-	{
-		if (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>'
-		|| (i > 0 && cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
-		|| (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1]))
-		{
-			free (cmd->cmds[i]);
-			cmd->cmds[i] = ft_strdup("");
-		}
-		i++;
-	}
 }

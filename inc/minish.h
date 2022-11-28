@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 12:08:03 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:48:46 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,15 @@
 ** Structures
 */
 
-typedef struct s_mini	t_mini;
-typedef struct s_cmd	t_cmd;
+typedef struct s_mini		t_mini;
+typedef struct s_cmd		t_cmd;
+typedef struct s_heredoc	t_heredoc;
+
+struct s_heredoc
+{
+	char		*content;
+	t_heredoc	*next;
+};
 
 struct s_cmd
 {
@@ -142,6 +149,8 @@ void						ft_echo(t_cmd *cmd);
 void						ft_env(t_mini *mini, t_cmd *cmd);
 void						ft_cd(t_mini *mini, t_cmd *cmd);
 void						ft_pwd(t_cmd *cmd);
+// heredoc.c
+int							mini_heredoc(char *str, int i, int j);
 
 // error
 void						ft_error(char *type, int is_exit);

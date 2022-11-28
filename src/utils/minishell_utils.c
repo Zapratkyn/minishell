@@ -6,25 +6,11 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 11:59:26 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 14:30:20 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
-
-char	*mini_getenv(t_mini *mini, char *var)
-{
-	t_var	*tmp;
-
-	tmp = mini->var;
-	while (tmp)
-	{
-		if (!ft_strncmp(var, tmp->content, ft_strlen(var)))
-			return (&tmp->content[ft_strlen(var) + 1]);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
 
 void	mini_exit(t_mini *mini)
 {
@@ -59,9 +45,10 @@ void	mini_new_line(int sig)
 	prompt = NULL;
 	(void)sig;
 	g_status = 1;
-	prompt = get_prompt(NULL);
+	prompt = get_prompt();
 	write (1, "\n", 1);
 	write (1, prompt, ft_strlen(prompt));
+	// rl_replace_line("", 0);
 	free (prompt);
 }
 

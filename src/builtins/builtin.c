@@ -6,11 +6,11 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:51:29 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 14:22:55 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/minish.h"
+#include "../../inc/minish.h"
 
 void	do_builtin(t_mini *mini, t_cmd *cmd)
 {
@@ -27,7 +27,6 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 	//	cmd_export(cmd);
 	//else if (builtin == UNSET)
 	//	cmd_unset(cmd);
-
 	//else if (builtin == EXIT)
 	//	cmd_exit(cmd);
 }

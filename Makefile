@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/28 11:44:43 by gponcele         ###   ########.fr        #
+#    Updated: 2022/11/28 15:53:30 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SRC							=	src/builtins/builtin.c \
 								src/free.c \
 								src/get_cmd.c \
 								src/get_infos.c \
-								src/ft_split_cmd.c
+								src/ft_split_cmd.c \
+								src/heredoc.c
 
 LIBFT						=	./libft/libft.a
 

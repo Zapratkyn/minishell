@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 12:08:19 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:34:22 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_var(t_mini *mini, char *str)
 	}
 }
 
-char	*get_prompt()
+char	*get_prompt(void)
 {
 	char	*str;
 	char	*prompt;
@@ -74,12 +74,13 @@ int	mini_parser(t_mini *mini, char *str)
 {
 	if (!str)
 		return (0);
-	if (start_with_pipe(str) || !mini)
+	if (start_with_pipe(str))
 		return (1);
 	if (is_input(str))
 	{
 		add_history(str);
-		mini->cmd = get_cmd(mini, mini->cmd, str, 0);
+		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
+		printf("get_cmd OK\n");
 		execute(mini);
 	}
 	free (str);

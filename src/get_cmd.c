@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 11:26:34 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:50:00 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 		return (NULL);
 	while (str[++i] != '"')
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != ' ')
 		{
 			var = ft_var(mini, &str[i + 1]);
 			if (var)
@@ -82,23 +82,35 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 		else
 			result = ft_strjoin2(result, str[i]);
 	}
+	free (str);
 	return (result);
 }
 
-char	*to_var(t_mini *mini, char *str)
+char	*get_vars(t_mini *mini, char *str, int i)
 {
 	char	*result;
 	char	*var;
 
-	if (str[1] == '?')
+	result = calloc(1, 1);
+	if (!result)
+		return (NULL);
+	while (str[++i])
 	{
-		result = ft_itoa(g_status);
-		result = ft_strjoin(result, &str[2]);
-		return (result);
+		if (str[i] == '$' && str[i + 1] && str[i + 1] != ' ')
+		{
+			var = ft_var(mini, &str[i + 1]);
+			if (var)
+			{
+				result = ft_strjoin(result, mini_getenv(mini, var));
+				i += (ft_strlen(var));
+				free (var);
+			}
+			else
+				i += is_var(mini, &str[i + 1], 1);
+		}
+		else
+			result = ft_strjoin2(result, str[i]);
 	}
-	var = ft_var(mini, &str[1]);
-	result = ft_strjoin("", mini_getenv(mini, var));
-	result = ft_strjoin(result, &str[ft_strlen(var) + 1]);
 	free (str);
 	return (result);
 }
@@ -109,23 +121,25 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
 		cmd->cmds = ft_split_cmd(str, 0, 0);
-		while (cmd->cmds[i])
+		while (cmd->cmds[++i])
 		{
-			if (!ft_quotes(cmd->cmds[i]))
-				free (cmd->cmds[i]);
-			else if (cmd->cmds[i][0] == S_QUOTE)
+			if (cmd->cmds[i][0] == S_QUOTE)
 				cmd->cmds[i] = delete_quotes(cmd->cmds[i], S_QUOTE);
 			else if (cmd->cmds[i][0] == '"')
 				cmd->cmds[i] = delete_double_quotes(mini, cmd->cmds[i], 0);
-			else if (dol(cmd->cmds[i]) && !is_var(mini, &cmd->cmds[i][1], 0))
-				cmd->cmds[i] = to_empty(cmd->cmds[i]);
-			else if (dol(cmd->cmds[i]) && is_var(mini, &cmd->cmds[i][1], 0))
-				cmd->cmds[i] = to_var(mini, cmd->cmds[i]);
-			i++;
+			else if (dol(cmd->cmds[i]))
+				cmd->cmds[i] = get_vars(mini, cmd->cmds[i], -1);
 		}
+		// if (mini_heredoc(cmd))
+		// {
 		get_path(mini, cmd, 0);
+		clean_files(cmd);
+		// }
+		// else
+		// 	ft_free_full_cmd(cmd->cmds);
 		if (cmd->cmds && ft_strchr(str, PIPE))
-			cmd->next = get_cmd(mini, cmd->next, &ft_strchr(str, PIPE)[1], 0);
+			cmd->next = get_cmd(mini, cmd->next,
+					&ft_strchr(str, PIPE)[1], 0);
 	}
 	return (cmd);
 }
