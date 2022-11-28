@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 17:34:30 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/28 10:39:31 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,23 +85,25 @@ struct s_mini
 char						*get_prompt(t_mini *mini);
 t_mini						mini_init(char **env);
 int							mini_parser(t_mini *mini, char *str);
+
 // execute
 void						execute(t_mini *mini);
 
 // ft_env.c
 void						mini_env(t_mini *mini);
 int							is_var(t_mini *mini, char *var, int j);
-// void	                    edit_var(t_mini mini, char *var, char *val);
+// void						edit_var(t_mini mini, char *var, char *val);
 
-// int	                        is_varname(char *str);
+// int							is_varname(char *str);
 
-// void	                    mini_export(t_mini mini, char *var, char *val);
+// void						mini_export(t_mini mini, char *var, char *val);
 
 // ft_free.c
 void						ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
 void						ft_free_paths(char **paths);
 void						ft_free_env(t_var *var);
+
 // minishell_utils.c
 char						*mini_getenv(t_mini *mini, char *var);
 void						mini_exit(t_mini *mini);
@@ -109,19 +111,23 @@ int							ft_quotes(char *str);
 void						mini_new_line(int sig);
 int							is_input(char *str);
 int							start_with_pipe(char *str);
+
 // get_cmd.c
 t_cmd						*get_cmd(t_mini *mini,
 								t_cmd *cmd, char *str, int i);
+
 // get_cmd_utils.c
 char						*to_empty(char *str);
 int							dol(char *str);
 t_cmd						*cmd_init(void);
+
 // get_infos.c
 char						*get_exec(t_cmd *cmd);
 void						get_path(t_mini *mini, t_cmd *cmd, int i);
 void						get_infile(t_cmd *cmd, int i);
 void						get_outfile(t_cmd *cmd, int i);
 void						clean_files(t_cmd *cmd);
+
 // ft_split_cmd.c
 char						**ft_split_cmd(char *s, int i, int index);
 
