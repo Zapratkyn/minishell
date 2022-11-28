@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 14:55:02 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:15:07 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	get_infile(t_cmd *cmd, int i)
 		free (infile);
 	}
 	if (cmd->infile != -1)
-		get_outfile(cmd, 0);
+		get_outfile(cmd, -1);
 }
 
 void	get_outfile(t_cmd *cmd, int i)
