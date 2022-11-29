@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/29 13:11:10 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:28:07 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	ft_error(char *type, int is_exit)
 {
-	if (is_exit == 0)
-	{
-		ft_putstr_fd(type, STDERR_FILENO);
-		write (STDERR_FILENO, "\n", 1);
-	}
+
+	ft_putstr_fd(type, STDERR_FILENO);
+	write (STDERR_FILENO, "\n", 1);
 	if (is_exit == 1)
 		exit (0);
 }

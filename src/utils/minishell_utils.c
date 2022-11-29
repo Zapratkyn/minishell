@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 13:13:48 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:23:00 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	mini_new_line(int sig)
 	prompt = NULL;
 	(void)sig;
 	g_status = 1;
-	prompt = get_prompt();
+	prompt = get_prompt(NULL);
 	write (1, "\n", 1);
 	write (1, prompt, ft_strlen(prompt));
 	// rl_replace_line("", 0);

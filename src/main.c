@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 14:29:34 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:25:44 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,15 @@ void	get_var(t_mini *mini, char *str)
 	}
 }
 
-char	*get_prompt(void)
+char	*get_prompt(t_mini *mini)
 {
 	char	*str;
 	char	*prompt;
 
-	prompt = ft_strdup(getenv("USER"));
+	if (mini && mini->prompt)
+		free(mini->prompt);
+	prompt = ft_strdup(GREEN);
+	prompt = ft_strjoin(prompt, getenv("USER"));
 	prompt = ft_strjoin(prompt, "@minishell ");
 	str = ft_strnstr2(getenv("PWD"),
 			getenv("USER"), 1000);
@@ -51,8 +54,7 @@ char	*get_prompt(void)
 	else
 		prompt = ft_strjoin(prompt, getenv("PWD"));
 	prompt = ft_strjoin(prompt, " % ");
-	prompt = ft_strjoin (GREEN, prompt);
-	prompt = ft_strjoin (prompt, WHITE);
+	prompt = ft_strjoin(prompt, WHITE);
 	return (prompt);
 }
 
@@ -68,7 +70,7 @@ t_mini	mini_init(char **env)
 		get_var(&mini, env[i++]);
 	mini.g_status = 0;
 	mini.prompt = NULL;
-	mini.prompt = get_prompt();
+	mini.prompt = get_prompt(&mini);
 	return (mini);
 }
 

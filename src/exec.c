@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/29 14:44:24 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:39:23 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,25 @@ void	redir(t_cmd *cmd)
 	close(cmd->fd[READ]);
 }
 
+void	close_exec(t_cmd *cmd)
+{
+	close(cmd->fd[WRITE]);
+	if (cmd->next && !cmd->next->infile)
+		cmd->next->infile = cmd->fd[READ];
+	else
+		close(cmd->fd[READ]);
+	if (cmd->infile > 2)
+		close(cmd->infile);
+	if (cmd->outfile > 2)
+		close(cmd->outfile);
+}
+
 void	exec_child(t_mini *mini, t_cmd *cmd)
 {
 	redir(cmd);
-	if (is_builtin(cmd))
+	if (ch_builtin(cmd))
 		do_builtin(mini, cmd);
-	else if (cmd->path)
+	else if (cmd->path && !par_builtin(cmd))
 		execve(cmd->path, cmd->cmds, ft_lst_to_str(mini->var));
 	exit(EXIT_SUCCESS);
 }
@@ -53,27 +66,9 @@ void	execute(t_mini *mini)
 	while (cmd)
 	{
 		if (!check_cmd(cmd))
-		{
-			cmd = cmd->next;
 			continue ;
-		}
-		if (pipe(cmd->fd) == -1)
-			ft_error(PIPE_ERR, EXIT);
-		cmd->pid = fork();
-		if (cmd->pid == -1)
-			ft_error(FORK_ERR, EXIT);
-		else if (cmd->pid == CHILD_PROC)
-			exec_child(mini, cmd);
-		waitpid(cmd->pid, NULL, 0);
-		close(cmd->fd[WRITE]);
-		if (cmd->next && !cmd->next->infile)
-			cmd->next->infile = cmd->fd[READ];
-		else
-			close(cmd->fd[READ]);
-		if (cmd->infile > 2)
-			close(cmd->infile);
-		if (cmd->outfile > 2)
-			close(cmd->outfile);
+		pipe_and_fork(mini, cmd);
+		close_exec(cmd);
 		cmd = cmd->next;
 	}
 }
