@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/29 13:12:07 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:44:24 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	redir(t_cmd *cmd)
 	}
 	else if (cmd->next)
 	{
-		if (dup2(cmd->fd[WRITE], STDOUT_FILENO == -1))
+		if (dup2(cmd->fd[WRITE], STDOUT_FILENO) == -1)
 			ft_error(DUP_ERR, EXIT);
 	}
 	close(cmd->fd[WRITE]);
