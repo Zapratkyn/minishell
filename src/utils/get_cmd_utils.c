@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 14:57:00 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:51:09 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,29 @@ t_cmd	*cmd_init(void)
 	return (cmd);
 }
 
-void	clean_files(t_cmd *cmd)
+char	**clean_files(char **cmds, int i, int j, int len)
 {
-	int	i;
+	char	**result;
 
-	i = 0;
-	while (cmd->cmds[i])
+	while (cmds[++i])
 	{
-		if (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>')
-		{
-			if (cmd->cmds[i][1])
-			{
-				free(cmd->cmds[i]);
-				cmd->cmds[i] = ft_strdup("");
-			}
-			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
-			{
-				free (cmd->cmds[i]);
-				free (cmd->cmds[i + 1]);
-				cmd->cmds[i] = ft_strdup("");
-				cmd->cmds[i + 1] = ft_strdup("");
-			}
-		}
-		i++;
+		if (cmds[i] && cmds[i][0] != '<' && cmds[i][0] != '>'
+			&& !(i > 0 && cmds[i - 1][0] != '<' && !cmds[i - 1][1])
+			&& !(i > 0 && cmds[i - 1][0] != '>' && !cmds[i - 1][1]))
+			len++;
 	}
+	result = malloc (sizeof(char *) *  len + 1);
+	if (!result)
+		return (NULL);
+	i = -1;
+	while (cmds[++i])
+	{
+		if (cmds[i] && cmds[i][0] != '<' && cmds[i][0] != '>'
+			&& !(i > 0 && cmds[i - 1][0] != '<' && !cmds[i - 1][1])
+			&& !(i > 0 && cmds[i - 1][0] != '>' && !cmds[i - 1][1]))
+			result[j++] = ft_strdup(cmds[i]);
+	}
+	result[j] = NULL;
+	free (cmds);
+	return (result);
 }
