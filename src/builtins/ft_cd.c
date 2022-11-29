@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/29 16:38:46 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:08:46 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,17 @@ void	update_pwd(t_mini *mini)
 	}
 }
 
-char	*find_path(t_mini *mini, t_cmd *cmd)
+char	*find_path(t_cmd *cmd)
 {
 	char	*path;
 	char	*tmp;
 
 	tmp = NULL;
 
-	//if (!cmd->cmds[1])
-	//	path = ft_strdup(getenv("HOME"));
+	if (!cmd->cmds[1])
+		return (ft_strdup(getenv("HOME")));
 	if (!ft_strcmp("-", cmd->cmds[1]))
-		path = ft_strdup(mini_getenv(mini, "OLDPWD"));
+		return (ft_strdup(getenv("OLDPWD")));
 	else
 	{
 		tmp = getcwd(tmp, 0);
@@ -83,8 +83,8 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	char	*path;
 	char	*tmp;
 
-	tmp = mini_getenv(mini, "PWD");
-	path = find_path(mini, cmd);
+	tmp = getenv("PWD");
+	path = find_path(cmd);
 	if (chdir(path) == -1)
 	{
 		free(path);

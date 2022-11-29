@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 14:58:33 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:57:40 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 				cmd->path = ft_strdup(path);
 			free (path);
 		}
-		if (!cmd->path)
+		if (!ch_builtin(cmd) && !par_builtin(cmd) && !cmd->path)
 			get_infos_error(3, exec);
 		free (exec);
 		ft_free_paths(paths);

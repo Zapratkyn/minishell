@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/29 16:39:23 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:51:35 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	execute(t_mini *mini)
 	while (cmd)
 	{
 		if (!check_cmd(cmd))
+		{
+			cmd = cmd->next;
 			continue ;
+		}
 		pipe_and_fork(mini, cmd);
 		close_exec(cmd);
 		cmd = cmd->next;

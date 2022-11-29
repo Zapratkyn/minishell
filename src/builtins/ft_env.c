@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 12:53:23 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 15:02:21 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:53:49 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_env(t_mini *mini, t_cmd *cmd)
 	var = mini->var;
 	while (var)
 	{
-		ft_putstr_fd(var->content, cmd->outfile);
+		ft_putstr_fd(var->content, STDOUT_FILENO);
 		write(cmd->outfile, "\n", 1);
 		var = var->next;
 	}
