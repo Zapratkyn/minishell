@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 12:41:21 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:12:25 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ char	*get_vars(t_mini *mini, char *str, int i)
 
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	printf("%s\n", str);
 	cmd = cmd_init();
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
@@ -130,14 +129,12 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 				cmd->cmds[i] = delete_double_quotes(mini, cmd->cmds[i], 0);
 			else if (dol(cmd->cmds[i]))
 				cmd->cmds[i] = get_vars(mini, cmd->cmds[i], -1);
-			printf("'%s'\n", cmd->cmds[i]);
 		}
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);
-		// printf("%s\n", &ft_strchr(str, PIPE)[1]);
 		if (cmd->cmds && ft_strchr(str, PIPE))
 			cmd->next = get_cmd(mini, cmd->next,
-					&ft_strchr(str, PIPE)[1], 0);
+					&ft_strchr(str, PIPE)[1], -1);
 	}
 	return (cmd);
 }
