@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/29 13:10:54 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/29 13:14:51 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME						=	libft.a
 SRC							=	ft_calloc.c \
 								ft_insert.c \
 								ft_isalnum.c \
+								ft_itoa.c \
 								ft_lst_to_str.c \
 								ft_lstadd_back.c \
 								ft_lstclear.c \
