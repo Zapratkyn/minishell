@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:39:51 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/28 17:59:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:04:57 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_echo(t_cmd *cmd)
 	while (cmd->cmds[++i])
 	{
 		ft_putstr_fd(cmd->cmds[i], STDOUT_FILENO);
-		if (cmd->cmds[i][0] && cmd->cmds[i + 1][0])
+		if (cmd->cmds[i][0] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0])
 			write (STDOUT_FILENO, " ", 1);
 	}
 	if (is_newl)

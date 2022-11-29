@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 16:17:28 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:01:49 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 # include <unistd.h>
 # include <signal.h>
 # include <fcntl.h>
+
+/*
+** Global Variable
+*/
+
+int	g_status;
 
 /*
 ** Define constants
@@ -90,6 +96,7 @@ int							mini_parser(t_mini *mini, char *str);
 void						execute(t_mini *mini);
 
 // execute utils
+int							check_cmd(t_cmd *cmd);
 int							n_of_cmd(t_cmd *cmd);
 
 // ft_env.c
