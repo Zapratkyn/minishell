@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 12:09:22 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:03:07 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 				cmd->path = ft_strdup(path);
 			free (path);
 		}
-		if (!cmd->path && exec[1])
+		if (!cmd->path)
 			get_infos_error(3, exec);
 		free (exec);
 		ft_free_paths(paths);
 	}
 	if (cmd->path || cmd->cmds[0][0] == '>' || cmd->cmds[0][0] == '<')
-		get_infile(cmd, -1);
+		get_infile(cmd, ft_tablen(cmd->cmds));
 }
 
 int	get_infos_error(int i, char *s)
@@ -89,7 +89,7 @@ void	get_infile(t_cmd *cmd, int i)
 	char	*infile;
 
 	infile = NULL;
-	while (cmd->cmds[++i] && !infile)
+	while (cmd->cmds[--i] && !infile && cmd->infile == STDIN_FILENO)
 	{
 		if (cmd->cmds[i][0] == '<')
 		{
@@ -110,7 +110,7 @@ void	get_infile(t_cmd *cmd, int i)
 		free (infile);
 	}
 	if (cmd->infile != -1)
-		get_outfile(cmd, -1, 1);
+		get_outfile(cmd, ft_tablen(cmd->cmds), 1);
 }
 
 void	get_outfile(t_cmd *cmd, int i, int j)
@@ -118,7 +118,7 @@ void	get_outfile(t_cmd *cmd, int i, int j)
 	char	*outfile;
 
 	outfile = NULL;
-	while (cmd->cmds[++i] && !outfile)
+	while (cmd->cmds[--i] && !outfile && i >= 0)
 	{
 		if (cmd->cmds[i][0] == '>')
 		{

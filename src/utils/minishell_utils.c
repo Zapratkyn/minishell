@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 13:07:12 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:57:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	mini_new_line(int sig)
 	prompt = NULL;
 	(void)sig;
 	g_status = 1;
-	prompt = get_prompt();
+	prompt = get_prompt(NULL);
 	write (1, "\n", 1);
 	write (1, prompt, ft_strlen(prompt));
 	// rl_replace_line("", 0);
@@ -76,7 +76,9 @@ int	ft_quotes(char *str)
 
 int	start_with_pipe(char *str, int i)
 {
-	if (str[0] == PIPE)
+	char	*s;
+
+	if (str[0] == PIPE && !str[1])
 	{
 		ft_error("syntax error near unexpected token `|'", 0);
 		g_status = 258;
@@ -85,16 +87,18 @@ int	start_with_pipe(char *str, int i)
 	add_history(str);
 	if (!ft_strchr(str, PIPE))
 		return (0);
-	while (ft_strchr(str, PIPE))
+	s = str;
+	while (ft_strchr(s, PIPE))
 	{
 		i = 0;
-		str = &ft_strchr(str, PIPE)[1];
-		while (str[i] && str[i] != PIPE)
+		s = &ft_strchr(s, PIPE)[1];
+		while (s[i] && s[i] != PIPE)
 		{
-			if (str[i] != ' ')
+			if (s[i] != ' ')
 				return (0);
 			i++;
 		}
 	}
+	free (str);
 	return (1);
 }

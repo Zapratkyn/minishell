@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 13:12:25 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:41:35 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,9 @@ char	*get_vars(t_mini *mini, char *str, int i)
 
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	cmd = cmd_init();
+	cmd = cmd_init(str);
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
-		cmd->cmds = ft_split_cmd(str, 0, 0, 0);
 		while (cmd->cmds[++i])
 		{
 			if (cmd->cmds[i][0] == S_QUOTE)
@@ -133,8 +132,12 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);
 		if (cmd->cmds && ft_strchr(str, PIPE))
+		{
 			cmd->next = get_cmd(mini, cmd->next,
 					&ft_strchr(str, PIPE)[1], -1);
+			if (!cmd->next)
+				return (NULL);
+		}
 	}
 	return (cmd);
 }

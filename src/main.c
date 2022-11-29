@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 12:47:41 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:23:24 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ void	get_var(t_mini *mini, char *str)
 	}
 }
 
-char	*get_prompt(void)
+char	*get_prompt(t_mini *mini)
 {
 	char	*str;
 	char	*prompt;
 
+	if (mini && mini->prompt)
+		free(mini->prompt);
 	prompt = ft_strdup(getenv("USER"));
 	prompt = ft_strjoin(prompt, "@minishell ");
 	str = ft_strnstr2(getenv("PWD"),
@@ -66,7 +68,7 @@ t_mini	mini_init(char **env)
 		get_var(&mini, env[i++]);
 	mini.g_status = 0;
 	mini.prompt = NULL;
-	mini.prompt = get_prompt();
+	mini.prompt = get_prompt(&mini);
 	return (mini);
 }
 
@@ -80,10 +82,11 @@ int	mini_parser(t_mini *mini, char *str)
 	{
 		add_history(str);
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
-		printf("get_cmd OK\n");
+		free (str);
+		if (!mini->cmd)
+			return (1);
 		execute(mini);
 	}
-	free (str);
 	return (1);
 }
 
