@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 13:13:06 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:29:34 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ char	*get_prompt(void)
 	else
 		prompt = ft_strjoin(prompt, getenv("PWD"));
 	prompt = ft_strjoin(prompt, " % ");
+	prompt = ft_strjoin (GREEN, prompt);
+	prompt = ft_strjoin (prompt, WHITE);
 	return (prompt);
 }
 
@@ -80,7 +82,6 @@ int	mini_parser(t_mini *mini, char *str)
 	{
 		add_history(str);
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
-		printf("get_cmd OK\n");
 		execute(mini);
 	}
 	free (str);
