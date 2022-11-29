@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 14:30:20 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:07:12 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,27 @@ int	ft_quotes(char *str)
 	return (1);
 }
 
-int	start_with_pipe(char *str)
+int	start_with_pipe(char *str, int i)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
+	if (str[0] == PIPE)
 	{
-		if (str[i] == PIPE)
-		{
-			ft_error("syntax error near unexpected token `|'", 0);
-			g_status = 258;
-			return (1);
-		}
-		i++;
+		ft_error("syntax error near unexpected token `|'", 0);
+		g_status = 258;
+		return (1);
 	}
-	return (0);
+	add_history(str);
+	if (!ft_strchr(str, PIPE))
+		return (0);
+	while (ft_strchr(str, PIPE))
+	{
+		i = 0;
+		str = &ft_strchr(str, PIPE)[1];
+		while (str[i] && str[i] != PIPE)
+		{
+			if (str[i] != ' ')
+				return (0);
+			i++;
+		}
+	}
+	return (1);
 }

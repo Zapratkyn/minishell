@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 17:08:44 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:41:38 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,24 +96,24 @@ static char	*find_next_word(char *s, int len)
 	return (str);
 }
 
-char	**ft_split_cmd(char *s, int i, int index)
+char	**ft_split_cmd(char *s, int i, int index, int len)
 {
 	char	**tab;
 	int		wc;
-	int		j;
 
-	j = 0;
 	wc = count_words(s, 0, 0);
 	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
 		return (NULL);
+	while (s[index] == ' ')
+		index++;
 	while (i < wc)
 	{
-		j = find_next_len(&s[index], 0, 0);
-		tab[i] = find_next_word(&s[index], j);
+		len = find_next_len(&s[index], 0, 0);
+		tab[i] = find_next_word(&s[index], len);
 		if (!tab[i])
 			ft_free_full_cmd(tab);
-		index += (j - 1);
+		index += (len - 1);
 		while (s[index] == ' ' || s[index] == '\t')
 			index++;
 		i++;

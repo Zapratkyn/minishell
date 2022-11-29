@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 11:51:09 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:18:01 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_cmd	*cmd_init(void)
 	return (cmd);
 }
 
+// int	to_clean()
+
 char	**clean_files(char **cmds, int i, int j, int len)
 {
 	char	**result;
@@ -51,7 +53,7 @@ char	**clean_files(char **cmds, int i, int j, int len)
 			&& !(i > 0 && cmds[i - 1][0] != '>' && !cmds[i - 1][1]))
 			len++;
 	}
-	result = malloc (sizeof(char *) *  len + 1);
+	result = malloc (sizeof(char *) * len + 1);
 	if (!result)
 		return (NULL);
 	i = -1;

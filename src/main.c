@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 11:49:52 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:47:41 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	mini_parser(t_mini *mini, char *str)
 {
 	if (!str)
 		return (0);
-	if (start_with_pipe(str))
+	if (start_with_pipe(str, 0))
 		return (1);
 	if (is_input(str))
 	{

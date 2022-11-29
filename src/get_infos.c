@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 11:39:57 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:09:22 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,10 @@ void	get_infile(t_cmd *cmd, int i)
 		free (infile);
 	}
 	if (cmd->infile != -1)
-		get_outfile(cmd, -1);
+		get_outfile(cmd, -1, 1);
 }
 
-void	get_outfile(t_cmd *cmd, int i)
+void	get_outfile(t_cmd *cmd, int i, int j)
 {
 	char	*outfile;
 
@@ -122,17 +122,22 @@ void	get_outfile(t_cmd *cmd, int i)
 	{
 		if (cmd->cmds[i][0] == '>')
 		{
-			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '>')
-				outfile = ft_strdup(&cmd->cmds[i][1]);
-			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
+			if (cmd->cmds[i][1] == '>')
+				j++;
+			if (cmd->cmds[i][j])
+				outfile = ft_strdup(&cmd->cmds[i][j]);
+			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1])
 				outfile = ft_strdup(cmd->cmds[i + 1]);
-			else				cmd->outfile = get_infos_error(1, NULL);
+			else
+				cmd->outfile = get_infos_error(1, NULL);
 		}
 	}
 	if (outfile)
 	{
-		cmd->outfile = open(outfile, O_CREAT | O_RDONLY, 0777);
+		if (j == 1)
+			cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
+		else if (j == 2)
+			cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0777);
 		free (outfile);
 	}
-	// clean_files(cmd);
 }
