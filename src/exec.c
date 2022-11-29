@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/29 13:06:49 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:12:07 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	execute(t_mini *mini)
 	cmd = mini->cmd;
 	while (cmd)
 	{
-
 		if (!check_cmd(cmd))
 		{
 			cmd = cmd->next;

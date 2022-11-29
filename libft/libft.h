@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 11:37:26 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:10:50 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ char					*ft_strnstr2(const char *haystack, const char *needle,
 char					*ft_substr(char const *s, unsigned int start,
 							size_t len);
 void					ft_usleep(int count);
+char					*ft_itoa(int n);
 
 #endif

@@ -6,25 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 14:14:01 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:13:48 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
-
-char	*mini_getenv(t_mini *mini, char *var)
-{
-	t_var	*tmp;
-
-	tmp = mini->var;
-	while (tmp)
-	{
-		if (!ft_strncmp(var, tmp->content, ft_strlen(var)))
-			return (&tmp->content[ft_strlen(var) + 1]);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
 
 void	mini_exit(t_mini *mini)
 {
@@ -33,7 +19,7 @@ void	mini_exit(t_mini *mini)
 	ft_free_env(mini->var);
 	free (mini->prompt);
 	printf("\nexit\n");
-	exit (0);
+	exit (g_status);
 }
 
 int	is_input(char *str)
@@ -41,7 +27,7 @@ int	is_input(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_strlen(str) == 0)
+	if (ft_strlen(str) == 0 || !ft_quotes(str))
 		return (0);
 	while (str[i])
 	{
@@ -54,8 +40,16 @@ int	is_input(char *str)
 
 void	mini_new_line(int sig)
 {
+	char	*prompt;
+
+	prompt = NULL;
 	(void)sig;
+	g_status = 1;
+	prompt = get_prompt();
 	write (1, "\n", 1);
+	write (1, prompt, ft_strlen(prompt));
+	// rl_replace_line("", 0);
+	free (prompt);
 }
 
 int	ft_quotes(char *str)
@@ -80,19 +74,27 @@ int	ft_quotes(char *str)
 	return (1);
 }
 
-int	start_with_pipe(char *str)
+int	start_with_pipe(char *str, int i)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
+	if (str[0] == PIPE)
 	{
-		if (str[i] == PIPE)
-		{
-			printf("parse error near '|'\n");
-			return (1);
-		}
-		i++;
+		ft_error("syntax error near unexpected token `|'", 0);
+		g_status = 258;
+		return (1);
 	}
-	return (0);
+	add_history(str);
+	if (!ft_strchr(str, PIPE))
+		return (0);
+	while (ft_strchr(str, PIPE))
+	{
+		i = 0;
+		str = &ft_strchr(str, PIPE)[1];
+		while (str[i] && str[i] != PIPE)
+		{
+			if (str[i] != ' ')
+				return (0);
+			i++;
+		}
+	}
+	return (1);
 }

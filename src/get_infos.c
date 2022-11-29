@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 17:56:18 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:12:50 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 			free (path);
 		}
 		if (!cmd->path && exec[1])
-			printf("%s : invalid command\n", exec);
+			get_infos_error(3, exec);
 		free (exec);
 		ft_free_paths(paths);
 	}
@@ -56,12 +56,31 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 		get_infile(cmd, -1);
 }
 
-int	infile_error(int i, char *infile)
+int	get_infos_error(int i, char *s)
 {
+	char	*str;
+
+	str = NULL;
 	if (i == 1)
-		printf("2: Syntax error: newline unexpected\n");
+	{
+		ft_error("syntax error near unexpected token `newline'", 0);
+		g_status = 258;
+	}
 	else if (i == 2)
-		printf("3: cannot open %s: No such file\n", infile);
+	{
+		str = ft_strjoin("3: cannot open ", s);
+		str = ft_strjoin(str, ": No such file or directory");
+		ft_error(str, 0);
+		free (str);
+		g_status = 1;
+	}
+	else if (i == 3)
+	{
+		str = ft_strjoin(s, " : command not found");
+		ft_error(str, 0);
+		free (str);
+		g_status = 127;
+	}
 	return (-1);
 }
 
@@ -70,75 +89,55 @@ void	get_infile(t_cmd *cmd, int i)
 	char	*infile;
 
 	infile = NULL;
-	if (cmd->cmds[0][0] == '<' && !cmd->cmds[0][1] && !cmd->cmds[1])
-		cmd->infile = infile_error(1, NULL);
 	while (cmd->cmds[++i] && !infile)
 	{
-		if (cmd->cmds[i][0] == '<' && cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
-			infile = ft_strdup(&cmd->cmds[i][1]);
-		else if (cmd->cmds[i][0] == '<' && !cmd->cmds[i][1] && cmd->cmds[i + 1])
-			infile = ft_strdup(cmd->cmds[i + 1]);
+		if (cmd->cmds[i][0] == '<')
+		{
+			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
+				infile = ft_strdup(&cmd->cmds[i][1]);
+			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
+				infile = ft_strdup(cmd->cmds[i + 1]);
+			else
+				cmd->infile = get_infos_error(1, NULL);
+		}
 	}
 	if (infile)
 	{
 		if (!access(infile, F_OK))
 			cmd->infile = open(infile, O_RDONLY);
 		else
-			cmd->infile = infile_error(2, infile);
+			cmd->infile = get_infos_error(2, infile);
 		free (infile);
 	}
 	if (cmd->infile != -1)
-		get_outfile(cmd, 0);
+		get_outfile(cmd, -1, 1);
 }
 
-void	get_outfile(t_cmd *cmd, int i)
+void	get_outfile(t_cmd *cmd, int i, int j)
 {
 	char	*outfile;
 
 	outfile = NULL;
-	if (cmd->cmds[0][0] == '>' && !cmd->cmds[0][1] && !cmd->cmds[1])
+	while (cmd->cmds[++i] && !outfile)
 	{
-		printf("2: Syntax error: newline unexpected\n");
-		cmd->outfile = -1;
-	}
-	while (cmd->cmds[i] && !outfile && cmd->outfile != -1)
-	{
-		if (cmd->cmds[i][0] == '>' && cmd->cmds[i][1] && cmd->cmds[i][1] != '>')
-			outfile = ft_strdup(&cmd->cmds[i][1]);
-		else if (cmd->cmds[i][0] == '>' && !cmd->cmds[i][1] && cmd->cmds[i + 1])
-			outfile = ft_strdup(cmd->cmds[i + 1]);
-		i++;
+		if (cmd->cmds[i][0] == '>')
+		{
+			if (cmd->cmds[i][1] == '>')
+				j++;
+			if (cmd->cmds[i][j])
+				outfile = ft_strdup(&cmd->cmds[i][j]);
+			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1])
+				outfile = ft_strdup(cmd->cmds[i + 1]);
+			else
+				cmd->outfile = get_infos_error(1, NULL);
+		}
 	}
 	if (outfile)
 	{
-		cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
+		if (j == 1)
+			cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
+		else if (j == 2)
+			cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0777);
 		free (outfile);
-	}
-	clean_files(cmd);
-}
-
-void	clean_files(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd->cmds[i])
-	{
-		if (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>')
-		{
-			if (cmd->cmds[i][1])
-			{
-				free(cmd->cmds[i]);
-				cmd->cmds[i] = ft_strdup("");
-			}
-			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
-			{
-				free (cmd->cmds[i]);
-				free (cmd->cmds[i + 1]);
-				cmd->cmds[i] = ft_strdup("");
-				cmd->cmds[i + 1] = ft_strdup("");
-			}
-		}
-		i++;
 	}
 }

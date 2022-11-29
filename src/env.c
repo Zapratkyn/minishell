@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:28:02 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/28 14:30:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	is_var(t_mini *mini, char *var, int j)
 	i = 0;
 	len = 0;
 	temp = mini->var;
+	if (var[0] == '?')
+		return (1);
 	while (ft_isalnum(var[i]) || var[i] == '_')
 	{
 		len++;
@@ -35,6 +37,22 @@ int	is_var(t_mini *mini, char *var, int j)
 		temp = temp->next;
 	}
 	return (0);
+}
+
+char	*mini_getenv(t_mini *mini, char *var)
+{
+	t_var	*tmp;
+
+	tmp = mini->var;
+	if (var[0] == '?')
+		return (ft_itoa(g_status));
+	while (tmp)
+	{
+		if (!ft_strncmp(var, tmp->content, ft_strlen(var)))
+			return (&tmp->content[ft_strlen(var) + 1]);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }
 
 // void	edit_var(t_mini mini, char *var, char *val)
