@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 14:31:28 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:40:46 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,17 @@ int	g_status;
 */
 
 // main.c
-char						*get_prompt();
+char						*get_prompt(t_mini *mini);
 t_mini  					mini_init(char **env);
 int                         mini_parser(t_mini *mini, char *str);
 // execute
 void						execute(t_mini *mini);
+void						exec_child(t_mini *mini, t_cmd *cmd);
 
 // execute utils
 int							check_cmd(t_cmd *cmd);
 int							n_of_cmd(t_cmd *cmd);
+void						pipe_and_fork(t_mini *mini, t_cmd *cmd);
 
 // ft_env.c
 void						mini_env(t_mini *mini);
@@ -159,7 +161,8 @@ char						**clean_files(char **cmds, int i, int j, int len);
 char						**ft_split_cmd(char *s, int i, int index, int len);
 
 // builtins
-int							is_builtin(t_cmd *cmd);
+int							par_builtin(t_cmd *cmd);
+int							ch_builtin(t_cmd *cmd);
 void						do_builtin(t_mini *mini, t_cmd *cmd);
 void						ft_echo(t_cmd *cmd);
 void						ft_env(t_mini *mini, t_cmd *cmd);
