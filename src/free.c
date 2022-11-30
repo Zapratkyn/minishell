@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:28:05 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:06:54 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	ft_free_full_cmd(char **tab)
 	free (tab);
 }
 
-void	ft_free_paths(char **paths)
+void	ft_free_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (paths[i])
-		free (paths[i++]);
-	free (paths);
+	while (tab[i])
+		free (tab[i++]);
+	free (tab);
 }
 
 void	ft_free_env(t_var *var)

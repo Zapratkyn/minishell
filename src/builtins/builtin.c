@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/29 16:55:30 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:11:52 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 	if (!ft_strcmp(cmd->cmds[0], "echo"))
 		ft_echo(cmd);
 	else if (!ft_strcmp(cmd->cmds[0], "env"))
-		ft_env(mini, cmd);
+		ft_env(mini);
 	else if (!ft_strcmp(cmd->cmds[0], "pwd"))
 		ft_pwd(cmd);
 	else if (!ft_strcmp(cmd->cmds[0], "cd"))

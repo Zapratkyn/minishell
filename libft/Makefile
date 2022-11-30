@@ -6,12 +6,13 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/29 13:14:51 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/30 12:27:48 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME						=	libft.a
 SRC							=	ft_calloc.c \
+								ft_find_index.c \
 								ft_insert.c \
 								ft_isalnum.c \
 								ft_itoa.c \
@@ -22,6 +23,7 @@ SRC							=	ft_calloc.c \
 								ft_lstlast.c \
 								ft_lstnew.c \
 								ft_lstsize.c \
+								ft_n_putstr.c \
 								ft_putstr_fd.c \
 								ft_split.c \
 								ft_strchr.c \

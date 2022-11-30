@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 13:10:50 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:27:31 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ struct s_var
 
 void					ft_error(char *type, int is_exit);
 char					*ft_calloc(int count, int size);
+int						ft_find_index(char *s, char c);
 char					*ft_insert(char *s1, char c, char *s2);
 int						ft_isalnum(int c);
 char					**ft_lst_to_str(t_var *var);
@@ -40,6 +41,7 @@ void					ft_lstdelone(t_var *var);
 t_var					*ft_lstnew(char *content);
 t_var					*ft_lstlast(t_var *var);
 int						ft_lstsize(t_var *var);
+void					ft_n_putstr(char *s, int n);
 void					ft_putstr_fd(char *s, int fd);
 char					**ft_split(char const *s, char c);
 char					*ft_strchr(const char *s, int c);
