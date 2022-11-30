@@ -6,19 +6,26 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/29 13:34:03 by gponcele         ###   ########.fr        #
+#    Updated: 2022/11/30 16:56:38 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME						=	libft.a
 SRC							=	ft_calloc.c \
+								ft_find_index.c \
 								ft_insert.c \
 								ft_isalnum.c \
+								ft_itoa.c \
+								ft_lst_index.c \
+								ft_lst_to_str.c \
 								ft_lstadd_back.c \
 								ft_lstclear.c \
 								ft_lstdelone.c \
+								ft_lstget.c \
 								ft_lstlast.c \
 								ft_lstnew.c \
+								ft_lstsize.c \
+								ft_n_putstr.c \
 								ft_putstr_fd.c \
 								ft_split.c \
 								ft_strchr.c \

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 14:02:46 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:56:45 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	ft_free_full_cmd(char **tab)
 	free (tab);
 }
 
-void	ft_free_paths(char **paths)
+void	ft_free_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (paths[i])
-		free (paths[i++]);
-	free (paths);
+	while (tab[i])
+		free (tab[i++]);
+	free (tab);
 }
 
 void	ft_free_env(t_var *var)

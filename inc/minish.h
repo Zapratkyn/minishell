@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 16:37:12 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:56:26 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,27 @@
 # include <sys/ioctl.h>
 
 /*
+** Global Variable
+*/
+
+int	g_status;
+
+/*
 ** Define constants
 */
 
 /* Debug */
 # define ICI printf("ici\n");
+
+/* Colors */
+#define RED "\x1B[31m"
+#define GREEN "\x1B[32m"
+#define YELLOW "\x1B[33m"
+#define BLUE "\x1B[34m"
+#define MAGENTA "\x1B[35m"
+#define CYAN "\x1B[36m"
+#define WHITE "\x1B[37m"
+#define RESET "\x1B[0m"
 
 /* Managing errors */
 # define PIPE_ERR "Error in the creation of a pipe."
@@ -42,22 +58,16 @@
 # define DUP_ERR "Error in the dup2."
 # define CMD_ERR "Wrong input command."
 # define DIR_ERR "No such file or directory."
+# define NO_EXIT 0
+# define EXIT 1
 
 /* Characters */
-# define CHILD 0
+# define CHILD_PROC 0
 # define READ 0
 # define WRITE 1
 # define S_QUOTE 39
+# define D_QUOTE 34
 # define PIPE 124
-
-/* Builtin */
-# define ECHO 1
-# define CD 2
-# define PWD 3
-# define EXPORT 4
-# define UNSET 5
-# define ENV 6
-# define EXIT 7
 
 /*
 ** Structures
@@ -86,10 +96,10 @@ struct s_cmd
 
 struct s_mini
 {
-    int     g_status;
-    char    *prompt;
-    t_var   *var;
-    t_cmd   *cmd;
+	int		g_status;
+	char	*prompt;
+	t_var	*var;
+	t_cmd	*cmd;
 };
 
 int	g_status;
@@ -99,27 +109,37 @@ int	g_status;
 */
 
 // main.c
-char						*get_prompt();
+char						*get_prompt(t_mini *mini);
 t_mini  					mini_init(char **env);
 int                         mini_parser(t_mini *mini, char *str);
 // execute
 void						execute(t_mini *mini);
+void						exec_child(t_mini *mini, t_cmd *cmd);
+
+// execute utils
+int							check_cmd(t_cmd *cmd);
+int							n_of_cmd(t_cmd *cmd);
+void						pipe_and_fork(t_mini *mini, t_cmd *cmd);
 
 // ft_env.c
 void						mini_env(t_mini *mini);
 int							is_var(t_mini *mini, char *var, int j);
-// void	                    edit_var(t_mini mini, char *var, char *val);
+// void						edit_var(t_mini mini, char *var, char *val);
 
-// int	                        is_varname(char *str);
+// int							is_varname(char *str);
 
-// void	                    mini_export(t_mini mini, char *var, char *val);
+// void						mini_export(t_mini mini, char *var, char *val);
 
 // ft_free.c
 void						ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
-void						ft_free_paths(char **paths);
+void						ft_free_tab(char **tab);
 void						ft_free_env(t_var *var);
 void						mini_unlink(char *str);
+// builtin_utils.c
+char						*ft_rev_strchr(char *str, char c);
+int							is_env(t_mini *mini, char *s);
+void						remove_quotes(t_cmd *cmd, int index, char *s);
 // minishell_utils.c
 char						*mini_getenv(t_mini *mini, char *var);
 void						mini_exit(t_mini *mini);
@@ -130,6 +150,7 @@ int							start_with_pipe(char *str, int i);
 // get_cmd.c
 t_cmd						*get_cmd(t_mini *mini,
 								t_cmd *cmd, char *str, int i);
+
 // get_cmd_utils.c
 char						*to_empty(char *str);
 int							dol(char *str);
@@ -145,12 +166,16 @@ char						**clean_files(char **cmds, int i, int j, int len);
 char						**ft_split_cmd(char *s, int i, int index, int len);
 
 // builtins
-int							is_builtin(t_cmd *cmd);
+int							par_builtin(t_cmd *cmd);
+int							ch_builtin(t_cmd *cmd);
 void						do_builtin(t_mini *mini, t_cmd *cmd);
 void						ft_echo(t_cmd *cmd);
-void						ft_env(t_mini *mini, t_cmd *cmd);
+void						ft_env(t_mini *mini);
+void						ft_exit(t_mini *mini);
 void						ft_cd(t_mini *mini, t_cmd *cmd);
 void						ft_pwd(t_cmd *cmd);
+void						ft_export(t_mini *mini, t_cmd *cmd);
+void						ft_unset(t_mini *mini, t_cmd *cmd);
 // heredoc.c
 int							mini_heredoc(char *str, int fd);
 

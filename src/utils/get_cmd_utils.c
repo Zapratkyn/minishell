@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 16:22:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:02:37 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_cmd	*cmd_init(char *str, int i, char *input)
 	cmd->cmds = ft_split_cmd(str, 0, 0, 0);
 	if (!cmd->cmds)
 		return (NULL);
+	cmd->next = NULL;
 	return (cmd);
 }
 

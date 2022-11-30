@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insert.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:44:21 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/28 10:57:34 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:10:32 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_insert(char *s1, char c, char *s2)
 {
-	char *ins;
+	char	*ins;
 	int		l1;
 	int		l2;
 	int		i;
@@ -23,7 +23,7 @@ char	*ft_insert(char *s1, char c, char *s2)
 	l2 = ft_strlen(s2);
 	ins = malloc (sizeof(char) * (l1 + l2 + 2));
 	if (!ins)
-		ft_error(MALLOC_ERR, 1);
+		ft_error(MALLOC_ERR, EXIT);
 	i = -1;
 	while (++i < l1)
 		ins[i] = s1[i];

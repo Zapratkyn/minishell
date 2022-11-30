@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_n_putstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 15:39:40 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 14:40:43 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/30 12:25:00 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/30 12:27:18 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_var	*ft_lstnew(char *content)
+void	ft_n_putstr(char *s, int n)
 {
-	t_var	*var;
+	int	i;
 
-	var = (t_var *)malloc(sizeof(t_var));
-	if (!var)
-		return (NULL);
-	var->content = content;
-	var->next = NULL;
-	var->prev = NULL;
-	return (var);
+	i = 0;
+	while (s && s[i] && i < n)
+		write(STDOUT_FILENO, &s[i++], 1);
 }

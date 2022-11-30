@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 16:38:03 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:02:14 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,19 @@
 
 int	get_var(t_mini *mini, char *str)
 {
-	t_var		*index;
-	t_var		*temp;
+	int		i;
+	t_var	*var;
 
-	index = mini->var;
-	temp = malloc (sizeof(t_var));
-	if (!temp)
-		return (0);
-	temp->content = ft_strdup(str);
-	if (!temp->content)
-		return (0);
-	if (!mini->var)
-		mini->var = temp;
-	else
+	i = 0;
+	mini->var = ft_lstnew(env[i]);
+	while (env[++i])
+		ft_lstadd_back(&mini->var, ft_lstnew(env[i]));
+	var = mini->var;
+	while (var)
 	{
-		while (index->next)
-			index = index->next;
-		index->next = temp;
+		if (var->next)
+			var->next->prev = var;
+		var = var->next;
 	}
 	return (1);
 }
@@ -43,7 +39,9 @@ char	*get_prompt(t_mini *mini)
 	if (mini && mini->prompt)
 		free(mini->prompt);
 	prompt = NULL;
-	prompt = ft_strdup(getenv("USER"));
+	prompt = ft_strdup(GREEN);
+	if (prompt)
+		prompt = ft_strjoin(prompt, getenv("USER"));
 	if (prompt)
 		prompt = ft_strjoin(prompt, "@minishell ");
 	str = ft_strnstr2(getenv("PWD"),
@@ -58,6 +56,8 @@ char	*get_prompt(t_mini *mini)
 		prompt = ft_strjoin(prompt, getenv("PWD"));
 	if (prompt)
 		prompt = ft_strjoin(prompt, " % ");
+	if (prompt)
+		prompt = ft_strjoin(prompt, WHITE);
 	return (prompt);
 }
 

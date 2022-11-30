@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 15:39:40 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 14:40:43 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/25 16:55:54 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/25 17:05:11 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minish.h"
 
-t_var	*ft_lstnew(char *content)
+void	ft_exit(t_mini *mini)
 {
-	t_var	*var;
-
-	var = (t_var *)malloc(sizeof(t_var));
-	if (!var)
-		return (NULL);
-	var->content = content;
-	var->next = NULL;
-	var->prev = NULL;
-	return (var);
+	(void) mini;
+	// code
 }

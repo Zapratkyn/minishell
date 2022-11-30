@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:52:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/28 14:22:36 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:13:35 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_pwd(t_cmd *cmd)
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (!pwd)
-		ft_error(PWD_ERR, 1);
+		ft_error(PWD_ERR, EXIT);
 	ft_putstr_fd(pwd, cmd->outfile);
 	write(cmd->outfile, "\n", 1);
 	free(pwd);

@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/30 16:34:09 by gponcele         ###   ########.fr        #
+#    Updated: 2022/11/30 16:56:13 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,12 @@ SRC							=	src/builtins/builtin.c \
 								src/builtins/ft_cd.c \
 								src/builtins/ft_echo.c \
 								src/builtins/ft_env.c \
+								src/builtins/ft_exit.c \
+								src/builtins/ft_export.c \
 								src/builtins/ft_pwd.c \
+								src/builtins/ft_unset.c \
+								src/utils/builtin_utils.c \
+								src/utils/exec_utils.c \
 								src/utils/minishell_utils.c \
 								src/utils/get_cmd_utils.c \
 								src/error.c \

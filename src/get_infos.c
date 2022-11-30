@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 13:07:49 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:58:20 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 				cmd->path = ft_strdup(path);
 			free (path);
 		}
-		if (!cmd->path)
+		if (!ch_builtin(cmd) && !par_builtin(cmd) && !cmd->path)
 			get_infos_error(3, exec);
 		free (exec);
-		ft_free_paths(paths);
+		ft_free_tab(paths);
 	}
 	if (cmd->path || cmd->cmds[0][0] == '>' || cmd->cmds[0][0] == '<')
 		get_infile(cmd, ft_tablen(cmd->cmds));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:51:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:41:24 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	update_oldpwd(t_mini *mini, char *path)
 	t_var	*var;
 	char	*o_pwd;
 
-	o_pwd = "OLDPWD";
+	o_pwd = "OLDPWD=";
 	var = mini->var;
 	while (var)
 	{
@@ -46,7 +46,7 @@ void	update_pwd(t_mini *mini)
 		{
 			tmp = getcwd(tmp, 0);
 			if (!tmp)
-				ft_error(PWD_ERR, 1);
+				ft_error(PWD_ERR, EXIT);
 			free(var->content);
 			var->content = ft_strjoin(pwd, tmp);
 			free(tmp);
@@ -56,20 +56,23 @@ void	update_pwd(t_mini *mini)
 	}
 }
 
-char	*find_path(t_mini *mini, t_cmd *cmd)
+char	*find_path(t_cmd *cmd)
 {
 	char	*path;
 	char	*tmp;
 
 	tmp = NULL;
+
+	if (!cmd->cmds[1])
+		return (ft_strdup(getenv("HOME")));
 	if (!ft_strcmp("-", cmd->cmds[1]))
-		path = ft_strdup(mini_getenv(mini, "OLDPWD"));
+		return (ft_strdup(getenv("OLDPWD")));
 	else
 	{
 		tmp = getcwd(tmp, 0);
 		if (!tmp)
-			ft_error(PWD_ERR, 1);
-		path = ft_insert(tmp, '/', cmd->cmds[0]);
+			ft_error(PWD_ERR, EXIT);
+		path = ft_insert(tmp, '/', cmd->cmds[1]);
 		free(tmp);
 	}
 	return (path);
@@ -80,12 +83,12 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	char	*path;
 	char	*tmp;
 
-	tmp = mini_getenv(mini, "PWD");
-	path = find_path(mini, cmd);
+	tmp = getenv("PWD");
+	path = find_path(cmd);
 	if (chdir(path) == -1)
 	{
 		free(path);
-		ft_error(DIR_ERR, 1);
+		ft_error(DIR_ERR, NO_EXIT);
 	}
 	update_oldpwd(mini, tmp);
 	update_pwd(mini);
