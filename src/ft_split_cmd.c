@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 12:41:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:19:53 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ char	**ft_split_cmd(char *s, int i, int index, int len)
 		len = find_next_len(&s[index], 0, 0);
 		tab[i] = find_next_word(&s[index], len);
 		if (!tab[i])
+		{
 			ft_free_full_cmd(tab);
+			return (NULL);
+		}
 		index += (len - 1);
 		while (s[index] == ' ' || s[index] == '\t')
 			index++;

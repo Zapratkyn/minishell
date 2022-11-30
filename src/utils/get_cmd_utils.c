@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 12:36:46 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:22:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ t_cmd	*cmd_init(char *str, int i, char *input)
 	cmd->cmds = NULL;
 	cmd->infile = STDIN_FILENO;
 	while (str[i] && str[i] != PIPE)
+	{
 		input = ft_strjoin2(input, str[i++]);
+		if (!input)
+			return (NULL);
+	}
 	cmd->infile = mini_heredoc(input, cmd->infile);
 	free (input);
 	if (cmd->infile == -1)
@@ -44,6 +48,8 @@ t_cmd	*cmd_init(char *str, int i, char *input)
 	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
 	cmd->cmds = ft_split_cmd(str, 0, 0, 0);
+	if (!cmd->cmds)
+		return (NULL);
 	return (cmd);
 }
 

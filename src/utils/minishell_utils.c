@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 16:57:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:00:01 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	mini_exit(t_mini *mini)
 		ft_free_cmd(mini->cmd);
 	ft_free_env(mini->var);
 	free (mini->prompt);
-	printf("\nexit\n");
+	printf("exit\n");
 	exit (g_status);
 }
 
@@ -40,16 +40,11 @@ int	is_input(char *str)
 
 void	mini_new_line(int sig)
 {
-	char	*prompt;
-
-	prompt = NULL;
 	(void)sig;
 	g_status = 1;
-	prompt = get_prompt(NULL);
-	write (1, "\n", 1);
-	write (1, prompt, ft_strlen(prompt));
-	// rl_replace_line("", 0);
-	free (prompt);
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
 }
 
 int	ft_quotes(char *str)
@@ -84,7 +79,8 @@ int	start_with_pipe(char *str, int i)
 		g_status = 258;
 		return (1);
 	}
-	add_history(str);
+	if (ft_strlen(str) != 0)
+		add_history(str);
 	if (!ft_strchr(str, PIPE))
 		return (0);
 	s = str;
@@ -99,6 +95,5 @@ int	start_with_pipe(char *str, int i)
 			i++;
 		}
 	}
-	free (str);
 	return (1);
 }

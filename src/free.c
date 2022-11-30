@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/25 15:28:05 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:02:46 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,24 @@ void	ft_free_env(t_var *var)
 	if (var->next)
 		ft_free_env(var->next);
 	free(var);
+}
+
+void	mini_unlink(char *str)
+{
+	int		i;
+	char	*file;
+
+	i = 1;
+	file = NULL;
+	while (1)
+	{
+		if (file)
+			free (file);
+		file = ft_strjoin(str, ft_itoa(i));
+		if (access(file, F_OK))
+			break ;
+		unlink(file);
+		i++;
+	}
+	free (file);
 }

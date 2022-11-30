@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/30 12:17:42 by gponcele         ###   ########.fr        #
+#    Updated: 2022/11/30 15:49:08 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ linux:
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 $(NAME):
-					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -o $(NAME)
+					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -L/Users/gponcele/.brew/opt/readline/lib -I/Users/gponcele/.brew/opt/readline/include -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 clean:

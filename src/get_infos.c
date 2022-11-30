@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 16:03:07 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:07:49 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	get_infile(t_cmd *cmd, int i)
 	char	*infile;
 
 	infile = NULL;
-	while (cmd->cmds[--i] && !infile && cmd->infile == STDIN_FILENO)
+	while (cmd->cmds[--i] && i >= 0 && !infile && cmd->infile == STDIN_FILENO)
 	{
 		if (cmd->cmds[i][0] == '<')
 		{
