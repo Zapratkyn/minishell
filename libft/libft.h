@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 12:27:31 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:48:50 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ struct s_var
 {
 	char	*content;
 	t_var	*next;
+	t_var	*prev;
 };
 
 void					ft_error(char *type, int is_exit);
