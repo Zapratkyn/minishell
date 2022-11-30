@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:41:03 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:11:25 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:51:01 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_lstclear(t_var **var)
 	while (var && *var)
 	{
 		tmp = (*var)->next;
-		ft_lstdelone(*var);
+		ft_lstdelone(var, *var);
 		*var = tmp;
 	}
 }

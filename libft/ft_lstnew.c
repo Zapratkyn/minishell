@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:39:40 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:15:56 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:40:43 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ t_var	*ft_lstnew(char *content)
 		return (NULL);
 	var->content = content;
 	var->next = NULL;
+	var->prev = NULL;
 	return (var);
 }
