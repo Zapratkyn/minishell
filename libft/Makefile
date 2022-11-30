@@ -1,0 +1,55 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
+#    Updated: 2022/11/29 13:34:03 by gponcele         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME						=	libft.a
+SRC							=	ft_calloc.c \
+								ft_insert.c \
+								ft_isalnum.c \
+								ft_lstadd_back.c \
+								ft_lstclear.c \
+								ft_lstdelone.c \
+								ft_lstlast.c \
+								ft_lstnew.c \
+								ft_putstr_fd.c \
+								ft_split.c \
+								ft_strchr.c \
+								ft_strcmp.c \
+								ft_strdup.c \
+								ft_strjoin.c \
+								ft_strlcpy.c \
+								ft_strlen.c \
+								ft_strncmp.c \
+								ft_strnstr.c \
+								ft_substr.c \
+								ft_itoa.c \
+								ft_tablen.c
+
+CC							=	gcc
+RM							=	rm -rf
+INCLUDES					=	-I./includes
+CFLAGS						=	-Wall -Wextra -Werror
+OBJS						=	$(SRC:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+			ar rcs $(NAME) $(OBJS)
+
+clean:
+			$(RM) $(OBJS)
+
+fclean: clean
+			$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
+#    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/15 17:23:43 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/30 16:34:09 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,17 +27,46 @@ RESET		= $(shell tput -Txterm sgr0)
 
 NAME						=	minishell
 
-
 # Files
 
-SRC							=	src/main.c
+SRC							=	src/builtins/builtin.c \
+								src/builtins/ft_cd.c \
+								src/builtins/ft_echo.c \
+								src/builtins/ft_env.c \
+								src/builtins/ft_pwd.c \
+								src/utils/minishell_utils.c \
+								src/utils/get_cmd_utils.c \
+								src/error.c \
+								src/exec.c \
+								src/main.c \
+								src/env.c \
+								src/free.c \
+								src/get_cmd.c \
+								src/get_infos.c \
+								src/ft_split_cmd.c \
+								src/mini_heredoc.c
+
+LIBFT						=	./libft/libft.a
+
+LIBFT_LINUX					=	libft/ft_strlen.c \
+								libft/ft_strnstr.c \
+								libft/ft_strncmp.c \
+								libft/ft_strdup.c \
+								libft/ft_strjoin.c \
+								libft/ft_isalnum.c \
+								libft/ft_strchr.c \
+								libft/ft_calloc.c \
+								libft/ft_usleep.c \
+								libft/ft_split.c \
+								libft/ft_substr.c \
+								libft/ft_usleep.c
 
 INC							=	-I./inc
 
 
 # Flags
 
-CFLAGS						=	-Wall -Wextra -Werror -lreadline
+CFLAGS						=	-Wall -Wextra -Werror
 
 RM							=	rm -rf
 
@@ -48,8 +77,12 @@ CC							=	gcc
 
 all: 		$(NAME)
 
+linux:
+					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT_LINUX) -lreadline -o $(NAME)
+					@echo "$(GREEN)********** Compiled. $(RESET)"
+
 $(NAME):
-					@$(CC) $(CFLAGS) $(INC) $(SRC) -o $(NAME)
+					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -L/Users/gponcele/.brew/opt/readline/lib -I/Users/gponcele/.brew/opt/readline/include -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 clean:

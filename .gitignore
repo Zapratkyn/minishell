@@ -1,3 +1,7 @@
 a.out
 minishell
 .DS_Store
+.vscode
+outfile
+libft.a
+infile
