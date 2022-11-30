@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 17:10:36 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 18:00:37 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	mini_parser(t_mini *mini, char *str)
 		if (!mini->cmd)
 			return (1);
 		execute(mini);
+		ICI
 		mini_unlink("./heredocs/heredoc_");
 	}
 	return (1);

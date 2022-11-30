@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 17:02:37 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:25:07 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ int	dol(char *str)
 	return (0);
 }
 
-t_cmd	*cmd_init(char *str, int i, char *input)
+t_cmd	*cmd_init(char *str, int i)
 {
 	t_cmd	*cmd;
+	char	*input;
 
 	cmd = malloc (sizeof(t_cmd));
-	if (!cmd)
+	input = calloc (1, 1);
+	if (!cmd || !input)
 		return (NULL);
 	cmd->path = NULL;
 	cmd->cmds = NULL;
@@ -43,12 +45,10 @@ t_cmd	*cmd_init(char *str, int i, char *input)
 	}
 	cmd->infile = mini_heredoc(input, cmd->infile);
 	free (input);
-	if (cmd->infile == -1)
-		return (NULL);
 	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
 	cmd->cmds = ft_split_cmd(str, 0, 0, 0);
-	if (!cmd->cmds)
+	if (!cmd->cmds || cmd->infile == -1)
 		return (NULL);
 	cmd->next = NULL;
 	return (cmd);

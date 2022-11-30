@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 16:56:50 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:26:06 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*get_vars(t_mini *mini, char *str, int i)
 
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	cmd = cmd_init(str, 0, "");
+	cmd = cmd_init(str, 0);
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
 		while (cmd->cmds[++i])

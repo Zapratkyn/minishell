@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 16:56:45 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:43:35 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,18 @@ void	ft_free_full_cmd(char **tab)
 void	ft_free_tab(char **tab)
 {
 	int	i;
+	int	len;
 
+	len = ft_tablen(tab);
 	i = 0;
-	while (tab[i])
-		free (tab[i++]);
-	free (tab);
+	while (tab && i < len)
+	{
+		if (tab[i])
+			free (tab[i]);
+		i++;
+	}
+	if (tab)
+		free (tab);
 }
 
 void	ft_free_env(t_var *var)
@@ -71,7 +78,8 @@ void	mini_unlink(char *str)
 	{
 		if (file)
 			free (file);
-		file = ft_strjoin(str, ft_itoa(i));
+		file = ft_strdup(str);
+		file = ft_strjoin(file, ft_itoa(i));
 		if (access(file, F_OK))
 			break ;
 		unlink(file);

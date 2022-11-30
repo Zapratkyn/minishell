@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 16:58:20 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:51:02 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,16 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 	char	*exec;
 	char	*path;
 	char	**paths;
+	char	*temp;
 
-	exec = NULL;
 	exec = get_exec(cmd);
 	if (exec)
 	{
 		paths = ft_split(mini_getenv(mini, "PATH"), ':');
 		while (paths[i] && !cmd->path)
 		{
-			path = ft_strjoin2(paths[i++], '/');
+			temp = ft_strdup(paths[i++]);
+			path = ft_strjoin2(temp, '/');
 			path = ft_strjoin(path, exec);
 			if (!access(path, F_OK))
 				cmd->path = ft_strdup(path);
@@ -68,7 +69,7 @@ int	get_infos_error(int i, char *s)
 	}
 	else if (i == 2)
 	{
-		str = ft_strjoin("3: cannot open ", s);
+		str = ft_strjoin(ft_strdup("3: cannot open "), s);
 		str = ft_strjoin(str, ": No such file or directory");
 		ft_error(str, 0);
 		free (str);

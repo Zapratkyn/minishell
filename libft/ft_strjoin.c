@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 15:53:03 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:23:57 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	result[i] = '\0';
-	free (s1);
+	free ((void *) s1);
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 16:24:06 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:56:38 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_input(char *str, int i, char *end, char *result)
 	while (str[i] == ' ')
 		i++;
 	while (str[i] && str[i] != ' ')
-		end = ft_strjoin2(end, str[i++]);
+		end = ft_strjoin2(ft_strdup(end), str[i++]);
 	while (1)
 	{
 		signal(SIGINT, heredoc_c);
@@ -51,7 +51,7 @@ char	*get_input(char *str, int i, char *end, char *result)
 		check = check_input(input, end);
 		if (check < 0 || g_status == 1)
 			break ;
-		result = ft_strjoin(result, input);
+		result = ft_strjoin(ft_strdup(result), input);
 		result = ft_strjoin2(result, '\n');
 		free (input);
 	}
@@ -66,7 +66,7 @@ int	add_heredoc(char *input, char *file)
 	int	fd;
 
 	i = 1;
-	file = ft_strjoin(file, ft_itoa(i));
+	file = ft_strjoin(ft_strdup(file), ft_itoa(i));
 	while (!access(file, F_OK))
 	{
 		i++;

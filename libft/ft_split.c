@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:23:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/24 10:13:35 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:29:24 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ char	**ft_split(char const *s, char c)
 		if (!str[i])
 			return (ft_free(i, str));
 	}
-	str[i] = 0;
+	str[i] = NULL;
 	return (str);
 }
