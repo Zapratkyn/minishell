@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:56 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 15:26:55 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:21:29 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,23 @@ void	ft_unset(t_mini *mini, t_cmd *cmd)
 
 	if (!cmd->cmds[1])
 		return ;
-	else
+	i = 0;
+	while (cmd->cmds[++i])
 	{
-		i = -1;
-		while (cmd->cmds[++i])
+		if (!check_err(cmd, i))
+			continue ;
+		var = mini->var;
+		while (var)
 		{
-			if (!check_err(cmd, i))
-				continue ;
-			var = mini->var;
-			while (var)
+			tmp = ft_rev_strchr(var->content, '=');
+			if (!ft_strcmp(tmp, cmd->cmds[i]))
 			{
-				tmp = ft_rev_strchr(var->content, '=');
-				if (!ft_strcmp(tmp, cmd->cmds[i]))
-					ft_lstdelone(&mini->var, var);
+				ft_lstdelone(&mini->var, ft_lst_index(&mini->var, var));
 				free(tmp);
-				var = var->next;
+				break ;
 			}
+			free(tmp);
+			var = var->next;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 12:11:37 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:36:05 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void						ft_exit(t_mini *mini);
 void						ft_cd(t_mini *mini, t_cmd *cmd);
 void						ft_pwd(t_cmd *cmd);
 void						ft_export(t_mini *mini, t_cmd *cmd);
+void						ft_unset(t_mini *mini, t_cmd *cmd);
 // heredoc.c
 int							mini_heredoc(char *str, int i, int j);
 

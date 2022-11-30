@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 14:52:51 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:01:06 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	get_var(t_mini *mini, char **env)
 	var = mini->var;
 	while (var)
 	{
-		if (ft_lst_index(&mini->var, var) && !ft_lstlast(var))
+		if (var->next)
 			var->next->prev = var;
 		var = var->next;
 	}
