@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 14:43:32 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:11:25 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/24 15:41:03 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/30 18:16:33 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-void	ft_lstadd_back(t_var **var, t_var *new)
+void	ft_lstclear(t_var **var)
 {
-	if (!var || !new)
-		return ;
-	else if (!*var)
-		*var = new;
-	else
-		ft_lstlast(*var)->next = new;
+	t_var	*tmp;
+
+	while (var && *var)
+	{
+		tmp = (*var)->next;
+		ft_lstdelone(var, ft_lst_index(var, *var));
+		*var = tmp;
+	}
 }

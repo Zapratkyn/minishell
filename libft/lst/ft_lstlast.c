@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 15:39:40 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 14:40:43 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/24 13:31:05 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/30 18:16:46 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-t_var	*ft_lstnew(char *content)
+t_var	*ft_lstlast(t_var *var)
 {
-	t_var	*var;
-
-	var = (t_var *)malloc(sizeof(t_var));
-	if (!var)
-		return (NULL);
-	var->content = content;
-	var->next = NULL;
-	var->prev = NULL;
+	while (var && var->next)
+		var = var->next;
 	return (var);
 }

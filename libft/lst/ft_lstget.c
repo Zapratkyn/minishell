@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_lstget.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 13:31:05 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 15:57:51 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/30 16:05:01 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/30 18:16:43 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-t_var	*ft_lstlast(t_var *var)
+t_var	*ft_lstget(t_var *var, int index)
 {
-	while (var && var->next)
+	int	i;
+
+	i = 0;
+	while (var && i < index)
+	{
+		i++;
 		var = var->next;
+	}
 	return (var);
 }

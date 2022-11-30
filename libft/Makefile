@@ -6,25 +6,27 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/30 16:07:21 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/30 18:21:40 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME						=	libft.a
-SRC							=	ft_calloc.c \
+SRC							=	lst/ft_lst_index.c \
+								lst/ft_lst_to_str.c \
+								lst/ft_lstadd_back.c \
+								lst/ft_lstclear.c \
+								lst/ft_lstdelone.c \
+								lst/ft_lstdup.c \
+								lst/ft_lstget.c \
+								lst/ft_lstlast.c \
+								lst/ft_lstnew.c \
+								lst/ft_lstsize.c \
+								lst/ft_sortlst.c \
+								ft_calloc.c \
 								ft_find_index.c \
 								ft_insert.c \
 								ft_isalnum.c \
 								ft_itoa.c \
-								ft_lst_index.c \
-								ft_lst_to_str.c \
-								ft_lstadd_back.c \
-								ft_lstclear.c \
-								ft_lstdelone.c \
-								ft_lstget.c \
-								ft_lstlast.c \
-								ft_lstnew.c \
-								ft_lstsize.c \
 								ft_n_putstr.c \
 								ft_putstr_fd.c \
 								ft_split.c \

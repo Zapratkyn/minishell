@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lst_index.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 15:41:03 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 16:17:36 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/30 14:30:53 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/30 18:16:23 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-void	ft_lstclear(t_var **var)
+int	ft_lst_index(t_var **l_var, t_var *var)
 {
 	t_var	*tmp;
+	int		i;
 
-	while (var && *var)
+	tmp = *l_var;
+	i = 0;
+	while (tmp)
 	{
-		tmp = (*var)->next;
-		ft_lstdelone(var, ft_lst_index(var, *var));
-		*var = tmp;
+		if (!ft_strcmp(tmp->content, var->content))
+			return (i);
+		i++;
+		tmp = tmp->next;
 	}
+	return (-1);
 }

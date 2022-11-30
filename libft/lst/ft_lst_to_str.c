@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lst_to_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 11:28:01 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/28 11:31:09 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/28 11:26:10 by ademurge          #+#    #+#             */
+/*   Updated: 2022/11/30 18:16:28 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-int	ft_lstsize(t_var *var)
+char	**ft_lst_to_str(t_var *var)
 {
-	int	i;
+	int		i;
+	int		size;
+	char	**tab;
 
-	if (!var)
-		return (0);
-	i = 0;
-	while (var->next)
+	size = ft_lstsize(var);
+	tab = malloc(sizeof(char *) * (size + 1));
+	if (!tab)
+		ft_error(MALLOC_ERR, EXIT);
+	i = -1;
+	while (++i < size)
 	{
-		i++;
+		tab[i] = ft_strdup(var->content);
 		var = var->next;
 	}
-	return (++i);
+	tab[i] = NULL;
+	return (tab);
 }
