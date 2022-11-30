@@ -6,31 +6,27 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 16:25:44 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:52:51 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void	get_var(t_mini *mini, char *str)
+void	get_var(t_mini *mini, char **env)
 {
-	t_var		*index;
-	t_var		*temp;
+	int		i;
+	t_var	*var;
 
-	index = mini->var;
-	temp = malloc (sizeof(t_var));
-	if (!temp)
-		exit (0);
-	temp->content = ft_strdup(str);
-	if (!temp->content)
-		exit (0);
-	if (!mini->var)
-		mini->var = temp;
-	else
+	i = 0;
+	mini->var = ft_lstnew(env[i]);
+	while (env[++i])
+		ft_lstadd_back(&mini->var, ft_lstnew(env[i]));
+	var = mini->var;
+	while (var)
 	{
-		while (index->next)
-			index = index->next;
-		index->next = temp;
+		if (ft_lst_index(&mini->var, var) && !ft_lstlast(var))
+			var->next->prev = var;
+		var = var->next;
 	}
 }
 
@@ -66,8 +62,7 @@ t_mini	mini_init(char **env)
 	i = 0;
 	mini.cmd = NULL;
 	mini.var = NULL;
-	while (env && env[i])
-		get_var(&mini, env[i++]);
+	get_var(&mini, env);
 	mini.g_status = 0;
 	mini.prompt = NULL;
 	mini.prompt = get_prompt(&mini);
