@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 13:09:59 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 19:22:53 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	modif_var(t_mini *mini, char *name_var, char *s)
 		if (!ft_strncmp(var->content, name_var, ft_strlen(name_var)))
 		{
 			free(var->content);
-			var->content = ft_insert(name_var, '=', s);
+			if (s && s[0])
+				var->content = ft_insert(name_var, '=', s);
+			else
+				var->content = ft_strdup(name_var);
 		}
 		var = var->next;
 	}
@@ -63,19 +66,25 @@ void	do_export(t_mini *mini, int index, char *s1, char *s2)
 static void	display_exp(t_mini *mini)
 {
 	t_var	*var;
+	t_var	*tmp;
 
-	var = mini->var;
+	var = ft_lstdup(mini->var);
+	ft_sortlst(var);
+	tmp = var;
 	while (var)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		ft_n_putstr(var->content, ft_find_index(var->content, '=') + 1);
-		write(STDOUT_FILENO, "\"", 1);
+		if (ft_strchr(var->content, '='))
+			write(STDOUT_FILENO, "\"", 1);
 		ft_putstr_fd(&var->content[ft_find_index(var->content, '=') + 1],
 				STDOUT_FILENO);
-		write(STDOUT_FILENO, "\"", 1);
+		if (ft_strchr(var->content, '='))
+			write(STDOUT_FILENO, "\"", 1);
 		write(STDOUT_FILENO, "\n", 1);
 		var = var->next;
 	}
+	ft_free_env(tmp);
 }
 
 void	ft_export(t_mini *mini, t_cmd *cmd)
