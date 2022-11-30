@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 10:41:24 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:10:54 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	*find_path(t_cmd *cmd)
 	char	*tmp;
 
 	tmp = NULL;
-
 	if (!cmd->cmds[1])
 		return (ft_strdup(getenv("HOME")));
 	if (!ft_strcmp("-", cmd->cmds[1]))
