@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 16:01:06 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 19:59:15 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ char	*get_prompt(t_mini *mini)
 t_mini	mini_init(char **env)
 {
 	t_mini	mini;
-	int		i;
 
-	i = 0;
 	mini.cmd = NULL;
 	mini.var = NULL;
 	get_var(&mini, env);
