@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/30 14:38:13 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/30 16:07:21 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC							=	ft_calloc.c \
 								ft_lstadd_back.c \
 								ft_lstclear.c \
 								ft_lstdelone.c \
+								ft_lstget.c \
 								ft_lstlast.c \
 								ft_lstnew.c \
 								ft_lstsize.c \

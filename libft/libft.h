@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 14:50:07 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:12:00 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int						ft_lst_index(t_var **l_var, t_var *var);
 char					**ft_lst_to_str(t_var *var);
 void					ft_lstadd_back(t_var **var, t_var *new);
 void					ft_lstclear(t_var **var);
-void					ft_lstdelone(t_var **l_var, t_var *var);
+void					ft_lstdelone(t_var **l_var, int i);
+t_var					*ft_lstget(t_var *var, int index);
 t_var					*ft_lstnew(char *content);
 t_var					*ft_lstlast(t_var *var);
 int						ft_lstsize(t_var *var);
