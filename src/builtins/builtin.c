@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 13:28:54 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:53:08 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->cmds[0], "export"))
 		ft_export(mini, cmd);
 	else if (!ft_strcmp(cmd->cmds[0], "unset"))
-		ft_unset(mini, cmd);}
+		ft_unset(mini, cmd);
+}
 
 int	par_builtin(t_cmd *cmd)
 {
