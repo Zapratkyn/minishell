@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/29 16:23:35 by ademurge         ###   ########.fr        #
+#    Updated: 2022/11/30 11:08:17 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC							=	src/builtins/builtin.c \
 								src/builtins/ft_export.c \
 								src/builtins/ft_pwd.c \
 								src/builtins/ft_unset.c \
+								src/utils/builtin_utils.c \
 								src/utils/exec_utils.c \
 								src/utils/minishell_utils.c \
 								src/utils/get_cmd_utils.c \

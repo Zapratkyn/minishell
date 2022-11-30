@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 16:40:46 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:11:37 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	g_status;
 # define READ 0
 # define WRITE 1
 # define S_QUOTE 39
+# define D_QUOTE 34
 # define PIPE 124
 
 /*
@@ -131,8 +132,13 @@ int							is_var(t_mini *mini, char *var, int j);
 // ft_free.c
 void						ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
-void						ft_free_paths(char **paths);
+void						ft_free_tab(char **tab);
 void						ft_free_env(t_var *var);
+
+// builtin_utils.c
+char						*ft_rev_strchr(char *str, char c);
+int							is_env(t_mini *mini, char *s);
+void						remove_quotes(t_cmd *cmd, int index, char *s);
 
 // minishell_utils.c
 char						*mini_getenv(t_mini *mini, char *var);
@@ -165,10 +171,11 @@ int							par_builtin(t_cmd *cmd);
 int							ch_builtin(t_cmd *cmd);
 void						do_builtin(t_mini *mini, t_cmd *cmd);
 void						ft_echo(t_cmd *cmd);
-void						ft_env(t_mini *mini, t_cmd *cmd);
+void						ft_env(t_mini *mini);
 void						ft_exit(t_mini *mini);
 void						ft_cd(t_mini *mini, t_cmd *cmd);
 void						ft_pwd(t_cmd *cmd);
+void						ft_export(t_mini *mini, t_cmd *cmd);
 // heredoc.c
 int							mini_heredoc(char *str, int i, int j);
 
