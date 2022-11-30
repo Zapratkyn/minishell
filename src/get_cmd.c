@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 16:41:35 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:41:27 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 	char	*result;
 	char	*var;
 
-	result = calloc(1, 1);
+	result = ft_calloc(1, 1);
 	if (!result)
 		return (NULL);
 	while (str[++i] != '"')
@@ -91,7 +91,7 @@ char	*get_vars(t_mini *mini, char *str, int i)
 	char	*result;
 	char	*var;
 
-	result = calloc(1, 1);
+	result = ft_calloc(1, 1);
 	if (!result)
 		return (NULL);
 	while (str[++i])
@@ -117,7 +117,7 @@ char	*get_vars(t_mini *mini, char *str, int i)
 
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	cmd = cmd_init(str);
+	cmd = cmd_init(str, 0, "");
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
 		while (cmd->cmds[++i])
