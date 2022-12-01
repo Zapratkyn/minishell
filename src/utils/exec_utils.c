@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 17:12:24 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:58:53 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,28 @@ int	n_of_cmd(t_cmd *cmd)
 		tmp = tmp->next;
 	}
 	return (n);
+}
+
+char	*clean_string(char *str)
+{
+	int		i;
+	char	*result;
+	char	c;
+
+	i = -1;
+	result = calloc (1, 1);
+	if (!result)
+		return (NULL);
+	while (str[++i])
+	{
+		if (str[i] == S_QUOTE || str[i] == '"')
+		{
+			c = str[i++];
+			while (str[i] != c)
+				result = ft_strjoin2(result, str[i++]);
+		}
+		else
+			result = ft_strjoin2(result, str[i]);
+	}
+	return (result);
 }

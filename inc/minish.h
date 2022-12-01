@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 13:51:33 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:27:08 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void						exec_child(t_mini *mini, t_cmd *cmd);
 int							check_cmd(t_cmd *cmd);
 int							n_of_cmd(t_cmd *cmd);
 void						pipe_and_fork(t_mini *mini, t_cmd *cmd);
+char						*clean_string(char *exec);
 
 // ft_env.c
 void						mini_env(t_mini *mini);
@@ -143,7 +144,7 @@ void						remove_quotes(t_cmd *cmd, int index, char *s);
 // minishell_utils.c
 char						*mini_getenv(t_mini *mini, char *var);
 void						mini_exit(t_mini *mini);
-int							ft_quotes(char *str);
+int							ft_quotes(char *str, int i, int quotes, int double_quotes);
 void						mini_new_line(int sig);
 int							is_input(char *str);
 int							start_with_pipe(char *str, int i);

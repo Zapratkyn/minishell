@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 16:19:53 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:57:00 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	quote_len(char *str, char c)
 	return (i + 1);
 }
 
-static int	count_words(char *s, int i, int count)
+static int	count_words(char *s, int i, int count, char c)
 {
 	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
@@ -33,16 +33,29 @@ static int	count_words(char *s, int i, int count)
 		if (s[i] && s[i] != ' ' && s[i] != PIPE)
 		{
 			count++;
-			if (s[i] == S_QUOTE || s[i] == '"')
-				i += quote_len(&s[i], s[i]);
-			else
+			i++;
+			while (s[i] && s[i] != ' ' && s[i] != PIPE)
 			{
-				while (s[i] == '<' || s[i] == '>')
+				if (s[i] == '"' || s[i] == S_QUOTE)
+				{
+					c = s[i];
+					while (s[i] != c)
+						i++;
 					i++;
-				while (s[i] && s[i] != ' ' && s[i] != PIPE
-					&& s[i] != '<' && s[i] != '>')
+				}
+				else
 					i++;
 			}
+			// if (s[i] == S_QUOTE || s[i] == '"')
+			// 	i += quote_len(&s[i], s[i]);
+			// else
+			// {
+			// 	while (s[i] == '<' || s[i] == '>')
+			// 		i++;
+			// 	while (s[i] && s[i] != ' ' && s[i] != PIPE
+			// 		&& s[i] != '<' && s[i] != '>')
+			// 		i++;
+			// }
 		}
 	}
 	return (count);
@@ -101,7 +114,7 @@ char	**ft_split_cmd(char *s, int i, int index, int len)
 	char	**tab;
 	int		wc;
 
-	wc = count_words(s, 0, 0);
+	wc = count_words(s, 0, 0, 0);
 	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
 		return (NULL);

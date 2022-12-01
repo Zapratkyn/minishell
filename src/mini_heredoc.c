@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 13:57:34 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:42:13 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	mini_heredoc(char *str, int fd)
 	while (ft_strchr(str, '<'))
 	{
 		str = &ft_strchr(str, '<')[1];
+		fd = STDIN_FILENO;
 		if (str[0] == '<')
 		{
 			str = &str[1];

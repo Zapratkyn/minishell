@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 17:03:04 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:22:38 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_input(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_strlen(str) == 0 || !ft_quotes(str))
+	if (ft_strlen(str) == 0 || !ft_quotes(str, -1, 0, 0))
 		return (0);
 	while (str[i])
 	{
@@ -47,23 +47,30 @@ void	mini_new_line(int sig)
 	rl_replace_line("", 0);
 }
 
-int	ft_quotes(char *str)
+int	ft_quotes(char *str, int i, int quotes, int double_quotes)
 {
-	int	i;
-	int	quotes;
-	int	double_quotes;
-
-	i = 0;
-	quotes = 0;
-	double_quotes = 0;
-	while (str[i] && str[i] != 124)
+	while (str[++i])
 	{
 		if (str[i] == '"')
+		{
+			i++;
 			double_quotes++;
-		else if (str[i] == 39)
+			while (str[i] != '"' && str[i])
+				i++;
+			if (str[i] == '"')
+				double_quotes++;
+		}
+		if (str[i] == S_QUOTE)
+		{
+			i++;
 			quotes++;
-		i++;
+			while (str[i] != S_QUOTE && str[i])
+				i++;
+			if (str[i] == S_QUOTE)
+				quotes++;
+		}
 	}
+	// printf("quotes = %d\nd_quotes = %d\n", quotes, double_quotes);
 	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
 		return (0);
 	return (1);

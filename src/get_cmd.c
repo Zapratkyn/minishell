@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 13:43:03 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:59:21 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,15 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 	{
 		while (cmd->cmds[++i])
 		{
+			printf("'%s'\n", cmd->cmds[i]);
 			if (cmd->cmds[i][0] == S_QUOTE)
 				cmd->cmds[i] = delete_quotes(cmd->cmds[i], S_QUOTE);
 			else if (cmd->cmds[i][0] == '"')
 				cmd->cmds[i] = delete_double_quotes(mini, cmd->cmds[i], 0);
 			else if (dol(cmd->cmds[i]))
 				cmd->cmds[i] = get_vars(mini, cmd->cmds[i], -1);
+			else if (ft_strchr(cmd->cmds[i], '"') || ft_strchr(cmd->cmds[i], S_QUOTE))
+				cmd->cmds[i] = clean_string(cmd->cmds[i]);
 		}
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);
