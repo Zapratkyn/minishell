@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 19:59:15 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:05:59 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	get_var(t_mini *mini, char **env)
 	i = 0;
 	mini->var = ft_lstnew(env[i]);
 	while (env[++i])
-		ft_lstadd_back(&mini->var, ft_lstnew(env[i]));
+		ft_lstadd_back(&mini->var, ft_lstnew(ft_strdup(env[i])));
 	var = mini->var;
 	while (var)
 	{

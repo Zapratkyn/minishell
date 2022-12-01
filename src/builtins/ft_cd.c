@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 10:41:24 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:05:32 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	update_oldpwd(t_mini *mini, char *path)
 		if (!ft_strncmp(var->content, o_pwd, ft_strlen(o_pwd)))
 		{
 			free(var->content);
-			var->content = ft_strjoin(o_pwd, path);
+			var->content = ft_strjoin(ft_strdup(o_pwd), path);
 			break ;
 		}
 		var = var->next;
