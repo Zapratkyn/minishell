@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:43:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/01 23:46:23 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:49:01 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ void	ft_lstdelone(t_var **l_var, int i)
 		var = next;
 	else
 		var = NULL;
-	(void)	var;
+	(void) var;
 }

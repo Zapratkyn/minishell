@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/01 23:56:55 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:51:00 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	do_export(t_mini *mini, int index, char *s1, char *s2)
 	else if (s1 && !s2 && is_env(mini, mini->cmd->cmds[index]))
 		modif_var(mini, s1, "");
 	else if (s1 && !s2 && !is_env(mini, mini->cmd->cmds[index]))
-		ft_lstadd_back(&mini->var, ft_lstnew(ft_strdup(mini->cmd->cmds[index])));
+		ft_lstadd_back(&mini->var, ft_lstnew(
+				ft_strdup(mini->cmd->cmds[index])));
 	if (s1)
 		free(s1);
 	if (s2)
@@ -80,7 +81,7 @@ static void	display_exp(t_mini *mini)
 		if (ft_strchr(var->content, '='))
 			write(STDOUT_FILENO, "\"", 1);
 		ft_putstr_fd(&var->content[ft_find_index(var->content, '=') + 1],
-				STDOUT_FILENO);
+			STDOUT_FILENO);
 		if (ft_strchr(var->content, '='))
 			write(STDOUT_FILENO, "\"", 1);
 		write(STDOUT_FILENO, "\n", 1);

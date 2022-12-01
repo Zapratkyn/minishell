@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/01 16:05:32 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:50:17 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	*find_path(t_cmd *cmd)
 	char	*tmp;
 
 	tmp = NULL;
-
 	if (!cmd->cmds[1])
 		return (ft_strdup(getenv("HOME")));
 	if (!ft_strcmp("-", cmd->cmds[1]))

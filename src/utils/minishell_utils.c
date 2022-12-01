@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 00:10:05 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:49:42 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	mini_new_line(int sig)
 	prompt = get_prompt(NULL);
 	write (1, "\n", 1);
 	write (1, prompt, ft_strlen(prompt));
-	// rl_replace_line("", 0);
 	free (prompt);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 00:38:06 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:48:24 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int	g_status;
 # define ICI printf("ici\n");
 
 /* Colors */
-#define RED "\x1B[31m"
-#define GREEN "\x1B[32m"
-#define YELLOW "\x1B[33m"
-#define BLUE "\x1B[34m"
-#define MAGENTA "\x1B[35m"
-#define CYAN "\x1B[36m"
-#define WHITE "\x1B[37m"
-#define RESET "\x1B[0m"
+# define RED "\x1B[31m"
+# define GREEN "\x1B[32m"
+# define YELLOW "\x1B[33m"
+# define BLUE "\x1B[34m"
+# define MAGENTA "\x1B[35m"
+# define CYAN "\x1B[36m"
+# define WHITE "\x1B[37m"
+# define RESET "\x1B[0m"
 
 /* Managing errors */
 # define PIPE_ERR "Error in the creation of a pipe."
@@ -83,8 +83,6 @@ struct s_heredoc
 	t_heredoc	*next;
 };
 
-
-
 /* Command structure */
 struct s_cmd
 {
@@ -112,7 +110,7 @@ struct s_mini
 
 /* Main */
 char						*get_prompt(t_mini *mini);
-t_mini  					mini_init(char **env);
+t_mini						mini_init(char **env);
 int							mini_parser(t_mini *mini, char *str);
 
 /* Utils.c */
