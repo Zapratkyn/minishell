@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 16:23:00 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 00:10:05 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	mini_exit(t_mini *mini)
 	if (mini->cmd)
 		ft_free_cmd(mini->cmd);
 	ft_free_env(mini->var);
-	free (mini->prompt);
-	printf("\nexit\n");
-	exit (g_status);
+	free(mini->prompt);
+	printf("\nexit.\n");
+	exit(g_status);
 }
 
 int	is_input(char *str)
