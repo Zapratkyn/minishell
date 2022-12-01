@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 12:32:30 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/01 13:57:34 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	add_heredoc(char *file)
 	{
 		i++;
 		free (file);
-		file = ft_strdup("./heredoc_");
+		file = ft_strdup("/tmp/mini_heredocs/heredoc_");
 		file = ft_strjoin(file, ft_itoa(i));
 	}
 	fd = open(file, O_CREAT | O_RDWR, 0777);
@@ -61,7 +61,7 @@ int	get_input(char *str, char *end, int fd)
 	g_status = 0;
 	check = 0;
 	input = ft_calloc(1, 1);
-	fd = add_heredoc("./heredoc_");
+	fd = add_heredoc("/tmp/mini_heredocs/heredoc_");
 	end = get_end(str, "");
 	while (1)
 	{

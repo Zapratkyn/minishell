@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 12:33:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/01 13:57:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,17 @@ int	get_var(t_mini *mini, char **env)
 	return (1);
 }
 
-char	*get_prompt(t_mini *mini)
+char	*get_prompt(char *prompt)
 {
 	char	*str;
-	char	*prompt;
 
-	if (mini && mini->prompt)
-		free(mini->prompt);
-	prompt = NULL;
-	prompt = ft_strdup(GREEN);
 	if (prompt)
-		prompt = ft_strjoin(prompt, getenv("USER"));
+		free (prompt);
+	prompt = ft_strjoin(ft_strdup(GREEN), getenv("USER"));
 	if (prompt)
 		prompt = ft_strjoin(prompt, "@minishell ");
 	str = ft_strnstr2(getenv("PWD"),
-			getenv("USER"), 1000);
+			getenv("USER"), INT_MAX);
 	if (str && prompt)
 	{
 		prompt = ft_strjoin(prompt, "~");
@@ -73,7 +69,9 @@ t_mini	mini_init(char **env)
 		ft_free_env(mini.var);
 	mini.g_status = 0;
 	mini.prompt = NULL;
-	mini.prompt = get_prompt(&mini);
+	mini.prompt = get_prompt(mini.prompt);
+	if (!mini.var || !mini.prompt)
+		exit (EXIT_FAILURE);
 	return (mini);
 }
 
@@ -92,7 +90,7 @@ int	mini_parser(t_mini *mini, char *str)
 		free (str);
 		if (mini->cmd)
 			execute(mini);
-		mini_unlink("./heredoc_");
+		mini_unlink("/tmp/mini_heredocs/heredoc_");
 	}
 	return (1);
 }
@@ -102,8 +100,6 @@ int	main(int argc, char **argv, char **env)
 	t_mini	mini;
 
 	mini = mini_init(env);
-	if (!mini.prompt || !mini.var)
-		exit (EXIT_FAILURE);
 	g_status = 0;
 	while (argc && argv[0])
 	{
