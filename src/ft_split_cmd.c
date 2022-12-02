@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 12:41:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/02 11:24:41 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**ft_split_cmd(char *s, int i, int index, int len)
 		len = find_next_len(&s[index], 0, 0);
 		tab[i] = find_next_word(&s[index], len);
 		if (!tab[i])
-			ft_free_full_cmd(tab);
+			ft_free_tab(tab, len);
 		index += (len - 1);
 		while (s[index] == ' ' || s[index] == '\t')
 			index++;

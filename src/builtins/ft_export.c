@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 00:51:00 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 11:28:02 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ void	modif_var(t_mini *mini, char *name_var, char *s)
 		if (!ft_strncmp(var->content, name_var, ft_strlen(name_var)))
 		{
 			free(var->content);
-			if (s && s[0])
+			if ((s && s[0]) || is_env(mini, name_var))
 				var->content = ft_insert(name_var, '=', s);
-			else if (ft_strchr(var->content, '='))
-				var->content = ft_strjoin(name_var, "=");
 			else
 				var->content = ft_strdup(name_var);
 		}
@@ -47,10 +45,7 @@ void	modif_var(t_mini *mini, char *name_var, char *s)
 void	do_export(t_mini *mini, int index, char *s1, char *s2)
 {
 	if (!s1 && !is_env(mini, mini->cmd->cmds[index]))
-	{
 		ft_lstadd_back(&mini->var, ft_lstnew(mini->cmd->cmds[index]));
-		modif_var(mini, mini->cmd->cmds[index], "");
-	}
 	if (s1 && s2 && !is_env(mini, mini->cmd->cmds[index]))
 		ft_lstadd_back(&mini->var, ft_lstnew(mini->cmd->cmds[index]));
 	else if (s1 && s2 && is_env(mini, mini->cmd->cmds[index]))
@@ -103,7 +98,6 @@ void	ft_export(t_mini *mini, t_cmd *cmd)
 		i = 0;
 		while (cmd->cmds[++i])
 		{
-			remove_quotes(cmd, i, cmd->cmds[i]);
 			s1 = ft_rev_strchr(cmd->cmds[i], '=');
 			s2 = export_strchr(cmd->cmds[i], '=');
 			do_export(mini, i, s1, s2);

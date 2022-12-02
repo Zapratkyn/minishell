@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 00:42:52 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 10:28:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_var					*ft_sortlst(t_var *var);
 
 /* Libft */
 char					*ft_calloc(int count, int size);
+void					ft_error(char *type, int is_exit);
 int						ft_find_index(char *s, char c);
 char					*ft_insert(char *s1, char c, char *s2);
 int						ft_isalnum(int c);

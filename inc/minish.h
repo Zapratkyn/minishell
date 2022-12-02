@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 00:48:24 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 11:26:17 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	g_status;
 
 /* Debug */
 # define ICI printf("ici\n");
+# define LEAKS system("leaks minishell");
 
 /* Colors */
 # define RED "\x1B[31m"
@@ -171,6 +172,6 @@ void						ft_error(char *type, int is_exit);
 void						ft_free_cmd(t_cmd *cmd);
 void						ft_free_env(t_var *var);
 void						ft_free_full_cmd(char **tab);
-void						ft_free_tab(char **tab);
+void						ft_free_tab(char **tab, int len);
 
 #endif

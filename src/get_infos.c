@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 12:06:45 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 11:28:42 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 		if (!ch_builtin(cmd) && !par_builtin(cmd) && !cmd->path)
 			get_infos_error(3, exec);
 		free (exec);
-		ft_free_tab(paths);
+		ft_free_tab(paths, i);
 	}
 	if (cmd->path || cmd->cmds[0][0] == '>' || cmd->cmds[0][0] == '<')
 		get_infile(cmd, -1);

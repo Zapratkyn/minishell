@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 00:49:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 10:53:35 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	mini_exit(t_mini *mini)
 		ft_free_cmd(mini->cmd);
 	ft_free_env(mini->var);
 	free(mini->prompt);
-	printf("\nexit.\n");
+	printf("\nexit\n");
+	LEAKS
 	exit(g_status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 12:06:54 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 11:47:26 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,45 @@
 
 void	ft_free_cmd(t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	t_cmd	*tmp;
+	t_cmd	**clear;
 
-	i = 0;
-	if (cmd->next)
-		ft_free_cmd(cmd->next);
-	while (cmd->cmds[i])
+	clear = NULL;
+	tmp = cmd;
+	while (tmp)
 	{
-		free (cmd->cmds[i]);
-		i++;
+		i = -1;
+		while (tmp->cmds && tmp->cmds[++i])
+			free (tmp->cmds[i]);
+		if (tmp->cmds)
+			free(tmp->cmds);
+		if (tmp->path)
+			free (tmp->path);
+		tmp = tmp->next;
 	}
-	free (cmd->cmds);
-	if (cmd->path)
-		free (cmd->path);
-	free (cmd);
+	clear = &cmd;
+	while (clear && *clear)
+	{
+		tmp = (*clear)->next;
+		free((*clear));
+		*clear = tmp;
+	}
 }
 
-void	ft_free_full_cmd(char **tab)
+void	ft_free_tab(char **tab, int len)
 {
 	int	i;
 
-	i = 0;
-	while (tab[i])
-	{
-		free (tab[i]);
-		i++;
-	}
-	free (tab);
-}
-
-void	ft_free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		free (tab[i++]);
-	free (tab);
+	i = -1;
+	while (++i < len)
+		if (tab && tab[i])
+			free (tab[i]);
+	if (tab)
+		free (tab);
 }
 
 void	ft_free_env(t_var *var)
 {
-	if (var->next)
-		ft_free_env(var->next);
-	free(var);
+	ft_lstclear(&var);
 }
