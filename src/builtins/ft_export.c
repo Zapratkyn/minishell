@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 13:57:24 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:51:21 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	modif_var(t_mini *mini, char *name_var, char *s)
 				var->content = ft_insert(mini, name_var, '=', s);
 			else
 				var->content = ft_strdup(mini, name_var);
+			break ;
 		}
 		var = var->next;
 	}
