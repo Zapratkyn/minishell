@@ -6,11 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 10:47:01 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/30 15:21:30 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:55:32 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minish.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

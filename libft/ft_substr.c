@@ -6,11 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:22:47 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 13:31:29 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:55:32 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minish.h"
 
 char	*ft_substr(t_mini *mini, char const *s, unsigned int start, size_t len)
 {

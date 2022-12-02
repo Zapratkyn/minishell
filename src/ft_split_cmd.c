@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 13:36:43 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:48:35 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,13 @@ static char	*find_next_word(t_mini *mini, char *s, int len)
 	return (str);
 }
 
-char	**ft_split_cmd(t_mini *mini, char *s, int i, int index, int len)
+char	**ft_split_cmd(t_mini *mini, char *s, int i, int index)
 {
 	char	**tab;
 	int		wc;
+	int		len;
 
+	len = 0;
 	wc = count_words(s, 0, 0);
 	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)

@@ -6,11 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:29:32 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 12:45:03 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:55:32 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minish.h"
 
 static int	ft_strlen_int(int n)
 {

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 13:34:05 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:57:24 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	display_exp(t_mini *mini)
 		write(STDOUT_FILENO, "\n", 1);
 		var = var->next;
 	}
-	ft_free_env(tmp);
+	ft_lstclear(&tmp);
 }
 
 void	ft_export(t_mini *mini, t_cmd *cmd)

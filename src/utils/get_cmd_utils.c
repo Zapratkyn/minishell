@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 13:40:00 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:45:37 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ int	to_clean(char *str)
 	return (0);
 }
 
-char	**clean_files(t_mini *mini, char **cmds, int i, int j, int len)
+char	**clean_files(t_mini *mini, char **cmds, int i, int j)
 {
 	char	**result;
+	int		len;
 
+	len = 0;
 	while (cmds[++i])
 	{
 		if ((cmds[i][0] != '<' && cmds[i][0] != '>')

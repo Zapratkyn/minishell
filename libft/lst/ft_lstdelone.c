@@ -6,11 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:43:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 00:49:01 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:55:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../inc/minish.h"
 
 void	ft_lstdelone(t_var **l_var, int i)
 {

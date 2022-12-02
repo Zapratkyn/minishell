@@ -6,11 +6,11 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:08:48 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 13:26:43 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:55:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../inc/minish.h"
 #include <stdio.h>
 
 t_var	*ft_sortlst(t_var *var)
