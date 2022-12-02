@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 14:30:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/02 12:45:33 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*mini_getenv(t_mini *mini, char *var)
 
 	tmp = mini->var;
 	if (var[0] == '?')
-		return (ft_itoa(g_status));
+		return (ft_itoa(mini, g_status));
 	while (tmp)
 	{
 		if (!ft_strncmp(var, tmp->content, ft_strlen(var)))

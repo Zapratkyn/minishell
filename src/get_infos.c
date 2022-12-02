@@ -6,13 +6,13 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 11:28:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:30:13 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-char	*get_exec(t_cmd *cmd)
+char	*get_exec(t_mini *mini, t_cmd *cmd)
 {
 	char	*exec;
 	int		i;
@@ -24,7 +24,7 @@ char	*get_exec(t_cmd *cmd)
 		|| (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1])))
 		i++;
 	if (cmd->cmds[i])
-		exec = ft_strdup(cmd->cmds[i]);
+		exec = ft_strdup(mini, cmd->cmds[i]);
 	return (exec);
 }
 
@@ -35,56 +35,56 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 	char	**paths;
 
 	exec = NULL;
-	exec = get_exec(cmd);
+	exec = get_exec(mini, cmd);
 	if (exec)
 	{
-		paths = ft_split(mini_getenv(mini, "PATH"), ':');
+		paths = ft_split(mini, mini_getenv(mini, "PATH"), ':');
 		while (paths[i] && !cmd->path)
 		{
-			path = ft_strjoin2(paths[i++], '/');
-			path = ft_strjoin(path, exec);
+			path = ft_strjoin2(mini, paths[i++], '/');
+			path = ft_strjoin(mini, path, exec);
 			if (!access(path, F_OK))
-				cmd->path = ft_strdup(path);
+				cmd->path = ft_strdup(mini, path);
 			free (path);
 		}
-		if (!ch_builtin(cmd) && !par_builtin(cmd) && !cmd->path)
-			get_infos_error(3, exec);
+		if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd) && !cmd->path)
+			get_infos_error(mini, 3, exec);
 		free (exec);
 		ft_free_tab(paths, i);
 	}
 	if (cmd->path || cmd->cmds[0][0] == '>' || cmd->cmds[0][0] == '<')
-		get_infile(cmd, -1);
+		get_infile(mini, cmd, -1);
 }
 
-int	get_infos_error(int i, char *s)
+int	get_infos_error(t_mini *mini, int i, char *s)
 {
 	char	*str;
 
 	str = NULL;
 	if (i == 1)
 	{
-		ft_error("syntax error near unexpected token `newline'", 0);
+		ft_error(mini, "syntax error near unexpected token `newline'", NO_EXIT);
 		g_status = 258;
 	}
 	else if (i == 2)
 	{
-		str = ft_strjoin("3: cannot open ", s);
-		str = ft_strjoin(str, ": No such file or directory");
-		ft_error(str, 0);
+		str = ft_strjoin(mini, "3: cannot open ", s);
+		str = ft_strjoin(mini, str, ": No such file or directory");
+		ft_error(mini, str, NO_EXIT);
 		free (str);
 		g_status = 1;
 	}
 	else if (i == 3)
 	{
-		str = ft_strjoin(s, " : command not found");
-		ft_error(str, 0);
+		str = ft_strjoin(mini, s, " : command not found");
+		ft_error(mini, str, NO_EXIT);
 		free (str);
 		g_status = 127;
 	}
 	return (-1);
 }
 
-void	get_infile(t_cmd *cmd, int i)
+void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 {
 	char	*infile;
 
@@ -94,11 +94,11 @@ void	get_infile(t_cmd *cmd, int i)
 		if (cmd->cmds[i][0] == '<')
 		{
 			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
-				infile = ft_strdup(&cmd->cmds[i][1]);
+				infile = ft_strdup(mini, &cmd->cmds[i][1]);
 			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
-				infile = ft_strdup(cmd->cmds[i + 1]);
+				infile = ft_strdup(mini, cmd->cmds[i + 1]);
 			else
-				cmd->infile = get_infos_error(1, NULL);
+				cmd->infile = get_infos_error(mini, 1, NULL);
 		}
 	}
 	if (infile)
@@ -106,14 +106,14 @@ void	get_infile(t_cmd *cmd, int i)
 		if (!access(infile, F_OK))
 			cmd->infile = open(infile, O_RDONLY);
 		else
-			cmd->infile = get_infos_error(2, infile);
+			cmd->infile = get_infos_error(mini, 2, infile);
 		free (infile);
 	}
 	if (cmd->infile != -1)
-		get_outfile(cmd, -1, 1);
+		get_outfile(mini, cmd, -1, 1);
 }
 
-void	get_outfile(t_cmd *cmd, int i, int j)
+void	get_outfile(t_mini *mini, t_cmd *cmd, int i, int j)
 {
 	char	*outfile;
 
@@ -125,11 +125,11 @@ void	get_outfile(t_cmd *cmd, int i, int j)
 			if (cmd->cmds[i][1] == '>')
 				j++;
 			if (cmd->cmds[i][j])
-				outfile = ft_strdup(&cmd->cmds[i][j]);
+				outfile = ft_strdup(mini, &cmd->cmds[i][j]);
 			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1])
-				outfile = ft_strdup(cmd->cmds[i + 1]);
+				outfile = ft_strdup(mini, cmd->cmds[i + 1]);
 			else
-				cmd->outfile = get_infos_error(1, NULL);
+				cmd->outfile = get_infos_error(mini, 1, NULL);
 		}
 	}
 	if (outfile)

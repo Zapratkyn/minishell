@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:29:32 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 00:48:36 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 12:45:03 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_strlen_int(int n)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(t_mini *mini, int n)
 {
 	int		len;
 	long	nb;
@@ -37,7 +37,7 @@ char	*ft_itoa(int n)
 	nb = n;
 	str = malloc (sizeof(char) * (len + 1));
 	if (!str)
-		return (0);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	str[len--] = '\0';
 	if (nb < 0)
 	{

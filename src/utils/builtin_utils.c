@@ -6,20 +6,20 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 11:05:17 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 11:27:56 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:35:07 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-char	*ft_rev_strchr(char *str, char c)
+char	*ft_rev_strchr(t_mini *mini, char *str, char c)
 {
 	int	i;
 
 	i = -1;
 	while (str && str[++i])
 		if (str[i] == c)
-			return (ft_substr(str, 0, i));
+			return (ft_substr(mini, str, 0, i));
 	return (NULL);
 }
 

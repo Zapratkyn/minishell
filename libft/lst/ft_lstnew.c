@@ -6,19 +6,19 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:39:40 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 18:16:49 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 12:54:59 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-t_var	*ft_lstnew(char *content)
+t_var	*ft_lstnew(t_mini *mini, char *content)
 {
 	t_var	*var;
 
 	var = (t_var *)malloc(sizeof(t_var));
 	if (!var)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	var->content = content;
 	var->next = NULL;
 	var->prev = NULL;

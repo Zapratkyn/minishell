@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 11:24:41 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:36:43 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	find_next_len(char *str, int i, int len)
 	return (len + 1);
 }
 
-static char	*find_next_word(char *s, int len)
+static char	*find_next_word(t_mini *mini, char *s, int len)
 {
 	int		i;
 	char	*str;
@@ -82,7 +82,7 @@ static char	*find_next_word(char *s, int len)
 	i = 0;
 	str = malloc (sizeof(char) * len);
 	if (!str)
-		return (0);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	s = &s[i];
@@ -96,7 +96,7 @@ static char	*find_next_word(char *s, int len)
 	return (str);
 }
 
-char	**ft_split_cmd(char *s, int i, int index, int len)
+char	**ft_split_cmd(t_mini *mini, char *s, int i, int index, int len)
 {
 	char	**tab;
 	int		wc;
@@ -104,13 +104,13 @@ char	**ft_split_cmd(char *s, int i, int index, int len)
 	wc = count_words(s, 0, 0);
 	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (s[index] == ' ')
 		index++;
 	while (i < wc)
 	{
 		len = find_next_len(&s[index], 0, 0);
-		tab[i] = find_next_word(&s[index], len);
+		tab[i] = find_next_word(mini, &s[index], len);
 		if (!tab[i])
 			ft_free_tab(tab, len);
 		index += (len - 1);

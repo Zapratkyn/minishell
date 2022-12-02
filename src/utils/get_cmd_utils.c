@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/29 13:13:39 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:40:00 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	dol(char *str)
 	return (0);
 }
 
-t_cmd	*cmd_init(void)
+t_cmd	*cmd_init(t_mini *mini)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc (sizeof(t_cmd));
 	if (!cmd)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	cmd->path = NULL;
 	cmd->cmds = NULL;
 	cmd->infile = STDIN_FILENO;
@@ -41,29 +41,40 @@ t_cmd	*cmd_init(void)
 	return (cmd);
 }
 
-// int	to_clean()
+int	to_clean(char *str)
+{
+	if (str[0] == '<')
+	{
+		if ((str[1] == '<' && !str[2]) || !str[1])
+			return (1);
+	}
+	else if (str[0] == '>')
+	{
+		if ((str[1] == '>' && !str[2]) || !str[1])
+			return (1);
+	}
+	return (0);
+}
 
-char	**clean_files(char **cmds, int i, int j, int len)
+char	**clean_files(t_mini *mini, char **cmds, int i, int j, int len)
 {
 	char	**result;
 
 	while (cmds[++i])
 	{
-		if (cmds[i] && cmds[i][0] != '<' && cmds[i][0] != '>'
-			&& !(i > 0 && cmds[i - 1][0] != '<' && !cmds[i - 1][1])
-			&& !(i > 0 && cmds[i - 1][0] != '>' && !cmds[i - 1][1]))
+		if ((cmds[i][0] != '<' && cmds[i][0] != '>')
+			&& !(i > 0 && to_clean(cmds[i - 1])))
 			len++;
 	}
 	result = malloc (sizeof(char *) * len + 1);
 	if (!result)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	i = -1;
 	while (cmds[++i])
 	{
-		if (cmds[i] && cmds[i][0] != '<' && cmds[i][0] != '>'
-			&& !(i > 0 && cmds[i - 1][0] != '<' && !cmds[i - 1][1])
-			&& !(i > 0 && cmds[i - 1][0] != '>' && !cmds[i - 1][1]))
-			result[j++] = ft_strdup(cmds[i]);
+		if ((cmds[i][0] != '<' && cmds[i][0] != '>')
+			&& !(i > 0 && to_clean(cmds[i - 1])))
+			result[j++] = ft_strdup(mini, cmds[i]);
 	}
 	result[j] = NULL;
 	free (cmds);

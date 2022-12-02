@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 10:53:35 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 12:28:19 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ int	ft_quotes(char *str)
 	return (1);
 }
 
-int	start_with_pipe(char *str, int i)
+int	start_with_pipe(t_mini *mini, char *str, int i)
 {
 	if (str[0] == PIPE)
 	{
-		ft_error("syntax error near unexpected token `|'", 0);
+		ft_error(mini, "syntax error near unexpected token `|'", NO_EXIT);
 		g_status = 258;
 		return (1);
 	}

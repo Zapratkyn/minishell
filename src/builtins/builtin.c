@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 14:53:08 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 12:27:34 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->cmds[0], "env"))
 		ft_env(mini);
 	else if (!ft_strcmp(cmd->cmds[0], "pwd"))
-		ft_pwd(cmd);
+		ft_pwd(mini, cmd);
 	else if (!ft_strcmp(cmd->cmds[0], "cd"))
 		ft_cd(mini, cmd);
 	else if (!ft_strcmp(cmd->cmds[0], "exit"))
@@ -30,10 +30,10 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 		ft_unset(mini, cmd);
 }
 
-int	par_builtin(t_cmd *cmd)
+int	par_builtin(t_mini *mini, t_cmd *cmd)
 {
 	if (!cmd->cmds[0])
-		ft_error(CMD_ERR, EXIT);
+		ft_error(mini, CMD_ERR, EXIT);
 	else if (!ft_strcmp("export", cmd->cmds[0]))
 		return (1);
 	else if (!ft_strcmp("exit", cmd->cmds[0]))
@@ -45,10 +45,10 @@ int	par_builtin(t_cmd *cmd)
 	return (0);
 }
 
-int	ch_builtin(t_cmd *cmd)
+int	ch_builtin(t_mini *mini, t_cmd *cmd)
 {
 	if (!cmd->cmds[0])
-		ft_error(CMD_ERR, EXIT);
+		ft_error(mini, CMD_ERR, EXIT);
 	else if (!ft_strcmp("echo", cmd->cmds[0]))
 		return (1);
 	else if (!ft_strcmp("pwd", cmd->cmds[0]))

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/07/18 12:25:42 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:28:48 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(t_mini *mini, char const *s1, char const *s2)
 {
 	size_t		i;
 	size_t		j;
@@ -24,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	result = malloc (sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!result)
-		return (0);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (s1[i])
 	{
 		result[i] = s1[i];
@@ -40,7 +40,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (result);
 }
 
-char	*ft_strjoin2(char *str, char c)
+char	*ft_strjoin2(t_mini *mini, char *str, char c)
 {
 	size_t	i;
 	char	*result;
@@ -50,7 +50,7 @@ char	*ft_strjoin2(char *str, char c)
 	i = 0;
 	result = malloc (sizeof(char) * ft_strlen(str) + 2);
 	if (!result)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (str[i])
 	{
 		result[i] = str[i];

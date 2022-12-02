@@ -6,22 +6,22 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:56 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 16:21:29 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:34:35 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-int	check_err(t_cmd *cmd, int index)
+int	check_err(t_mini *mini, t_cmd *cmd, int index)
 {
 	char	*tmp;
 
 	if (ft_strchr(cmd->cmds[index], '='))
 	{
-		tmp = ft_strdup("unset: ");
-		tmp = ft_strjoin(tmp, cmd->cmds[index]);
-		tmp = ft_strjoin(tmp, ": invalid parameter name");
-		ft_error(tmp, NO_EXIT);
+		tmp = ft_strdup(mini, "unset: ");
+		tmp = ft_strjoin(mini, tmp, cmd->cmds[index]);
+		tmp = ft_strjoin(mini, tmp, ": invalid parameter name");
+		ft_error(mini, tmp, NO_EXIT);
 		free(tmp);
 		return (0);
 	}
@@ -39,12 +39,12 @@ void	ft_unset(t_mini *mini, t_cmd *cmd)
 	i = 0;
 	while (cmd->cmds[++i])
 	{
-		if (!check_err(cmd, i))
+		if (!check_err(mini, cmd, i))
 			continue ;
 		var = mini->var;
 		while (var)
 		{
-			tmp = ft_rev_strchr(var->content, '=');
+			tmp = ft_rev_strchr(mini, var->content, '=');
 			if (!ft_strcmp(tmp, cmd->cmds[i]))
 			{
 				ft_lstdelone(&mini->var, ft_lst_index(&mini->var, var));
