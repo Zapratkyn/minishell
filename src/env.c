@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/11/28 14:30:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:54:41 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,19 @@
 int	is_var(t_mini *mini, char *var, int j)
 {
 	int		i;
-	int		len;
 	t_var	*temp;
 
 	i = 0;
-	len = 0;
 	temp = mini->var;
 	if (var[0] == '?')
 		return (1);
-	while (ft_isalnum(var[i]) || var[i] == '_')
-	{
-		len++;
+	while (var[i] && (ft_isalnum(var[i]) || var[i] == '_'))
 		i++;
-	}
 	if (j == 1)
-		return (len);
+		return (i);
 	while (temp->next && j == 0)
 	{
-		if (!ft_strncmp(temp->content, var, len) && temp->content[len] == '=')
+		if (!ft_strncmp(temp->content, var, i) && temp->content[i] == '=')
 			return (1);
 		temp = temp->next;
 	}
@@ -42,13 +37,17 @@ int	is_var(t_mini *mini, char *var, int j)
 char	*mini_getenv(t_mini *mini, char *var)
 {
 	t_var	*tmp;
+	int		i;
 
 	tmp = mini->var;
 	if (var[0] == '?')
 		return (ft_itoa(g_status));
-	while (tmp)
+	i = 0;
+	while (ft_isalnum(var[i]) || var[i] == '_')
+		i++;
+	while (tmp->next && (var[i] == ' ' || var[i] == '"' || var[i] == '\0'))
 	{
-		if (!ft_strncmp(var, tmp->content, ft_strlen(var)))
+		if (!ft_strncmp(var, tmp->content, i) && tmp->content[i] == '=')
 			return (&tmp->content[ft_strlen(var) + 1]);
 		tmp = tmp->next;
 	}

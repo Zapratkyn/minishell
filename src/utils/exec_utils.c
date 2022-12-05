@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/01 18:58:53 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:51:57 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,24 @@ int	n_of_cmd(t_cmd *cmd)
 	return (n);
 }
 
-char	*clean_string(char *str)
+char	*clean_string(char *str, int len, int i, int j)
 {
-	int		i;
 	char	*result;
-	char	c;
 
-	i = -1;
-	result = calloc (1, 1);
-	if (!result)
-		return (NULL);
 	while (str[++i])
 	{
-		if (str[i] == S_QUOTE || str[i] == '"')
-		{
-			c = str[i++];
-			while (str[i] != c)
-				result = ft_strjoin2(result, str[i++]);
-		}
-		else
-			result = ft_strjoin2(result, str[i]);
+		if (str[i] != S_QUOTE && str[i] != '"')
+			len++;
 	}
+	result = malloc (sizeof(char) * len + 1);
+	if (!result)
+		return (NULL);
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] != S_QUOTE && str[i] != '"')
+			result[j++] = str[i];
+	}
+	result[j] = '\0';
 	return (result);
 }

@@ -1,65 +1,65 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_cmd.c                                     :+:      :+:    :+:   */
+/*   ft_split_string.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/05 17:35:34 by gponcele         ###   ########.fr       */
+/*   Created: 2022/12/05 15:51:46 by gponcele          #+#    #+#             */
+/*   Updated: 2022/12/05 17:46:57 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-static int	count_words(char *s, int i, int count, char c)
+static int	count_words(char *s, int i, int count)
 {
-	while (s[i] && s[i] == ' ')
-			i++;
-	while (s[i] && s[i] != PIPE)
+	while (s[i])
 	{
-		while (s[i] && s[i] == ' ')
-			i++;
-		if (s[i] && s[i] != ' ' && s[i] != PIPE)
+		count++;
+		if (s[i] == S_QUOTE)
 		{
-			count++;
-			while (s[i] && s[i] != PIPE && s[i] != ' ')
-			{
-				if (s[i] == '"' || s[i] == S_QUOTE)
-				{
-					c = s[i++];
-					while (s[i] != c)
-						i++;
-				}
+			i++;
+			while (s[i] != S_QUOTE)
 				i++;
-			}
+			i++;
+		}
+		else if (s[i] == '$')
+		{
+			i++;
+			while (isalnum(s[i]) || s[i] == '_' || s[i] == '?')
+				i++;
+		}
+		else
+		{
+			while (s[i] && s[i] != '$' && s[i] != S_QUOTE)
+				i++;
 		}
 	}
 	return (count);
 }
 
-static int	find_next_len(char *str, int len, int i, char c)
+static int	find_next_len(char *s, int i)
 {
-	while (str[i] && str[i] == ' ')
-		i++;
-	while (str[i] && str[i] != PIPE && str[i] != ' ')
+	if (s[0] == '$')
 	{
-		if (str[i] == '"' || str[i] == S_QUOTE)
-		{
-			len++;
-			c = str[i++];
-			while (str[i] != c)
-			{
-				i++;
-				len++;
-			}
-			len++;
-			i++;
-		}
 		i++;
-		len++;
+		while (isalnum(s[i]) || s[i] == '_' || s[i] == '?')
+			i++;
 	}
-	return (len);
+	else if (s[0] == S_QUOTE)
+	{
+		i++;
+		while (s[i] != S_QUOTE)
+			i++;
+		i++;
+	}
+	else if (s[0] != '$' && s[i] != S_QUOTE)
+	{
+		while (s[i] && s[i] != '$' && s[i] != S_QUOTE)
+			i++;
+	}
+	return (i);
 }
 
 static char	*find_next_word(char *s, int i, int len)
@@ -69,10 +69,6 @@ static char	*find_next_word(char *s, int i, int len)
 	result = malloc (sizeof(char) * len + 1);
 	if (!result)
 		return (NULL);
-	while (s[i] == ' ')
-		i++;
-	s = &s[i];
-	i = 0;
 	while (i < len)
 	{
 		result[i] = s[i];
@@ -82,24 +78,22 @@ static char	*find_next_word(char *s, int i, int len)
 	return (result);
 }
 
-char	**ft_split_cmd(char *s, int i, int index, int len)
+char	**split_string(char *s, int i, int index, int len)
 {
 	char	**tab;
 	int		wc;
 
-	wc = count_words(s, 0, 0, 0);
+	wc = count_words(s, 0, 0);
 	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
 		return (NULL);
 	while (i < wc)
 	{
-		len = find_next_len(&s[index], 0, 0, 0);
+		len = find_next_len(&s[index], 0);
 		tab[i] = find_next_word(&s[index], 0, len);
 		if (!tab[i])
 			return (NULL);
 		index += ft_strlen(tab[i]);
-		while (s[index] == ' ')
-			index++;
 		i++;
 	}
 	tab[i] = NULL;

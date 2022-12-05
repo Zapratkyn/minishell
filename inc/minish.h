@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 18:27:08 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:31:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void						exec_child(t_mini *mini, t_cmd *cmd);
 int							check_cmd(t_cmd *cmd);
 int							n_of_cmd(t_cmd *cmd);
 void						pipe_and_fork(t_mini *mini, t_cmd *cmd);
-char						*clean_string(char *exec);
+char						*clean_string(char *exec, int len, int i, int j);
 
 // ft_env.c
 void						mini_env(t_mini *mini);
@@ -134,6 +134,7 @@ int							is_var(t_mini *mini, char *var, int j);
 // ft_free.c
 void						ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
+void						ft_free_parts(char **parts);
 void						ft_free_tab(char **tab);
 void						ft_free_env(t_var *var);
 void						mini_unlink(char *str);
@@ -153,9 +154,8 @@ t_cmd						*get_cmd(t_mini *mini,
 								t_cmd *cmd, char *str, int i);
 
 // get_cmd_utils.c
-char						*to_empty(char *str);
-int							dol(char *str);
 t_cmd						*cmd_init(char *str, int i);
+char						*delete_double_quotes(char *str, int i, int j, int len);
 // get_infos.c
 char						*get_exec(t_cmd *cmd);
 void						get_path(t_mini *mini, t_cmd *cmd, int i);
@@ -179,6 +179,8 @@ void						ft_export(t_mini *mini, t_cmd *cmd);
 void						ft_unset(t_mini *mini, t_cmd *cmd);
 // heredoc.c
 int							mini_heredoc(char *str, int fd);
+// split_string.c
+char						**split_string(char *s, int i, int index, int len);
 
 // error
 void						ft_error(char *type, int is_exit);

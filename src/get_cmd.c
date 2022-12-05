@@ -6,131 +6,100 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 18:59:21 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:58:18 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-char	*delete_quotes(char *str, char c)
+char	*ft_var(t_mini *mini, char *str)
+{
+	if (!is_var(mini, str, 0))
+		return ("");
+	return (mini_getenv(mini, str));
+}
+
+char	*delete_quotes(char *str, int i, int j)
 {
 	char	*result;
-	int		i;
-	int		j;
 
-	i = 1;
-	j = 0;
-	result = malloc(sizeof(char) * ft_strlen(str) + 1);
+	result = malloc (sizeof(char) * ft_strlen(str) - 1);
 	if (!result)
 		return (NULL);
-	while (str[i] != c)
-	{
-		result[j] = str[i];
-		i++;
-		j++;
-	}
-	free (str);
+	while (str[i] != S_QUOTE)
+		result[j++] = str[i++];
+	result[j] = '\0';
 	return (result);
 }
 
-char	*ft_var(t_mini *mini, char *str)
+char	**transform_parts(t_mini *mini, char **parts, int i, int len)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*result;
+	char	**result;
 
-	i = 0;
-	j = 0;
-	len = 0;
-	result = NULL;
-	if (!is_var(mini, str, 0))
+	while (parts[i++])
+		len++;
+	result = malloc (sizeof(char *) * len + 1);
+	if (!result)
 		return (NULL);
-	len = is_var(mini, str, 1);
+	i = 0;
+	while (parts[i])
+	{
+		if (parts[i][0] == '$')
+			result[i] = ft_strdup(ft_var(mini, &parts[i][1]));
+		else if (parts[i][0] == S_QUOTE)
+			result[i] = delete_quotes(parts[i], 1, 0);
+		else
+			result[i] = ft_strdup(parts[i]);
+		i++;
+	}
+	ft_free_parts(parts);
+	return (result);
+}
+
+char	*fill_parts(char **parts, char *str, int i, int len)
+{
+	char	*result;
+	int		j;
+	int		k;
+
+	while (parts[i])
+		len += ft_strlen(parts[i++]);
 	result = malloc (sizeof(char) * len + 1);
 	if (!result)
 		return (NULL);
-	i = 0;
-	while (i < len)
-		result[j++] = str[i++];
-	result[i] = '\0';
-	return (result);
-}
-
-char	*delete_double_quotes(t_mini *mini, char *str, int i)
-{
-	char	*result;
-	char	*var;
-
-	result = ft_calloc(1, 1);
-	if (!result)
-		return (NULL);
-	while (str[++i] != '"')
+	i = -1;
+	j = 0;
+	while (parts[++i])
 	{
-		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != ' ')
-		{
-			var = ft_var(mini, &str[i + 1]);
-			if (var)
-			{
-				result = ft_strjoin(result, mini_getenv(mini, var));
-				i += (ft_strlen(var));
-				free (var);
-			}
-			else
-				i += is_var(mini, &str[i + 1], 1);
-		}
-		else
-			result = ft_strjoin2(result, str[i]);
+		k = 0;
+		while (parts[i][k])
+			result[j++] = parts[i][k++];
 	}
+	ft_free_parts(parts);
 	free (str);
-	return (result);
-}
-
-char	*get_vars(t_mini *mini, char *str, int i)
-{
-	char	*result;
-	char	*var;
-
-	result = ft_calloc(1, 1);
-	if (!result)
-		return (NULL);
-	while (str[++i])
-	{
-		if (str[i] == '$' && str[i + 1] && str[i + 1] != ' ')
-		{
-			var = ft_var(mini, &str[i + 1]);
-			if (var)
-			{
-				result = ft_strjoin(result, mini_getenv(mini, var));
-				i += (ft_strlen(var));
-				free (var);
-			}
-			else
-				i += is_var(mini, &str[i + 1], 1);
-		}
-		else
-			result = ft_strjoin2(result, str[i]);
-	}
-	free (str);
+	result[len] = '\0';
 	return (result);
 }
 
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
+	char	**parts;
+
 	cmd = cmd_init(str, 0);
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
 		while (cmd->cmds[++i])
 		{
-			printf("'%s'\n", cmd->cmds[i]);
-			if (cmd->cmds[i][0] == S_QUOTE)
-				cmd->cmds[i] = delete_quotes(cmd->cmds[i], S_QUOTE);
-			else if (cmd->cmds[i][0] == '"')
-				cmd->cmds[i] = delete_double_quotes(mini, cmd->cmds[i], 0);
-			else if (dol(cmd->cmds[i]))
-				cmd->cmds[i] = get_vars(mini, cmd->cmds[i], -1);
-			else if (ft_strchr(cmd->cmds[i], '"') || ft_strchr(cmd->cmds[i], S_QUOTE))
-				cmd->cmds[i] = clean_string(cmd->cmds[i]);
+			parts = split_string(cmd->cmds[i], 0, 0, 0);
+			parts = transform_parts(mini, parts, 0, 0);
+			printf("%s\n", cmd->cmds[i]);
+			int	n;
+			n = 0;
+			while (parts[n])
+				printf("%s\n", parts[n++]);
+			printf("%s\n", cmd->cmds[i]);
+			cmd->cmds[i] = fill_parts(parts, cmd->cmds[i], 0, 0);
+			cmd->cmds[i] = delete_double_quotes(cmd->cmds[i], 0, 0, 0);
 		}
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);

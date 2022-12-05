@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 18:22:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:52:14 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	ft_quotes(char *str, int i, int quotes, int double_quotes)
 				quotes++;
 		}
 	}
-	// printf("quotes = %d\nd_quotes = %d\n", quotes, double_quotes);
 	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
 		return (0);
 	return (1);

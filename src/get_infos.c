@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 18:27:29 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/05 12:30:10 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_exec(t_cmd *cmd)
 	if (cmd->cmds[i])
 		exec = ft_strdup(cmd->cmds[i]);
 	if (ft_strchr(exec, S_QUOTE) || ft_strchr(exec, '"'))
-		exec = clean_string(exec);
+		exec = clean_string(exec, 0, -1, 0);
 	return (exec);
 }
 

@@ -6,24 +6,11 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 18:41:59 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:51:49 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
-
-char	*to_empty(char *str)
-{
-	free (str);
-	return ("");
-}
-
-int	dol(char *str)
-{
-	if (ft_strnstr(str, "$", 10000))
-		return (1);
-	return (0);
-}
 
 t_cmd	*cmd_init(char *str, int i)
 {
@@ -91,5 +78,30 @@ char	**clean_files(char **cmds, int i, int j, int len)
 	}
 	result[j] = NULL;
 	free (cmds);
+	return (result);
+}
+
+char	*delete_double_quotes(char *str, int i, int j, int len)
+{
+	char	*result;
+
+	while (str[i])
+	{
+		if (str[i] != '"')
+			len++;
+		i++;
+	}
+	result = malloc (sizeof(char) * len + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '"')
+			result[j++] = str[i];
+		i++;
+	}
+	free (str);
+	result[len] = '\0';
 	return (result);
 }
