@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/05 17:51:57 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:51:02 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ char	*clean_string(char *str, int len, int i, int j)
 			result[j++] = str[i];
 	}
 	result[j] = '\0';
+	free (str);
 	return (result);
 }

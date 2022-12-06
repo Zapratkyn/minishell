@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/05 17:52:14 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:27:47 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	mini_exit(t_mini *mini)
 	if (mini->cmd)
 		ft_free_cmd(mini->cmd);
 	ft_free_env(mini->var);
+	ft_free_tab(mini->paths);
 	free (mini->prompt);
 	printf("exit\n");
+	system("leaks minishell");
 	exit (g_status);
 }
 

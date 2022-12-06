@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 11:34:06 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:36:02 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,18 @@ t_mini	mini_init(char **env)
 	mini.var = NULL;
 	if (!get_var(&mini, env))
 		ft_free_env(mini.var);
+	mini.paths = ft_split(mini_getenv(&mini, "PATH"), ':');
+	if (!mini.paths || !mini.var)
+		exit (EXIT_FAILURE);
 	mini.g_status = 0;
 	mini.prompt = NULL;
 	mini.prompt = get_prompt(mini.prompt);
-	if (!mini.var || !mini.prompt)
+	if (!mini.prompt)
+	{
+		ft_free_env(mini.var);
+		ft_free_tab(mini.paths);
 		exit (EXIT_FAILURE);
+	}
 	return (mini);
 }
 
@@ -87,13 +94,13 @@ int	mini_parser(t_mini *mini, char *str)
 	if (is_input(str))
 	{
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
-		free (str);
-		/*if (mini->cmd && g_status == 0)
+		/*if (mini->cmd)
 			execute(mini);
 		*/
-		ft_free_cmd(mini->cmd);
+		mini->cmd = ft_free_cmd(mini->cmd);
 		mini_unlink("/tmp/mini_heredocs/heredoc_");
 	}
+	free (str);
 	return (1);
 }
 

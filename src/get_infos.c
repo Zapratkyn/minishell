@@ -6,13 +6,13 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/05 12:30:10 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:33:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-char	*get_exec(t_cmd *cmd)
+char	*get_exec(t_mini *mini, t_cmd *cmd)
 {
 	char	*exec;
 	int		i;
@@ -24,9 +24,10 @@ char	*get_exec(t_cmd *cmd)
 		|| (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1])))
 		i++;
 	if (cmd->cmds[i])
+	{
 		exec = ft_strdup(cmd->cmds[i]);
-	if (ft_strchr(exec, S_QUOTE) || ft_strchr(exec, '"'))
-		exec = clean_string(exec, 0, -1, 0);
+		exec = get_vars(mini, exec, -1, NULL);
+	}
 	return (exec);
 }
 
@@ -34,32 +35,30 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 {
 	char	*exec;
 	char	*path;
-	char	**paths;
-	char	*temp;
 
-	exec = get_exec(cmd);
+	exec = get_exec(mini, cmd);
 	if (exec)
 	{
-		paths = ft_split(mini_getenv(mini, "PATH"), ':');
-		while (paths[i] && !cmd->path)
+		while (mini->paths[i] && !cmd->path)
 		{
-			temp = ft_strdup(paths[i++]);
-			path = ft_strjoin2(temp, '/');
+			path = ft_strjoin(ft_strdup(""), mini->paths[i++]);
+			path = ft_strjoin2(path, '/');
 			path = ft_strjoin(path, exec);
 			if (!access(path, F_OK))
 				cmd->path = ft_strdup(path);
 			free (path);
 		}
 		if (!ch_builtin(cmd) && !par_builtin(cmd) && !cmd->path)
-			get_infos_error(3, exec);
+			get_infos_error(cmd, 3, exec);
 		free (exec);
-		ft_free_tab(paths);
 	}
-	if (cmd->path || cmd->cmds[0][0] == '>' || cmd->cmds[0][0] == '<')
+	else
+		cmd->path = ft_strdup("none");
+	if (strncmp(cmd->path, "none", 4))
 		get_infile(cmd, ft_tablen(cmd->cmds));
 }
 
-int	get_infos_error(int i, char *s)
+int	get_infos_error(t_cmd *cmd, int i, char *s)
 {
 	char	*str;
 
@@ -83,6 +82,7 @@ int	get_infos_error(int i, char *s)
 		ft_error(str, 0);
 		free (str);
 		g_status = 127;
+		cmd->path = ft_strdup("none");
 	}
 	return (-1);
 }
@@ -101,7 +101,7 @@ void	get_infile(t_cmd *cmd, int i)
 			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
 				infile = ft_strdup(cmd->cmds[i + 1]);
 			else
-				cmd->infile = get_infos_error(1, NULL);
+				cmd->infile = get_infos_error(cmd, 1, NULL);
 		}
 	}
 	if (infile)
@@ -109,7 +109,7 @@ void	get_infile(t_cmd *cmd, int i)
 		if (!access(infile, F_OK))
 			cmd->infile = open(infile, O_RDONLY);
 		else
-			cmd->infile = get_infos_error(2, infile);
+			cmd->infile = get_infos_error(cmd, 2, infile);
 		free (infile);
 	}
 	if (cmd->infile != -1)
@@ -132,7 +132,7 @@ void	get_outfile(t_cmd *cmd, int i, int j)
 			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1])
 				outfile = ft_strdup(cmd->cmds[i + 1]);
 			else
-				cmd->outfile = get_infos_error(1, NULL);
+				cmd->outfile = get_infos_error(cmd, 1, NULL);
 		}
 	}
 	if (outfile)

@@ -6,25 +6,20 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 11:57:18 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:36:41 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void	ft_free_cmd(t_cmd *cmd)
+t_cmd	*ft_free_cmd(t_cmd *cmd)
 {
-	int	i;
-
-	i = 0;
-	while (cmd->cmds[i])
-		free (cmd->cmds[i++]);
-	free (cmd->cmds);
-	if (cmd->path)
-		free (cmd->path);
+	ft_free_tab(cmd->cmds);
+	free (cmd->path);
 	if (cmd->next)
 		ft_free_cmd(cmd->next);
 	free (cmd);
+	return (NULL);
 }
 
 // void	ft_free_full_cmd(char **tab)
@@ -73,13 +68,12 @@ void	mini_unlink(char *str)
 	file = NULL;
 	while (1)
 	{
-		if (file)
-			free (file);
 		file = ft_strdup(str);
 		file = ft_strjoin(file, ft_itoa(i));
 		if (access(file, F_OK))
 			break ;
 		unlink(file);
+		free (file);
 		i++;
 	}
 	free (file);

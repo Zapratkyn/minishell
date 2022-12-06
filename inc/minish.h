@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:56:10 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:06:46 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ struct s_mini
 {
 	int		g_status;
 	char	*prompt;
+	char	**paths;
 	t_var	*var;
 	t_cmd	*cmd;
 };
@@ -132,7 +133,7 @@ int							is_var(t_mini *mini, char *var, int j);
 // void						mini_export(t_mini mini, char *var, char *val);
 
 // ft_free.c
-void						ft_free_cmd(t_cmd *cmd);
+t_cmd						*ft_free_cmd(t_cmd *cmd);
 void						ft_free_full_cmd(char **tab);
 void						ft_free_parts(char **parts);
 void						ft_free_tab(char **tab);
@@ -150,20 +151,22 @@ void						mini_new_line(int sig);
 int							is_input(char *str);
 int							start_with_pipe(char *str, int i);
 // get_cmd.c
+char						*ft_var(t_mini *mini, char *str);
 char						**transform_parts(t_mini *mini,
 								char **parts, int i, int len);
-char						*fill_parts(char **parts, char *str, int i);
+char						*join_parts(char **parts, char *str, int i);
 t_cmd						*get_cmd(t_mini *mini,
 								t_cmd *cmd, char *str, int i);
 
 // get_cmd_utils.c
 t_cmd						*cmd_init(char *str, int i);
-char						*delete_double_quotes(char *str, int i, int j, int len);
+char						*delete_double_quotes(t_mini *mini, char *str, int i);
 char						*manage_string(t_mini *mini, char *str, int i);
+char						*get_vars(t_mini *mini, char *str, int i, char *result);
 // get_infos.c
-char						*get_exec(t_cmd *cmd);
+char						*get_exec(t_mini *mini, t_cmd *cmd);
 void						get_path(t_mini *mini, t_cmd *cmd, int i);
-int							get_infos_error(int i, char *s);
+int							get_infos_error(t_cmd *cmd, int i, char *s);
 void						get_infile(t_cmd *cmd, int i);
 void						get_outfile(t_cmd *cmd, int i, int j);
 char						**clean_files(char **cmds, int i, int j, int len);
