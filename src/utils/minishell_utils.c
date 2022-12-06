@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:37:21 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:17:22 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	mini_exit(t_mini *mini)
 {
 	if (mini->cmd)
 		ft_free_cmd(mini->cmd);
-	ft_free_env(mini->var);
+	ft_lstclear(&mini->var);
 	free (mini->prompt);
 	printf("exit\n");
 	exit (g_status);
@@ -44,7 +44,7 @@ void	mini_new_line(int sig)
 	g_status = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	//rl_replace_line("", 0);
 }
 
 int	ft_quotes(char *str, int i, int quotes, int double_quotes)

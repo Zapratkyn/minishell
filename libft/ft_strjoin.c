@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:13:51 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:26:25 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*ft_strjoin2(t_mini *mini, char *str, char c)
 	}
 	result[i++] = c;
 	result[i] = '\0';
-	free (str);
+	if (str)
+		free (str);
 	return (result);
 }

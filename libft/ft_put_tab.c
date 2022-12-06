@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tablen.c                                        :+:      :+:    :+:   */
+/*   ft_put_tab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/29 13:33:04 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:41:04 by ademurge         ###   ########.fr       */
+/*   Created: 2022/12/06 13:35:14 by ademurge          #+#    #+#             */
+/*   Updated: 2022/12/06 13:36:15 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-int	ft_tablen(char **tab)
+void	ft_put_tab(char **tab)
 {
 	int	i;
 
-	i = 0;
-	while (tab && tab[i])
-		i++;
-	return (i);
+	i = -1;
+	while (tab && tab[++i])
+		ft_putstr_fd(tab[i], STDOUT_FILENO);
 }

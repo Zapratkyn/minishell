@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_string.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:51:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 11:54:44 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:10:46 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	count_words(char *s, int i, int count, char c)
 		else if (s[i] == '$')
 		{
 			i++;
-			while (isalnum(s[i]) || s[i] == '_' || s[i] == '?')
+			while (ft_isalnum(s[i]) || s[i] == '_' || s[i] == '?')
 				i++;
 		}
 		else
@@ -45,7 +45,7 @@ static int	find_next_len(char *s, int i, char c)
 	if (s[0] == '$')
 	{
 		i++;
-		while (isalnum(s[i]) || s[i] == '_' || s[i] == '?')
+		while (ft_isalnum(s[i]) || s[i] == '_' || s[i] == '?')
 			i++;
 	}
 	else if (s[0] == S_QUOTE || s[0] == '"')
@@ -64,13 +64,13 @@ static int	find_next_len(char *s, int i, char c)
 	return (i);
 }
 
-static char	*find_next_word(char *s, int i, int len)
+static char	*find_next_word(t_mini *mini, char *s, int i, int len)
 {
 	char		*result;
 
 	result = malloc (sizeof(char) * len + 1);
 	if (!result)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (i < len)
 	{
 		result[i] = s[i];
@@ -80,21 +80,21 @@ static char	*find_next_word(char *s, int i, int len)
 	return (result);
 }
 
-char	**split_string(char *s, int i, int index, int len)
+char	**split_string(t_mini *mini, char *s, int i, int index)
 {
 	char	**tab;
 	int		wc;
+	int		len;
 
+	len = 0;
 	wc = count_words(s, 0, 0, 0);
 	tab = malloc(sizeof(char *) * (wc + 1));
 	if (!tab)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (i < wc)
 	{
 		len = find_next_len(&s[index], 0, 0);
-		tab[i] = find_next_word(&s[index], 0, len);
-		if (!tab[i])
-			return (NULL);
+		tab[i] = find_next_word(mini, &s[index], 0, 0);
 		index += ft_strlen(tab[i]);
 		i++;
 	}

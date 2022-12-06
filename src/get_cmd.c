@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:29:44 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:47:24 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,43 +45,40 @@ char	**transform_parts(t_mini *mini, char **parts, int i, int len)
 	while (parts[i])
 	{
 		if (parts[i][0] == '$')
-			result[i] = ft_strdup(ft_var(mini, &parts[i][1]));
+			result[i] = ft_strdup(mini, ft_var(mini, &parts[i][1]));
 		else if (parts[i][0] == S_QUOTE)
-			result[i] = delete_quotes(parts[i], 1, 0);
+			result[i] = delete_quotes(mini, parts[i], 1, 0);
 		else
-			result[i] = ft_strdup(parts[i]);
+			result[i] = ft_strdup(mini, parts[i]);
 		i++;
 	}
-	ft_free_tab(parts);
+	ft_free_tab(parts, ft_tablen(parts));
 	return (result);
 }
 
-char	*fill_parts(char **parts, char *str, int i, int len)
+char	*fill_parts(t_mini *mini, char **parts, char *str, int i)
 {
 	char	*result;
-	int		j;
+	int		j[2];
 	int		k;
 
-	while (parts[i])
-	{
-		printf("%s\n", parts[i]);
-		len += ft_strlen(parts[i++]);
-		printf("%d\n", len);
-	}
-	result = malloc (sizeof(char) * len + 1);
+	while (parts && parts[i])
+		j[0] += ft_strlen(parts[i++]);
+	printf("\n\nj[0] = '%d'\n\n", j[0]);
+	result = malloc (sizeof(char) * (j[0] + 1));
 	if (!result)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	i = -1;
-	j = 0;
+	j[1] = 0;
 	while (parts[++i])
 	{
 		k = 0;
 		while (parts[i][k])
-			result[j++] = parts[i][k++];
+			result[j[1]++] = parts[i][k++];
 	}
-	ft_free_tab(parts);
+	ft_free_tab(parts, ft_tablen(parts));
 	free (str);
-	result[len] = '\0';
+	result[j[0]] = '\0';
 	return (result);
 }
 
@@ -92,7 +89,7 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 	{
 		while (cmd->cmds[++i])
 		{
-			cmd->cmds[i] = manage_string(mini, cmd->cmds[i]);
+			cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 0);
 			printf("'%s'\n", cmd->cmds[i]);
 		}
 		get_path(mini, cmd, 0);

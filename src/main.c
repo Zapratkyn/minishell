@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:39:17 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:29:32 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,17 @@ char	*get_prompt(t_mini *mini, char *prompt)
 	return (prompt);
 }
 
-t_mini	mini_init(t_mini *mini, char **env)
+t_mini	mini_init(char **env)
 {
 	t_mini	mini;
 
 	mini.cmd = NULL;
 	mini.var = NULL;
 	if (!get_var(&mini, env))
-		ft_free_env(mini.var);
+		ft_lstclear(&mini.var);
 	mini.g_status = 0;
 	mini.prompt = NULL;
-	mini.prompt = get_prompt(mini, mini.prompt);
+	mini.prompt = get_prompt(&mini, mini.prompt);
 	if (!mini.var || !mini.prompt)
 		exit (EXIT_FAILURE);
 	return (mini);
@@ -76,13 +76,15 @@ int	mini_parser(t_mini *mini, char *str)
 		return (0);
 	if (start_with_pipe(mini, str, 0) || !mini)
 	{
-		free (str);
+		if (str)
+			free (str);
 		return (1);
 	}
 	if (is_input(str))
 	{
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
-		free (str);
+		if (str)
+			free (str);
 		if (mini->cmd && g_status == 0)
 			execute(mini);
 		ft_free_cmd(mini->cmd);

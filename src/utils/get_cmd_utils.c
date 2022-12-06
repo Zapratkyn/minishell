@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:37:37 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:49:07 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,18 @@ t_cmd	*cmd_init(t_mini *mini, char *str, int i)
 	cmd = malloc (sizeof(t_cmd));
 	if (!cmd)
 		ft_error(mini, MALLOC_ERR, EXIT);
+	input = ft_strdup(mini, "");
 	cmd->path = NULL;
 	cmd->cmds = NULL;
 	cmd->infile = STDIN_FILENO;
 	while (str[i] && str[i] != PIPE)
-	{
-		input = ft_strjoin2(input, str[i++]);
-		if (!input)
-			return (NULL);
-	}
-	cmd->infile = mini_heredoc(input, cmd->infile);
-	free (input);
+		input = ft_strjoin2(mini, input, str[i++]);
+	cmd->infile = mini_heredoc(mini, input, cmd->infile);
+	if (input)
+		free (input);
 	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
-	cmd->cmds = ft_split_cmd(str, 0, 0, 0);
+	cmd->cmds = ft_split_cmd(mini, str, 0, 0);
 	if (!cmd->cmds || cmd->infile == -1)
 		return (NULL);
 	cmd->next = NULL;
@@ -107,15 +105,22 @@ char	**clean_files(t_mini *mini, char **cmds, int i, int j)
 // 	return (result);
 // }
 
-char	*manage_string(t_mini *mini, char *str)
+char	*manage_string(t_mini *mini, char *str, int i)
 {
 	char	**parts;
 	char	*result;
 
-	result = ft_strdup(str);
-	parts = split_string(result, 0, 0, 0);
+	result = NULL;
+	if (!i)
+	{
+		result = ft_strdup(mini, str);
+		free (str);
+	}
+	else if (i == 1)
+		result = ft_strdup2(mini, str);
+	parts = split_string(mini, result, 0, 0);
+
 	parts = transform_parts(mini, parts, 0, 0);
-	result = fill_parts(parts, result, 0, 0);
-	free (str);
+	result = fill_parts(mini, parts, result, 0);
 	return (result);
 }

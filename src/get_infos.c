@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:33:17 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:53:59 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	get_infos_error(t_mini *mini, int i, char *s)
 	}
 	else if (i == 2)
 	{
-		str = ft_strjoin(mini, ft_strdup("3: cannot open "), s);
+		str = ft_strjoin(mini, ft_strdup(mini, "3: cannot open "), s);
 		str = ft_strjoin(mini, str, ": No such file or directory");
 		ft_error(mini, str, NO_EXIT);
 		free (str);

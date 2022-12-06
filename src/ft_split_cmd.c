@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:21:56 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:08:22 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	**ft_split_cmd(t_mini *mini, char *s, int i, int index)
 	while (i < wc)
 	{
 		len = find_next_len(&s[index], 0, 0, 0);
-		tab[i] = find_next_word(mini, &s[index], 0, len);
+		tab[i] = find_next_word(mini, &s[index], 0);
 		index += ft_strlen(tab[i]);
 		while (s[index] == ' ')
 			index++;

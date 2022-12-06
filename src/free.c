@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:17:47 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:06:29 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	ft_free_cmd(t_cmd *cmd)
 void	ft_free_tab(char **tab, int len)
 {
 	int	i;
-	int	len;
 
 	i = -1;
 	while (++i < len)
@@ -65,7 +64,7 @@ void	mini_unlink(t_mini *mini, char *str)
 		if (file)
 			free (file);
 		file = ft_strdup(mini, str);
-		file = ft_strjoin(file, ft_itoa(mini, i));
+		file = ft_strjoin(mini, file, ft_itoa(mini, i));
 		if (access(file, F_OK))
 			break ;
 		unlink(file);

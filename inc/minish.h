@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:11:36 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:45:49 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 */
 
 # include <fcntl.h>
+# include <limits.h>
 # include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -116,22 +117,29 @@ typedef struct s_mini
 */
 
 /* Main */
-char					*get_prompt(t_mini *mini);
+char					*get_prompt(t_mini *mini, char *prompt);
 t_mini					mini_init(char **env);
 int						mini_parser(t_mini *mini, char *str);
 
 /* Utils.c */
+char					*clean_string(char *str, int len, int i, int j);
 int						is_input(char *str);
-int						ft_quotes(char *str);
+char					*fill_parts(t_mini *mini, char **parts,
+							char *str, int i);
+int						ft_quotes(char *str, int i, int quotes,
+							int double_quotes);
+char					*manage_string(t_mini *mini, char *str, int i);
 void					mini_exit(t_mini *mini);
 char					*mini_getenv(t_mini *mini, char *var);
 void					mini_new_line(int sig);
+char					**split_string(t_mini *mini, char *s, int i, int index);
 int						start_with_pipe(t_mini *mini, char *str, int i);
+char					**transform_parts(t_mini *mini, char **parts, int i, int len);
 
 /* Parsing & Initialization */
 char					**clean_files(t_mini *mini, char **cmds,
 							int i, int j);
-t_cmd					*cmd_init(t_mini *mini);
+t_cmd					*cmd_init(t_mini *mini, char *str, int i);
 int						dol(char *str);
 char					**ft_split_cmd(t_mini *mini, char *s, int i,
 							int index);
@@ -144,7 +152,7 @@ void					get_outfile(t_mini *mini, t_cmd *cmd, int i, int j);
 void					get_path(t_mini *mini, t_cmd *cmd, int i);
 int						is_var(t_mini *mini, char *var, int j);
 void					mini_env(t_mini *mini);
-int						mini_heredoc(char *str, int i, int j);
+int						mini_heredoc(t_mini *mini, char *str, int fd);
 char					*to_empty(char *str);
 
 /* Execution */
@@ -180,6 +188,7 @@ void					ft_error(t_mini *mini, char *type, int is_exit);
 void					ft_free_cmd(t_cmd *cmd);
 void					ft_free_full_cmd(char **tab);
 void					ft_free_tab(char **tab, int len);
+void					mini_unlink(t_mini *mini, char *str);
 
 /* Linked List */
 int						ft_lst_index(t_var **l_var, t_var *var);
@@ -203,10 +212,12 @@ int						ft_isalnum(int c);
 char					*ft_itoa(t_mini *mini, int n);
 void					ft_n_putstr(char *s, int n);
 void					ft_putstr_fd(char *s, int fd);
+void					ft_put_tab(char **tab);
 char					**ft_split(t_mini *mini, char const *s, char c);
 char					*ft_strchr(const char *s, int c);
 int						ft_strcmp(char *s1, char *s2);
 char					*ft_strdup(t_mini *mini, char *str);
+char					*ft_strdup2(t_mini *mini, char *str);
 char					*ft_strjoin(t_mini *mini, char const *s1,
 							char const *s2);
 char					*ft_strjoin2(t_mini *mini, char *str, char c);
@@ -219,5 +230,7 @@ char					*ft_strnstr2(const char *haystack, const char *needle,
 							size_t len);
 char					*ft_substr(t_mini *mini, char const *s,
 							unsigned int start, size_t len);
+int						ft_tablen(char **tab);
+
 
 #endif

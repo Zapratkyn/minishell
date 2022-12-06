@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/06 12:10:39 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/06 13:17:45 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,7 @@ linux:
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 $(NAME):
-					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -L/Users/gponcele/.brew/opt/readline/lib -I/Users/gponcele/.brew/opt/readline/include -o $(NAME)
+					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 libft:

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 16:42:13 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:09:14 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-char	*get_end(char *str, char *end)
+char	*get_end(t_mini *mini, char *str, char *end)
 {
 	int		i;
 
@@ -20,7 +20,7 @@ char	*get_end(char *str, char *end)
 	while (str[i] == ' ')
 		i++;
 	while (str[i] && str[i] != ' ')
-		end = ft_strjoin2(ft_strdup(end), str[i++]);
+		end = ft_strjoin2(mini, ft_strdup(mini, end), str[i++]);
 	return (end);
 }
 
@@ -34,35 +34,35 @@ int	check_input(char *str, char *end)
 	return (1);
 }
 
-int	add_heredoc(char *file)
+int	add_heredoc(t_mini *mini, char *file)
 {
 	int		i;
 	int		fd;
 
 	i = 1;
-	file = ft_strjoin(ft_strdup(file), ft_itoa(i));
+	file = ft_strjoin(mini, ft_strdup(mini, file), ft_itoa(mini, i));
 	while (!access(file, F_OK))
 	{
 		i++;
 		free (file);
-		file = ft_strdup("/tmp/mini_heredocs/heredoc_");
-		file = ft_strjoin(file, ft_itoa(i));
+		file = ft_strdup(mini, "/tmp/mini_heredocs/heredoc_");
+		file = ft_strjoin(mini, file, ft_itoa(mini, i));
 	}
 	fd = open(file, O_CREAT | O_RDWR, 0777);
 	free (file);
 	return (fd);
 }
 
-int	get_input(char *str, char *end, int fd)
+int	get_input(t_mini *mini, char *str, char *end, int fd)
 {
 	char	*input;
 	int		check;
 
 	g_status = 0;
 	check = 0;
-	input = ft_calloc(1, 1);
-	fd = add_heredoc("/tmp/mini_heredocs/heredoc_");
-	end = get_end(str, "");
+	input = ft_calloc(mini, 1, 1);
+	fd = add_heredoc(mini, "/tmp/mini_heredocs/heredoc_");
+	end = get_end(mini, str, "");
 	while (1)
 	{
 		signal(SIGINT, mini_new_line);
@@ -80,7 +80,7 @@ int	get_input(char *str, char *end, int fd)
 	return (fd);
 }
 
-int	mini_heredoc(char *str, int fd)
+int	mini_heredoc(t_mini *mini, char *str, int fd)
 {
 	while (ft_strchr(str, '<'))
 	{
@@ -89,7 +89,7 @@ int	mini_heredoc(char *str, int fd)
 		if (str[0] == '<')
 		{
 			str = &str[1];
-			fd = get_input(str, "", 0);
+			fd = get_input(mini, str, "", 0);
 			if (fd == 0)
 			{
 				write (1, "", 1);
