@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 16:41:53 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:58:13 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,16 @@ int	g_status;
 # define RESET "\x1B[0m"
 
 /* Managing errors */
-# define PIPE_ERR "Error in the creation of a pipe."
-# define PWD_ERR "Error in the pwd."
-# define FORK_ERR "Error in the creation of a fork."
-# define MALLOC_ERR "Error in the memory allocation of a malloc."
-# define DUP_ERR "Error in the dup2."
 # define CMD_ERR "Wrong input command."
 # define DIR_ERR "No such file or directory."
-# define NO_EXIT 0
+# define DUP_ERR "Error in the dup2."
 # define EXIT 1
+# define EXIT_ERR "exit: too many argument"
+# define FORK_ERR "Error in the creation of a fork."
+# define MALLOC_ERR "Error in the memory allocation of a malloc."
+# define NO_EXIT 0
+# define PIPE_ERR "Error in the creation of a pipe."
+# define PWD_ERR "Error in the pwd."
 
 /* Characters */
 # define CHILD_PROC 0
@@ -122,7 +123,7 @@ t_mini					mini_init(char **env);
 int						mini_parser(t_mini *mini, char *str);
 
 /* Utils.c */
-char					*clean_string(char *str, int len, int i, int j);
+char					*clean_string(t_mini *mini, char *str, int len, int i);
 int						is_input(char *str);
 char					*fill_parts(t_mini *mini, char **parts,
 							char *str, int i);
@@ -171,7 +172,7 @@ void					do_builtin(t_mini *mini, t_cmd *cmd);
 void					ft_cd(t_mini *mini, t_cmd *cmd);
 void					ft_echo(t_cmd *cmd);
 void					ft_env(t_mini *mini);
-void					ft_exit(t_mini *mini);
+void					ft_exit(t_mini *mini, t_cmd *cmd);
 void					ft_export(t_mini *mini, t_cmd *cmd);
 void					ft_pwd(t_mini *mini);
 void					ft_unset(t_mini *mini, t_cmd *cmd, int i);
@@ -213,6 +214,7 @@ char					*ft_insert(t_mini *mini, char *s1, char c, char *s2);
 int						ft_isalnum(int c);
 char					*ft_itoa(t_mini *mini, int n);
 void					ft_n_putstr(char *s, int n);
+void					ft_putendl_fd(char *s, int fd);
 void					ft_putstr_fd(char *s, int fd);
 void					ft_put_tab(char **tab);
 char					**ft_split(t_mini *mini, char const *s, char c);

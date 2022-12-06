@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 16:39:08 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:43:06 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,7 @@ int	main(int argc, char **argv, char **env)
 		if (!mini_parser(&mini, readline(mini.prompt)))
 			break ;
 	}
-	ft_exit(&mini);
+	ft_free_all(&mini);
+	write(STDERR_FILENO, "\nexit\n", 6);
+	exit(g_status);
 }

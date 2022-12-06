@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/06 13:36:55 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/06 17:57:41 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRC							=	lst/ft_lst_index.c \
 								ft_itoa.c \
 								ft_n_putstr.c \
 								ft_putstr_fd.c \
+								ft_putendl_fd.c \
 								ft_put_tab.c \
 								ft_split.c \
 								ft_strchr.c \

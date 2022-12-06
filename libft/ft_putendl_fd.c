@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_putendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/06 17:48:29 by ademurge         ###   ########.fr       */
+/*   Created: 2022/12/06 17:55:01 by ademurge          #+#    #+#             */
+/*   Updated: 2022/12/06 17:55:42 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void	ft_error(t_mini *mini, char *type, int is_exit)
+void	ft_putendl_fd(char *s, int fd)
 {
-	ft_putstr_fd(type, STDERR_FILENO);
-	write (STDERR_FILENO, "\n", 1);
-	if (is_exit == EXIT)
-	{
-		ft_free_all(mini);
-		write(STDERR_FILENO, "\nexit\n", 6);
-		exit(g_status);
-	}
+	ft_putstr_fd(s, fd);
+	write(fd, "\n", 1);
 }
