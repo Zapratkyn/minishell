@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/02 00:29:46 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/06 12:14:15 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ SRC							=	lst/ft_lst_index.c \
 								ft_strncmp.c \
 								ft_strnstr.c \
 								ft_substr.c \
-								ft_itoa.c
+								ft_itoa.c \
+								ft_tablen.c
 
 
 # Flags

@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/06 12:16:34 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/29 13:33:04 by gponcele          #+#    #+#             */
+/*   Updated: 2022/11/30 17:33:39 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minish.h"
+#include "libft.h"
 
-void	ft_error(t_mini *mini, char *type, int is_exit)
+int	ft_tablen(char **tab)
 {
-	ft_putstr_fd(type, STDERR_FILENO);
-	write (STDERR_FILENO, "\n", 1);
-	if (is_exit == EXIT)
-		ft_exit(mini);
+	int	i;
+
+	i = 0;
+	while (tab && tab[i])
+		i++;
+	return (i);
 }

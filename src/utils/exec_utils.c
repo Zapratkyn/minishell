@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 12:36:39 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:37:55 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,26 @@ int	n_of_cmd(t_cmd *cmd)
 		tmp = tmp->next;
 	}
 	return (n);
+}
+
+char	*clean_string(char *str, int len, int i, int j)
+{
+	char	*result;
+
+	while (str[++i])
+	{
+		if (str[i] != S_QUOTE && str[i] != '"')
+			len++;
+	}
+	result = malloc (sizeof(char) * len + 1);
+	if (!result)
+		return (NULL);
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] != S_QUOTE && str[i] != '"')
+			result[j++] = str[i];
+	}
+	result[j] = '\0';
+	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 13:30:13 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:33:17 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 		i++;
 	if (cmd->cmds[i])
 		exec = ft_strdup(mini, cmd->cmds[i]);
+		if (ft_strchr(exec, S_QUOTE) || ft_strchr(exec, '"'))
+			exec = clean_string(exec, 0, -1, 0);
 	return (exec);
 }
 
@@ -33,6 +35,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 	char	*exec;
 	char	*path;
 	char	**paths;
+	char	*temp;
 
 	exec = NULL;
 	exec = get_exec(mini, cmd);
@@ -41,7 +44,8 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 		paths = ft_split(mini, mini_getenv(mini, "PATH"), ':');
 		while (paths[i] && !cmd->path)
 		{
-			path = ft_strjoin2(mini, paths[i++], '/');
+			temp = ft_strdup(mini, paths[i++]);
+			path = ft_strjoin2(mini, temp, '/');
 			path = ft_strjoin(mini, path, exec);
 			if (!access(path, F_OK))
 				cmd->path = ft_strdup(mini, path);
@@ -53,7 +57,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 		ft_free_tab(paths, i);
 	}
 	if (cmd->path || cmd->cmds[0][0] == '>' || cmd->cmds[0][0] == '<')
-		get_infile(mini, cmd, -1);
+		get_infile(mini, cmd, ft_tablen(cmd->cmds));
 }
 
 int	get_infos_error(t_mini *mini, int i, char *s)
@@ -68,7 +72,7 @@ int	get_infos_error(t_mini *mini, int i, char *s)
 	}
 	else if (i == 2)
 	{
-		str = ft_strjoin(mini, "3: cannot open ", s);
+		str = ft_strjoin(mini, ft_strdup("3: cannot open "), s);
 		str = ft_strjoin(mini, str, ": No such file or directory");
 		ft_error(mini, str, NO_EXIT);
 		free (str);
@@ -76,7 +80,7 @@ int	get_infos_error(t_mini *mini, int i, char *s)
 	}
 	else if (i == 3)
 	{
-		str = ft_strjoin(mini, s, " : command not found");
+		str = ft_strjoin(mini, ft_strdup(mini, s), " : command not found");
 		ft_error(mini, str, NO_EXIT);
 		free (str);
 		g_status = 127;
@@ -89,7 +93,7 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 	char	*infile;
 
 	infile = NULL;
-	while (cmd->cmds[++i] && !infile)
+	while (cmd->cmds[--i] && i >= 0 && !infile && cmd->infile == STDIN_FILENO)
 	{
 		if (cmd->cmds[i][0] == '<')
 		{
@@ -110,7 +114,7 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 		free (infile);
 	}
 	if (cmd->infile != -1)
-		get_outfile(mini, cmd, -1, 1);
+		get_outfile(mini, cmd, ft_tablen(cmd->cmds), 1);
 }
 
 void	get_outfile(t_mini *mini, t_cmd *cmd, int i, int j)
@@ -118,7 +122,7 @@ void	get_outfile(t_mini *mini, t_cmd *cmd, int i, int j)
 	char	*outfile;
 
 	outfile = NULL;
-	while (cmd->cmds[++i] && !outfile)
+	while (cmd->cmds[--i] && !outfile && i >= 0)
 	{
 		if (cmd->cmds[i][0] == '>')
 		{

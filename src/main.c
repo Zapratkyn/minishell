@@ -6,13 +6,13 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/02 13:30:27 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:39:17 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void	get_var(t_mini *mini, char **env)
+int	get_var(t_mini *mini, char **env)
 {
 	int		i;
 	t_var	*var;
@@ -28,42 +28,45 @@ void	get_var(t_mini *mini, char **env)
 			var->next->prev = var;
 		var = var->next;
 	}
+	return (1);
 }
 
-char	*get_prompt(t_mini *mini)
+char	*get_prompt(t_mini *mini, char *prompt)
 {
 	char	*str;
-	char	*prompt;
 
-	if (mini && mini->prompt)
-		free(mini->prompt);
-	prompt = ft_strdup(mini, GREEN);
-	prompt = ft_strjoin(mini, prompt, getenv("USER"));
-	prompt = ft_strjoin(mini, prompt, "@minishell ");
+	if (prompt)
+		free (prompt);
+	prompt = ft_strjoin(mini, ft_strdup(mini, GREEN), getenv("USER"));
+	if (prompt)
+		prompt = ft_strjoin(mini, prompt, "@minishell ");
 	str = ft_strnstr2(getenv("PWD"),
-			getenv("USER"), 1000);
-	if (str)
+			getenv("USER"), INT_MAX);
+	if (str && prompt)
 	{
-		prompt = ft_strjoin(mini, prompt, "~");
+		prompt = ft_strjoin(mini,prompt, "~");
 		prompt = ft_strjoin(mini, prompt, str);
 	}
-	else
+	else if (!str && prompt)
 		prompt = ft_strjoin(mini, prompt, getenv("PWD"));
 	prompt = ft_strjoin(mini, prompt, " % ");
 	prompt = ft_strjoin(mini, prompt, WHITE);
 	return (prompt);
 }
 
-t_mini	mini_init(char **env)
+t_mini	mini_init(t_mini *mini, char **env)
 {
 	t_mini	mini;
 
 	mini.cmd = NULL;
 	mini.var = NULL;
-	get_var(&mini, env);
+	if (!get_var(&mini, env))
+		ft_free_env(mini.var);
 	mini.g_status = 0;
 	mini.prompt = NULL;
-	mini.prompt = get_prompt(&mini);
+	mini.prompt = get_prompt(mini, mini.prompt);
+	if (!mini.var || !mini.prompt)
+		exit (EXIT_FAILURE);
 	return (mini);
 }
 
@@ -71,15 +74,20 @@ int	mini_parser(t_mini *mini, char *str)
 {
 	if (!str)
 		return (0);
-	if (start_with_pipe(mini, str, 0))
+	if (start_with_pipe(mini, str, 0) || !mini)
+	{
+		free (str);
 		return (1);
+	}
 	if (is_input(str))
 	{
-		add_history(str);
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
-		execute(mini);
+		free (str);
+		if (mini->cmd && g_status == 0)
+			execute(mini);
+		ft_free_cmd(mini->cmd);
+		mini_unlink(mini, "/tmp/mini_heredocs/heredoc_");
 	}
-	free (str);
 	return (1);
 }
 
