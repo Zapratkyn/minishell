@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/05 17:31:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 11:38:13 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,16 @@ void						mini_new_line(int sig);
 int							is_input(char *str);
 int							start_with_pipe(char *str, int i);
 // get_cmd.c
+char						**transform_parts(t_mini *mini,
+								char **parts, int i, int len);
+char						*fill_parts(char **parts, char *str, int i, int len);
 t_cmd						*get_cmd(t_mini *mini,
 								t_cmd *cmd, char *str, int i);
 
 // get_cmd_utils.c
 t_cmd						*cmd_init(char *str, int i);
 char						*delete_double_quotes(char *str, int i, int j, int len);
+char						*manage_string(t_mini *mini, char *str);
 // get_infos.c
 char						*get_exec(t_cmd *cmd);
 void						get_path(t_mini *mini, t_cmd *cmd, int i);

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/05 17:58:18 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:04:23 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**transform_parts(t_mini *mini, char **parts, int i, int len)
 			result[i] = ft_strdup(parts[i]);
 		i++;
 	}
-	ft_free_parts(parts);
+	ft_free_tab(parts);
 	return (result);
 }
 
@@ -63,7 +63,11 @@ char	*fill_parts(char **parts, char *str, int i, int len)
 	int		k;
 
 	while (parts[i])
+	{
+		printf("%s\n", parts[i]);
 		len += ft_strlen(parts[i++]);
+		printf("%d\n", len);
+	}
 	result = malloc (sizeof(char) * len + 1);
 	if (!result)
 		return (NULL);
@@ -75,7 +79,7 @@ char	*fill_parts(char **parts, char *str, int i, int len)
 		while (parts[i][k])
 			result[j++] = parts[i][k++];
 	}
-	ft_free_parts(parts);
+	ft_free_tab(parts);
 	free (str);
 	result[len] = '\0';
 	return (result);
@@ -83,23 +87,13 @@ char	*fill_parts(char **parts, char *str, int i, int len)
 
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	char	**parts;
-
 	cmd = cmd_init(str, 0);
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
 		while (cmd->cmds[++i])
 		{
-			parts = split_string(cmd->cmds[i], 0, 0, 0);
-			parts = transform_parts(mini, parts, 0, 0);
-			printf("%s\n", cmd->cmds[i]);
-			int	n;
-			n = 0;
-			while (parts[n])
-				printf("%s\n", parts[n++]);
-			printf("%s\n", cmd->cmds[i]);
-			cmd->cmds[i] = fill_parts(parts, cmd->cmds[i], 0, 0);
-			cmd->cmds[i] = delete_double_quotes(cmd->cmds[i], 0, 0, 0);
+			cmd->cmds[i] = manage_string(mini, cmd->cmds[i]);
+			printf("'%s'\n", cmd->cmds[i]);
 		}
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);
