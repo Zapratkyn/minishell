@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:04:23 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:44:33 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	**transform_parts(t_mini *mini, char **parts, int i, int len)
 			result[i] = ft_strdup(ft_var(mini, &parts[i][1]));
 		else if (parts[i][0] == S_QUOTE)
 			result[i] = delete_quotes(parts[i], 1, 0);
+		else if (parts[i][0] == '"')
+			result[i] = manage_string(mini, &parts[i][1], 1);
 		else
 			result[i] = ft_strdup(parts[i]);
 		i++;
@@ -62,12 +64,8 @@ char	*fill_parts(char **parts, char *str, int i, int len)
 	int		j;
 	int		k;
 
-	while (parts[i])
-	{
-		printf("%s\n", parts[i]);
+	while (parts && parts[i])
 		len += ft_strlen(parts[i++]);
-		printf("%d\n", len);
-	}
 	result = malloc (sizeof(char) * len + 1);
 	if (!result)
 		return (NULL);
@@ -92,7 +90,7 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 	{
 		while (cmd->cmds[++i])
 		{
-			cmd->cmds[i] = manage_string(mini, cmd->cmds[i]);
+			cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 0);
 			printf("'%s'\n", cmd->cmds[i]);
 		}
 		get_path(mini, cmd, 0);

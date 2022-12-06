@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 11:38:13 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:32:09 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ t_cmd						*get_cmd(t_mini *mini,
 // get_cmd_utils.c
 t_cmd						*cmd_init(char *str, int i);
 char						*delete_double_quotes(char *str, int i, int j, int len);
-char						*manage_string(t_mini *mini, char *str);
+char						*manage_string(t_mini *mini, char *str, int i);
 // get_infos.c
 char						*get_exec(t_cmd *cmd);
 void						get_path(t_mini *mini, t_cmd *cmd, int i);

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/05 12:58:15 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:34:03 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char					**ft_split(char const *s, char c);
 char					*ft_strchr(const char *s, int c);
 int						ft_strcmp(char *s1, char *s2);
 char					*ft_strdup(char *str);
+char					*ft_strdup2(char *str);
 char					*ft_strjoin(char const *s1, char const *s2);
 char					*ft_strjoin2(char *str, char c);
 size_t					ft_strlcpy(char *dest, const char *src, size_t size);
