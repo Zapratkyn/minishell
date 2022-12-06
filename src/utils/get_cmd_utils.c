@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:43:57 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:25:38 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,29 @@ char	**clean_files(char **cmds, int i, int j, int len)
 	return (result);
 }
 
-char	*delete_double_quotes(char *str, int i, int j, int len)
-{
-	char	*result;
+// char	*delete_double_quotes(char *str, int i, int j, int len)
+// {
+// 	char	*result;
 
-	while (str && str[i])
-	{
-		if (str[i] != '"')
-			len++;
-		i++;
-	}
-	result = malloc (sizeof(char) * len + 1);
-	if (!result)
-		return (NULL);
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != '"')
-			result[j++] = str[i];
-		i++;
-	}
-	result[len] = '\0';
-	return (result);
-}
+// 	while (str && str[i])
+// 	{
+// 		if (str[i] != '"')
+// 			len++;
+// 		i++;
+// 	}
+// 	result = malloc (sizeof(char) * len + 1);
+// 	if (!result)
+// 		return (NULL);
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] != '"')
+// 			result[j++] = str[i];
+// 		i++;
+// 	}
+// 	result[len] = '\0';
+// 	return (result);
+// }
 
 char	*manage_string(t_mini *mini, char *str, int i)
 {
@@ -120,6 +120,6 @@ char	*manage_string(t_mini *mini, char *str, int i)
 		result = ft_strdup2(str);
 	parts = split_string(result, 0, 0, 0);
 	parts = transform_parts(mini, parts, 0, 0);
-	result = fill_parts(parts, result, 0, 0);
+	result = fill_parts(parts, result, 0);
 	return (result);
 }

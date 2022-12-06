@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:32:09 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:56:10 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int							start_with_pipe(char *str, int i);
 // get_cmd.c
 char						**transform_parts(t_mini *mini,
 								char **parts, int i, int len);
-char						*fill_parts(char **parts, char *str, int i, int len);
+char						*fill_parts(char **parts, char *str, int i);
 t_cmd						*get_cmd(t_mini *mini,
 								t_cmd *cmd, char *str, int i);
 
