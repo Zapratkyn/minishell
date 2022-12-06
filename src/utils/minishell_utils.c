@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 13:17:22 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:40:38 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	mini_new_line(int sig)
 	g_status = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
-	//rl_replace_line("", 0);
 }
 
 int	ft_quotes(char *str, int i, int quotes, int double_quotes)

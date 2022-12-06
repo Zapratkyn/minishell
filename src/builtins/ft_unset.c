@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:56 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 14:52:35 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:40:13 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,13 @@ int	check_err(t_mini *mini, t_cmd *cmd, int index)
 	return (1);
 }
 
-void	ft_unset(t_mini *mini, t_cmd *cmd)
+void	ft_unset(t_mini *mini, t_cmd *cmd, int i)
 {
 	t_var	*var;
 	char	*tmp;
-	int		i;
 
 	if (!cmd->cmds[1])
 		return ;
-	i = 0;
 	while (cmd->cmds[++i])
 	{
 		if (!check_err(mini, cmd, i))

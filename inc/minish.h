@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 15:32:08 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:41:53 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,8 @@ char					*mini_getenv(t_mini *mini, char *var);
 void					mini_new_line(int sig);
 char					**split_string(t_mini *mini, char *s, int i, int index);
 int						start_with_pipe(t_mini *mini, char *str, int i);
-char					**transform_parts(t_mini *mini, char **parts, int i, int len);
+char					**transform_parts(t_mini *mini, char **parts,
+							int i, int len);
 
 /* Parsing & Initialization */
 char					**clean_files(t_mini *mini, char **cmds,
@@ -173,7 +174,7 @@ void					ft_env(t_mini *mini);
 void					ft_exit(t_mini *mini);
 void					ft_export(t_mini *mini, t_cmd *cmd);
 void					ft_pwd(t_mini *mini);
-void					ft_unset(t_mini *mini, t_cmd *cmd);
+void					ft_unset(t_mini *mini, t_cmd *cmd, int i);
 int						par_builtin(t_mini *mini, t_cmd *cmd);
 
 /* Builtin UTILS */
@@ -186,7 +187,7 @@ void					ft_error(t_mini *mini, char *type, int is_exit);
 
 /* Free */
 void					ft_free_all(t_mini *mini);
-void					ft_free_cmd(t_cmd *cmd);
+t_cmd					*ft_free_cmd(t_cmd *cmd);
 void					ft_free_full_cmd(char **tab);
 void					ft_free_tab(char **tab, int len);
 void					mini_unlink(t_mini *mini, char *str);
@@ -232,6 +233,5 @@ char					*ft_strnstr2(const char *haystack, const char *needle,
 char					*ft_substr(t_mini *mini, char const *s,
 							unsigned int start, size_t len);
 int						ft_tablen(char **tab);
-
 
 #endif

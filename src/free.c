@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 15:45:32 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:21:46 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,36 +21,22 @@ void	ft_free_all(t_mini *mini)
 		ft_lstclear(&mini->var);
 		free(mini->var);
 	}
-	if (mini->cmd)
-		ft_free_cmd(mini->cmd);
+	if (mini->cmd && mini->cmd->cmds)
+		mini->cmd = ft_free_cmd(mini->cmd);
 }
 
-void	ft_free_cmd(t_cmd *cmd)
+t_cmd	*ft_free_cmd(t_cmd *cmd)
 {
-	int		i;
-	t_cmd	*tmp;
-	t_cmd	**clear;
+	int	i;
 
-	clear = NULL;
-	tmp = cmd;
-	while (tmp)
-	{
-		i = -1;
-		while (tmp->cmds && tmp->cmds[++i])
-			free (tmp->cmds[i]);
-		if (tmp->cmds)
-			free(tmp->cmds);
-		if (tmp->path)
-			free (tmp->path);
-		tmp = tmp->next;
-	}
-	clear = &cmd;
-	while (clear && *clear)
-	{
-		tmp = (*clear)->next;
-		free((*clear));
-		*clear = tmp;
-	}
+	i = 0;
+	ft_free_tab(cmd->cmds, ft_tablen(cmd->cmds));
+	if (cmd->path)
+		free (cmd->path);
+	if (cmd->next)
+		ft_free_cmd(cmd->next);
+	free (cmd);
+	return (NULL);
 }
 
 void	ft_free_tab(char **tab, int len)

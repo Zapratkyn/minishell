@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:51:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 14:34:50 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:36:59 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*find_next_word(t_mini *mini, char *s, int i, int len)
 {
 	char		*result;
 
-	result = malloc (sizeof(char) * len + 1);
+	result = malloc (sizeof(char) * (len + 1));
 	if (!result)
 		ft_error(mini, MALLOC_ERR, EXIT);
 	while (i < len)

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 12:53:59 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:38:46 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 		i++;
 	if (cmd->cmds[i])
 		exec = ft_strdup(mini, cmd->cmds[i]);
-		if (ft_strchr(exec, S_QUOTE) || ft_strchr(exec, '"'))
-			exec = clean_string(exec, 0, -1, 0);
+	if (ft_strchr(exec, S_QUOTE) || ft_strchr(exec, '"'))
+		exec = clean_string(exec, 0, -1, 0);
 	return (exec);
 }
 

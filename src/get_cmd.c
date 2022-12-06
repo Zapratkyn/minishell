@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 15:19:36 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:37:52 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*delete_quotes(t_mini *mini, char *str, int i, int j)
 
 	result = malloc (sizeof(char) * ft_strlen(str) - 1);
 	if (!result)
-		ft_error(mini, MALLOC_ERR, EXIT);;
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (str[i] != S_QUOTE)
 		result[j++] = str[i++];
 	result[j] = '\0';
