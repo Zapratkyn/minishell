@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/06 12:38:43 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:56:16 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	update_pwd(t_mini *mini)
 	char	*tmp;
 	char	*pwd;
 
-	pwd = "PWD=";
+	pwd = ft_strdup(mini, "PWD=");
 	var = mini->var;
 	tmp = NULL;
 	while (var)
@@ -65,7 +65,7 @@ char	*find_path(t_mini *mini, t_cmd *cmd)
 	if (!cmd->cmds[1])
 		return (ft_strdup(mini, getenv("HOME")));
 	if (!ft_strcmp("-", cmd->cmds[1]))
-		return (ft_strdup(mini, getenv("OLDPWD")));
+		return (ft_strdup(mini, mini_getenv(mini, "OLDPWD")));
 	else
 	{
 		tmp = getcwd(tmp, 0);
@@ -82,14 +82,18 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	char	*path;
 	char	*tmp;
 
-	tmp = getenv("PWD");
+	tmp = mini_getenv(mini, "PWD");
 	path = find_path(mini, cmd);
 	if (chdir(path) == -1)
 	{
 		free(path);
 		ft_error(mini, DIR_ERR, NO_EXIT);
 	}
-	update_oldpwd(mini, tmp);
-	update_pwd(mini);
-	free(path);
+	else
+	{
+		update_oldpwd(mini, tmp);
+		update_pwd(mini);
+		free(path);
+	}
+	mini->prompt = get_prompt(mini, mini->prompt);
 }
