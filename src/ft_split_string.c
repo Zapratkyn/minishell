@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:51:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 13:10:46 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:34:50 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	count_words(char *s, int i, int count, char c)
 	while (s[i])
 	{
 		count++;
-		if (s[i] == S_QUOTE || s[i] == '"')
+		if (s[i] == S_QUOTE || s[i] == D_QUOTE)
 		{
 			c = s[i];
 			i++;
@@ -48,7 +48,7 @@ static int	find_next_len(char *s, int i, char c)
 		while (ft_isalnum(s[i]) || s[i] == '_' || s[i] == '?')
 			i++;
 	}
-	else if (s[0] == S_QUOTE || s[0] == '"')
+	else if (s[0] == S_QUOTE || s[0] == D_QUOTE)
 	{
 		c = s[0];
 		i++;
@@ -56,9 +56,9 @@ static int	find_next_len(char *s, int i, char c)
 			i++;
 		i++;
 	}
-	else if (s[0] != '$' && s[i] != S_QUOTE)
+	else if (s[0] && s[0] != '$' && s[i] != S_QUOTE && s[i] != D_QUOTE)
 	{
-		while (s[i] && s[i] != '$' && s[i] != S_QUOTE)
+		while (s[i] && s[i] != '$' && s[i] != S_QUOTE && s[i] != D_QUOTE)
 			i++;
 	}
 	return (i);
@@ -94,7 +94,7 @@ char	**split_string(t_mini *mini, char *s, int i, int index)
 	while (i < wc)
 	{
 		len = find_next_len(&s[index], 0, 0);
-		tab[i] = find_next_word(mini, &s[index], 0, 0);
+		tab[i] = find_next_word(mini, &s[index], 0, len);
 		index += ft_strlen(tab[i]);
 		i++;
 	}

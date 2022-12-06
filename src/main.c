@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 13:29:32 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:33:37 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ int	mini_parser(t_mini *mini, char *str)
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
 		if (str)
 			free (str);
-		if (mini->cmd && g_status == 0)
-			execute(mini);
+		execute(mini);
 		ft_free_cmd(mini->cmd);
 		mini_unlink(mini, "/tmp/mini_heredocs/heredoc_");
 	}

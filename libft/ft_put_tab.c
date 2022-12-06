@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:35:14 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/06 13:36:15 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:47:37 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,8 @@ void	ft_put_tab(char **tab)
 
 	i = -1;
 	while (tab && tab[++i])
+	{
 		ft_putstr_fd(tab[i], STDOUT_FILENO);
+		write (STDOUT_FILENO, "\n", 1);
+	}
 }

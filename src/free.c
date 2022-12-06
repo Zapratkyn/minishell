@@ -6,11 +6,24 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 13:06:29 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:45:32 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
+
+void	ft_free_all(t_mini *mini)
+{
+	if (mini->prompt)
+		free(mini->prompt);
+	if (mini->var)
+	{
+		ft_lstclear(&mini->var);
+		free(mini->var);
+	}
+	if (mini->cmd)
+		ft_free_cmd(mini->cmd);
+}
 
 void	ft_free_cmd(t_cmd *cmd)
 {

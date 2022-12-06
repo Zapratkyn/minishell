@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 13:49:07 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:41:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,8 @@ char	*manage_string(t_mini *mini, char *str, int i)
 	else if (i == 1)
 		result = ft_strdup2(mini, str);
 	parts = split_string(mini, result, 0, 0);
-
 	parts = transform_parts(mini, parts, 0, 0);
+	ft_put_tab(parts);
 	result = fill_parts(mini, parts, result, 0);
 	return (result);
 }

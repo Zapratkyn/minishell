@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 13:45:49 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:32:08 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ void					remove_quotes(t_cmd *cmd, int index, char *s);
 void					ft_error(t_mini *mini, char *type, int is_exit);
 
 /* Free */
+void					ft_free_all(t_mini *mini);
 void					ft_free_cmd(t_cmd *cmd);
 void					ft_free_full_cmd(char **tab);
 void					ft_free_tab(char **tab, int len);
