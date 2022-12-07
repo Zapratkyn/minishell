@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 14:14:13 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 16:32:02 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,14 @@ int	g_status;
 # define RESET "\x1B[0m"
 
 /* Managing errors */
+# define ARG_ERR "too many arguments"
 # define CMD_ERR "Wrong input command."
 # define DIR_ERR "No such file or directory."
 # define DUP_ERR "Error in the dup2."
 # define EXIT 1
-# define EXIT_ERR "exit: too many argument"
 # define FORK_ERR "Error in the creation of a fork."
 # define MALLOC_ERR "Error in the memory allocation of a malloc."
+# define NUM_ERR "numeric argument required"
 # define NO_EXIT 0
 # define PIPE_ERR "Error in the creation of a pipe."
 # define PWD_ERR "Error in the pwd."
