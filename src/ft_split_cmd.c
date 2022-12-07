@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/05 17:35:34 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 11:59:27 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 
 static int	count_words(char *s, int i, int count, char c)
 {
-	while (s[i] && s[i] == ' ')
-			i++;
-	while (s[i] && s[i] != PIPE)
+	while (s[i])
 	{
-		while (s[i] && s[i] == ' ')
-			i++;
-		if (s[i] && s[i] != ' ' && s[i] != PIPE)
+		if (s[i] && s[i] != ' ')
 		{
 			count++;
-			while (s[i] && s[i] != PIPE && s[i] != ' ')
+			while (s[i] && s[i] != ' ')
 			{
 				if (s[i] == '"' || s[i] == S_QUOTE)
 				{
@@ -34,15 +30,15 @@ static int	count_words(char *s, int i, int count, char c)
 				i++;
 			}
 		}
+		while (s[i] && s[i] == ' ')
+			i++;
 	}
 	return (count);
 }
 
 static int	find_next_len(char *str, int len, int i, char c)
 {
-	while (str[i] && str[i] == ' ')
-		i++;
-	while (str[i] && str[i] != PIPE && str[i] != ' ')
+	while (str[i] && str[i] != ' ')
 	{
 		if (str[i] == '"' || str[i] == S_QUOTE)
 		{
@@ -53,8 +49,6 @@ static int	find_next_len(char *str, int len, int i, char c)
 				i++;
 				len++;
 			}
-			len++;
-			i++;
 		}
 		i++;
 		len++;
@@ -87,7 +81,9 @@ char	**ft_split_cmd(char *s, int i, int index, int len)
 	char	**tab;
 	int		wc;
 
-	wc = count_words(s, 0, 0, 0);
+	while (s[index] == ' ')
+		index++;
+	wc = count_words(&s[index], 0, 0, 0);
 	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
 		return (NULL);

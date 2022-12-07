@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:07:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 17:58:47 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:42:55 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # define MALLOC_ERR "Error in the memory allocation of a malloc."
 # define NO_EXIT 0
 # define EXIT 1
+
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE	50
+#endif
 
 typedef struct s_var	t_var;
 
@@ -67,5 +71,6 @@ char					*ft_substr(char const *s, unsigned int start,
 void					ft_usleep(int count);
 char					*ft_itoa(int n);
 int						ft_tablen(char **tab);
+char					*get_next_line(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/11/30 16:56:38 by gponcele         ###   ########.fr        #
+#    Updated: 2022/12/07 14:06:50 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ SRC							=	ft_calloc.c \
 								ft_strnstr.c \
 								ft_substr.c \
 								ft_itoa.c \
-								ft_tablen.c
+								ft_tablen.c \
+								get_next_line.c
 
 CC							=	gcc
 RM							=	rm -rf

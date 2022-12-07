@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 18:33:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:09:49 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 	if (cmd->cmds[i])
 	{
 		exec = ft_strdup(cmd->cmds[i]);
-		exec = get_vars(mini, exec, -1, NULL);
+		exec = manage_string(mini, exec);
 	}
 	return (exec);
 }
@@ -39,6 +39,8 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 	exec = get_exec(mini, cmd);
 	if (exec)
 	{
+		if (!access(exec, F_OK))
+			cmd->path = exec;
 		while (mini->paths[i] && !cmd->path)
 		{
 			path = ft_strjoin(ft_strdup(""), mini->paths[i++]);
@@ -55,39 +57,20 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 	else
 		cmd->path = ft_strdup("none");
 	if (strncmp(cmd->path, "none", 4))
-		get_infile(cmd, ft_tablen(cmd->cmds));
+		get_infile(mini, cmd, ft_tablen(cmd->cmds));
 }
 
-int	get_infos_error(t_cmd *cmd, int i, char *s)
+void	set_infile(t_mini *mini, t_cmd *cmd, char *infile)
 {
-	char	*str;
-
-	str = NULL;
-	if (i == 1)
-	{
-		ft_error("syntax error near unexpected token `newline'", 0);
-		g_status = 258;
-	}
-	else if (i == 2)
-	{
-		str = ft_strjoin(ft_strdup("3: cannot open "), s);
-		str = ft_strjoin(str, ": No such file or directory");
-		ft_error(str, 0);
-		free (str);
-		g_status = 1;
-	}
-	else if (i == 3)
-	{
-		str = ft_strjoin(ft_strdup(s), " : command not found");
-		ft_error(str, 0);
-		free (str);
-		g_status = 127;
-		cmd->path = ft_strdup("none");
-	}
-	return (-1);
+	infile = manage_string(mini, infile);
+	if (!access(infile, F_OK))
+		cmd->infile = open(infile, O_RDONLY);
+	else
+		cmd->infile = get_infos_error(cmd, 2, infile);
+	free (infile);
 }
 
-void	get_infile(t_cmd *cmd, int i)
+void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 {
 	char	*infile;
 
@@ -98,6 +81,12 @@ void	get_infile(t_cmd *cmd, int i)
 		{
 			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
 				infile = ft_strdup(&cmd->cmds[i][1]);
+			else if (cmd->cmds[i][1] == '<' && cmd->cmds[i][2]
+					&& cmd->cmds[i][2] != '<')
+				cmd->infile = mini_heredoc(mini, &cmd->cmds[i][2]);
+			else if (cmd->cmds[i][1] == '<'
+					&& !cmd->cmds[i][2] && cmd->cmds[i + 1])
+				cmd->infile = mini_heredoc(mini, cmd->cmds[i + 1]);
 			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
 				infile = ft_strdup(cmd->cmds[i + 1]);
 			else
@@ -105,13 +94,7 @@ void	get_infile(t_cmd *cmd, int i)
 		}
 	}
 	if (infile)
-	{
-		if (!access(infile, F_OK))
-			cmd->infile = open(infile, O_RDONLY);
-		else
-			cmd->infile = get_infos_error(cmd, 2, infile);
-		free (infile);
-	}
+		set_infile(mini, cmd, infile);
 	if (cmd->infile != -1)
 		get_outfile(cmd, ft_tablen(cmd->cmds), 1);
 }

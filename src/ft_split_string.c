@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:51:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 16:53:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:21:55 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static int	count_words(char *s, int i, int count, char c)
 		count++;
 		if (s[i] == S_QUOTE || s[i] == '"')
 		{
-			c = s[i];
-			i++;
+			c = s[i++];
 			while (s[i] != c)
 				i++;
 			i++;
@@ -36,6 +35,8 @@ static int	count_words(char *s, int i, int count, char c)
 			while (s[i] && s[i] != '$' && s[i] != S_QUOTE && s[i] != '"')
 				i++;
 		}
+		while (s[i] && s[i] == ' ')
+			i++;
 	}
 	return (count);
 }

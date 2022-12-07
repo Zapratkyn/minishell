@@ -6,96 +6,182 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/01 16:42:13 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:38:45 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-char	*get_end(char *str, char *end)
-{
-	int		i;
+// char	*get_end(char *str, char *end)
+// {
+// 	int		i;
 
-	i = 0;
-	while (str[i] == ' ')
-		i++;
-	while (str[i] && str[i] != ' ')
-		end = ft_strjoin2(ft_strdup(end), str[i++]);
-	return (end);
+// 	i = 0;
+// 	while (str[i] == ' ')
+// 		i++;
+// 	while (str[i] && str[i] != ' ')
+// 		end = ft_strjoin2(ft_strdup(end), str[i++]);
+// 	return (end);
+// }
+
+// int	check_input(char *str, char *end)
+// {
+// 	if (!str)
+// 		return (-1);
+// 	else if ((!ft_strncmp(str, end, ft_strlen(end))
+// 			&& ft_strlen(str) == ft_strlen(end)))
+// 		return (-2);
+// 	return (1);
+// }
+
+// int	get_input(char *str, char *end, int fd)
+// {
+// 	char	*input;
+// 	int		check;
+
+// 	g_status = 0;
+// 	check = 0;
+// 	input = ft_calloc(1, 1);
+// 	fd = add_heredoc("/tmp/mini_heredocs/heredoc_");
+// 	end = get_end(str, "");
+// 	while (1)
+// 	{
+// 		signal(SIGINT, mini_new_line);
+// 		signal(SIGQUIT, SIG_IGN);
+// 		input = (readline("> "));
+// 		check = check_input(input, end);
+// 		if (check < 0 || g_status == 1)
+// 			break ;
+// 		write (fd, input, ft_strlen(input));
+// 		write (fd, "\n", 1);
+// 		free (input);
+// 	}
+// 	if (g_status == 1 || check == -1 || !end)
+// 		return (0);
+// 	return (fd);
+// }
+
+char	*get_vars(t_mini *mini, char *str, int i)
+{
+	char	*result;
+
+	result = ft_strdup("");
+	if (!result)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != ' ')
+		{
+			i++;
+			result = ft_strjoin(result, ft_var(mini, &str[i]));
+			while (ft_isalnum(str[i]) || str[i] == '_')
+				i++;
+		}
+		else
+			result = ft_strjoin2(result, str[i++]);
+	}
+	free (str);
+	return (result);
 }
 
-int	check_input(char *str, char *end)
+char	*manage_line(t_mini *mini, char *str, char *eof)
 {
-	if (!str)
-		return (-1);
-	else if ((!ft_strncmp(str, end, ft_strlen(end))
-			&& ft_strlen(str) == ft_strlen(end)))
-		return (-2);
-	return (1);
+	if (!ft_strchr(eof, '"') && !ft_strchr(eof, S_QUOTE))
+	{
+		str = get_vars(mini, str, 0);
+		return (str);
+	}
+	else if ((ft_strchr(eof, '"') || ft_strchr(eof, S_QUOTE)) && ft_quotes(eof, -1, 0, 0))
+		return (str);
+	return (0);
 }
 
-int	add_heredoc(char *file)
+int	read_fd(t_mini *mini, int fd, char *eof)
+{
+	char	*str;
+	
+	str = manage_line(mini, get_next_line(fd), eof);
+	printf("%s", str);
+	free (str);
+	while (1)
+	{
+		str = manage_line(mini, get_next_line(fd), eof);
+		if (!str)
+			break ;
+		printf("%s", str);
+		free (str);
+	}
+	free (eof);
+	return (0);
+}
+
+int	fill_fd(t_mini *mini, char *input, int fd, char *eof)
+{
+	if (!input)
+		return (read_fd(mini, fd, eof));
+	else if (!strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof)))
+	{
+		free (input);
+		free (eof);
+		return (0);
+	}
+	else
+	{
+		input = manage_line(mini, input, eof);
+		write (fd, input, ft_strlen(input));
+		write (fd, "\n", 1);
+		free (input);
+		fd = open("Makefile", O_RDONLY);
+		input = get_next_line(fd);
+		printf("%s\n", input);
+		free (input);
+		return (1);
+	}
+}
+
+int	add_heredoc(void)
 {
 	int		i;
 	int		fd;
+	char	*nb;
+	char	*file;
 
 	i = 1;
-	file = ft_strjoin(ft_strdup(file), ft_itoa(i));
+	nb = ft_itoa(i);
+	file = ft_strjoin(ft_strdup("/tmp/mini_heredocs/heredoc_"), nb);
+	free (nb);
 	while (!access(file, F_OK))
 	{
 		i++;
 		free (file);
-		file = ft_strdup("/tmp/mini_heredocs/heredoc_");
-		file = ft_strjoin(file, ft_itoa(i));
+		nb = ft_itoa(i);
+		file = ft_strjoin(ft_strdup("/tmp/mini_heredocs/heredoc_"), nb);
+		free (nb);
 	}
 	fd = open(file, O_CREAT | O_RDWR, 0777);
 	free (file);
 	return (fd);
 }
 
-int	get_input(char *str, char *end, int fd)
+int	mini_heredoc(t_mini *mini, char *str)
 {
-	char	*input;
-	int		check;
-
-	g_status = 0;
-	check = 0;
-	input = ft_calloc(1, 1);
-	fd = add_heredoc("/tmp/mini_heredocs/heredoc_");
-	end = get_end(str, "");
+	int		fd;
+	char	*eof;
+	
+	fd = add_heredoc();
+	eof = ft_strdup(str);
 	while (1)
 	{
 		signal(SIGINT, mini_new_line);
 		signal(SIGQUIT, SIG_IGN);
-		input = (readline("> "));
-		check = check_input(input, end);
-		if (check < 0 || g_status == 1)
+		if (g_status == 1 || !fill_fd(mini, readline("> "), fd, eof))
 			break ;
-		write (fd, input, ft_strlen(input));
-		write (fd, "\n", 1);
-		free (input);
 	}
-	if (g_status == 1 || check == -1 || !end)
-		return (0);
-	return (fd);
-}
-
-int	mini_heredoc(char *str, int fd)
-{
-	while (ft_strchr(str, '<'))
+	if (g_status == 1 || eof)
 	{
-		str = &ft_strchr(str, '<')[1];
-		fd = STDIN_FILENO;
-		if (str[0] == '<')
-		{
-			str = &str[1];
-			fd = get_input(str, "", 0);
-			if (fd == 0)
-			{
-				write (1, "", 1);
-				return (-1);
-			}
-		}
+		if (eof)
+			free (eof);
+		return (-1);
 	}
 	return (fd);
 }
