@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/06 17:27:22 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:42:42 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ char	*clean_string(t_mini *mini, char *str, int len, int i)
 			result[j++] = str[i];
 	}
 	result[j] = '\0';
+	free (str);
 	return (result);
 }

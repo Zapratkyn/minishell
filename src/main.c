@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 18:32:39 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:42:31 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,25 @@ char	*get_prompt(t_mini *mini, char *prompt)
 	return (prompt);
 }
 
-t_mini	mini_init(char **env)
+void	mini_init(t_mini *mini, char **env)
 {
-	t_mini	mini;
 
-	mini.cmd = NULL;
-	mini.var = NULL;
-	if (!get_var(&mini, env))
-		ft_lstclear(&mini.var);
-	mini.g_status = 0;
-	mini.prompt = NULL;
-	mini.prompt = get_prompt(&mini, mini.prompt);
-	if (!mini.var || !mini.prompt)
+	mini->cmd = NULL;
+	mini->var = NULL;
+	if (!get_var(mini, env))
+		ft_lstclear(&mini->var);
+	mini->paths = ft_split(mini, mini_getenv(mini, "PATH"), ':');
+	if (!mini->paths || !mini->var)
 		exit (EXIT_FAILURE);
-	return (mini);
+	mini->g_status = 0;
+	mini->prompt = NULL;
+	mini->prompt = get_prompt(mini, mini->prompt);
+	if (!mini->prompt)
+	{
+		ft_lstclear(mini->var);
+		ft_free_tab(mini->paths, ft_tablen(mini->paths));
+		exit (EXIT_FAILURE);
+	}
 }
 
 int	mini_parser(t_mini *mini, char *str)
@@ -83,12 +88,11 @@ int	mini_parser(t_mini *mini, char *str)
 	if (is_input(str))
 	{
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
-		if (str)
-			free (str);
-		execute(mini);
+			execute(mini);
 		mini->cmd = ft_free_cmd(mini->cmd);
 		mini_unlink(mini, "/tmp/mini_heredocs/heredoc_");
 	}
+	free (str);
 	return (1);
 }
 
@@ -96,7 +100,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
 
-	mini = mini_init(env);
+	mini_init(&mini, env);
 	g_status = 0;
 	while (argc && argv[0])
 	{

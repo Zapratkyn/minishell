@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 16:40:38 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:45:46 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	mini_exit(t_mini *mini)
 	if (mini->cmd)
 		ft_free_cmd(mini->cmd);
 	ft_lstclear(&mini->var);
+	ft_free_tab(mini->paths, ft_tablen(mini->paths));
 	free (mini->prompt);
 	printf("exit\n");
 	exit (g_status);

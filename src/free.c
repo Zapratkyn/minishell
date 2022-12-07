@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 16:21:46 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:35:31 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	mini_unlink(t_mini *mini, char *str)
 		if (access(file, F_OK))
 			break ;
 		unlink(file);
+		free (file);
 		i++;
 	}
 	free (file);

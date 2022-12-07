@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 16:32:02 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:33:18 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_mini
 {
 	int		g_status;
 	char	*prompt;
+	char	**paths;
 	t_var	*var;
 	t_cmd	*cmd;
 }	t_mini;
