@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/06 18:56:16 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:48:36 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,16 @@ char	*find_path(t_mini *mini, t_cmd *cmd)
 	char	*tmp;
 
 	tmp = NULL;
-	if (!cmd->cmds[1])
-		return (ft_strdup(mini, getenv("HOME")));
+	if (!cmd->cmds[1] || !ft_strcmp(cmd->cmds[1], "~"))
+		return (ft_strdup(mini, mini_getenv(mini, "HOME")));
 	if (!ft_strcmp("-", cmd->cmds[1]))
 		return (ft_strdup(mini, mini_getenv(mini, "OLDPWD")));
+	if (!ft_strncmp(cmd->cmds[1], "~/", 2))
+	{
+		path = ft_strdup(mini, mini_getenv(mini, "HOME"));
+		path = ft_strjoin(mini, path, "/");
+		path = ft_strjoin(mini, path, &cmd->cmds[1][2]);
+	}
 	else
 	{
 		tmp = getcwd(tmp, 0);
