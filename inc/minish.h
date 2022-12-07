@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:42:08 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:16:40 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,13 +149,15 @@ t_cmd					*cmd_init(t_mini *mini, char *str, int i);
 int						dol(char *str);
 char					**ft_split_cmd(t_mini *mini, char *s, int i,
 							int index);
+char					*ft_var(t_mini *mini, char *str);
 t_cmd					*get_cmd(t_mini *mini,
 							t_cmd *cmd, char *str, int i);
 char					*get_exec(t_mini *mini, t_cmd *cmd);
 void					get_infile(t_mini *mini, t_cmd *cmd, int i);
-int						get_infos_error(t_mini *mini, int i, char *s);
+int						get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s);
 void					get_outfile(t_mini *mini, t_cmd *cmd, int i, int j);
 void					get_path(t_mini *mini, t_cmd *cmd, int i);
+char					*get_vars(t_mini *mini, char *str, int i);
 int						is_var(t_mini *mini, char *var, int j);
 void					mini_env(t_mini *mini);
 int						mini_heredoc(t_mini *mini, char *str, int fd);
@@ -229,7 +231,7 @@ char					*ft_strdup2(t_mini *mini, char *str);
 char					*ft_strjoin(t_mini *mini, char const *s1,
 							char const *s2);
 char					*ft_strjoin2(t_mini *mini, char *str, char c);
-char					*ft_strjoin3(char const *s1, char const *s2);
+char					*ft_strjoin3(t_mini *mini, char const *s1, char const *s2);
 size_t					ft_strlcpy(char *dest, const char *src, size_t size);
 size_t					ft_strlen(const char *s);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);

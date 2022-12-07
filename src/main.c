@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:42:31 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:03:14 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	mini_init(t_mini *mini, char **env)
 	mini->prompt = get_prompt(mini, mini->prompt);
 	if (!mini->prompt)
 	{
-		ft_lstclear(mini->var);
+		ft_lstclear(&mini->var);
 		ft_free_tab(mini->paths, ft_tablen(mini->paths));
 		exit (EXIT_FAILURE);
 	}

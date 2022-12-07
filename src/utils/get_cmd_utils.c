@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:44:45 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:06:47 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,35 +109,6 @@ char	*delete_quotes(t_mini *mini, char *str, int i, int j)
 	while (str[++i] != S_QUOTE)
 		result[j++] = str[i];
 	result[j] = '\0';
-	free (str);
-	return (result);
-}
-
-char	*get_vars(t_mini *mini, char *str, int i, char *result)
-{
-	char	c;
-
-	result = ft_strdup(mini, "");
-	if (!result)
-		return (NULL);
-	while (str[++i])
-	{
-		if (str[i] && str[i] == S_QUOTE)
-			result = ft_strjoin3(result, delete_quotes(&str[i], 0, 0, 0));
-		else if (str[i] && str[i] == '"')
-			result = ft_strjoin(mini, result,
-					delete_double_quotes(mini, &str[i], 0));
-		else if (str[i] && str[i] == '$' && str[i + 1] != ' ')
-			result = ft_strjoin(mini, result, ft_var(mini, &str[i + 1]));
-		if (str[i] == '$')
-			c = ' ';
-		else if (str[i] == '"' || str[i] == S_QUOTE)
-			c = str[i];
-		while (str[++i] && str[i] != c)
-			i++;
-		while (str[i] && str[i] != S_QUOTE && str[i] != '"' && str[i] != '$')
-			result = ft_strjoin2(mini, result, str[i++]);
-	}
 	free (str);
 	return (result);
 }

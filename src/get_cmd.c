@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:36:06 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:17:37 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,13 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
 		get_path(mini, cmd, 0);
-		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);
+		cmd->cmds = clean_files(mini, cmd->cmds, -1, 0);
 		while (cmd->cmds && cmd->cmds[++i])
 		{
 			if (cmd->cmds[i][0] == '$')
 				cmd->cmds[i] = to_var(mini, cmd->cmds[i]);
 			// else
 			// 	cmd->cmds[i] = get_vars(mini, cmd->cmds[i], -1, NULL);
-			printf("'%s'\n", cmd->cmds[i]);
 		}
 		if (cmd->cmds && ft_strchr(str, PIPE))
 		{

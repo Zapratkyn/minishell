@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:38:04 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:17:04 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 	if (cmd->cmds[i])
 	{
 		exec = ft_strdup(mini, cmd->cmds[i]);
-		exec = get_vars(mini, exec, -1, NULL);
+		exec = get_vars(mini, exec, -1);
 	}
 	return (exec);
 }
@@ -41,7 +41,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 	{
 		while (mini->paths[i] && !cmd->path)
 		{
-			path = ft_strjoin(mini, ft_strdup(""), mini->paths[i++]);
+			path = ft_strjoin(mini, ft_strdup(mini, ""), mini->paths[i++]);
 			path = ft_strjoin2(mini, path, '/');
 			path = ft_strjoin(mini, path, exec);
 			if (!access(path, F_OK))
@@ -49,42 +49,13 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 			free (path);
 		}
 		if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd) && !cmd->path)
-			get_infos_error(cmd, 3, exec);
+			get_infos_error(mini, cmd, 3, exec);
 		free (exec);
 	}
 	else
 		cmd->path = ft_strdup(mini, "none");
-	if (strncmp(cmd->path, "none", 4))
+	if (ft_strncmp(cmd->path, "none", 4))
 		get_infile(mini, cmd, ft_tablen(cmd->cmds));
-}
-
-int	get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s)
-{
-	char	*str;
-
-	str = NULL;
-	if (i == 1)
-	{
-		ft_error(mini, "syntax error near unexpected token `newline'", NO_EXIT);
-		g_status = 258;
-	}
-	else if (i == 2)
-	{
-		str = ft_strjoin(mini, ft_strdup(mini, "3: cannot open "), s);
-		str = ft_strjoin(mini, str, ": No such file or directory");
-		ft_error(mini, str, NO_EXIT);
-		free (str);
-		g_status = 1;
-	}
-	else if (i == 3)
-	{
-		str = ft_strjoin(mini, ft_strdup(mini, s), " : command not found");
-		ft_error(mini, str, NO_EXIT);
-		free (str);
-		g_status = 127;
-		cmd->path = ft_strdup(mini, "none");
-	}
-	return (-1);
 }
 
 void	get_infile(t_mini *mini, t_cmd *cmd, int i)

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:33:41 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:56:19 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_strjoin2(t_mini *mini, char *str, char c)
 	return (result);
 }
 
-char	*ft_strjoin3(char const *s1, char const *s2)
+char	*ft_strjoin3(t_mini *mini, char const *s1, char const *s2)
 {
 	size_t		i;
 	size_t		j;
@@ -76,8 +76,7 @@ char	*ft_strjoin3(char const *s1, char const *s2)
 	j = 0;
 	result = malloc (sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!result)
-		return (0);
-
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (s1[i])
 	{
 		result[i] = s1[i];
