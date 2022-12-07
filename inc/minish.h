@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:33:18 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:42:08 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_mini
 
 /* Main */
 char					*get_prompt(t_mini *mini, char *prompt);
-t_mini					mini_init(char **env);
+void					mini_init(t_mini *mini, char **env);
 int						mini_parser(t_mini *mini, char *str);
 
 /* Utils.c */
@@ -229,6 +229,7 @@ char					*ft_strdup2(t_mini *mini, char *str);
 char					*ft_strjoin(t_mini *mini, char const *s1,
 							char const *s2);
 char					*ft_strjoin2(t_mini *mini, char *str, char c);
+char					*ft_strjoin3(char const *s1, char const *s2);
 size_t					ft_strlcpy(char *dest, const char *src, size_t size);
 size_t					ft_strlen(const char *s);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
