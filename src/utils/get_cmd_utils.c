@@ -6,17 +6,18 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 12:29:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 16:46:47 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-t_cmd	*cmd_init(char *str, int i)
+t_cmd	*cmd_init(t_mini *mini, char *str, int i)
 {
 	t_cmd	*cmd;
 	char	*input;
 
+	(void)mini;
 	input = ft_strdup("");
 	while (str[i] && str[i] != PIPE)
 	{
@@ -30,10 +31,11 @@ t_cmd	*cmd_init(char *str, int i)
 	cmd->path = NULL;
 	cmd->cmds = NULL;
 	cmd->infile = STDIN_FILENO;
+	cmd->infile = mini_heredoc(mini, input, cmd->infile);
 	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
 	cmd->cmds = ft_split_cmd(input, 0, 0, 0);
-	if (!cmd->cmds || cmd->infile == -1)
+	if (!cmd->cmds)
 		return (NULL);
 	cmd->next = NULL;
 	free (input);

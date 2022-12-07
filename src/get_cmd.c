@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 12:22:55 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:16:31 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,13 @@ char	*manage_string(t_mini *mini, char *str)
 
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	cmd = cmd_init(str, 0);
+	cmd = cmd_init(mini, str, 0);
 	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
 	{
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);
 		while (cmd->cmds && cmd->cmds[++i])
-		{
 			cmd->cmds[i] = manage_string(mini, cmd->cmds[i]);
-			printf("'%s'\n", cmd->cmds[i]);
-		}
 		if (cmd->cmds && ft_strchr(str, PIPE))
 		{
 			cmd->next = get_cmd(mini, cmd->next,

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 14:09:21 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 16:16:37 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ t_cmd						*get_cmd(t_mini *mini,
 								t_cmd *cmd, char *str, int i);
 
 // get_cmd_utils.c
-t_cmd						*cmd_init(char *str, int i);
+t_cmd						*cmd_init(t_mini *mini, char *str, int i);
 char						*delete_quotes(char *str, int i, int j, int len);
 char						*delete_double_quotes(t_mini *mini, char *str, int i);
 char						*manage_string(t_mini *mini, char *str);
@@ -186,7 +186,9 @@ void						ft_pwd(t_cmd *cmd);
 void						ft_export(t_mini *mini, t_cmd *cmd);
 void						ft_unset(t_mini *mini, t_cmd *cmd);
 // heredoc.c
-int							mini_heredoc(t_mini *mini, char *eof);
+int							mini_heredoc(t_mini *mini, char *str, int fd);
+// ft_split_heredoc.c
+char						**ft_split_heredoc(char *s, int i, int index, int len);
 // split_string.c
 char						**split_string(char *s, int i, int index, int len);
 

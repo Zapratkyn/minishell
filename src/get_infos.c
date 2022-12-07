@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 14:09:49 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:01:42 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 	}
 	else
 		cmd->path = ft_strdup("none");
-	if (strncmp(cmd->path, "none", 4))
+	if (ft_strncmp(cmd->path, "none", 4))
 		get_infile(mini, cmd, ft_tablen(cmd->cmds));
 }
 
@@ -81,12 +81,6 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 		{
 			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
 				infile = ft_strdup(&cmd->cmds[i][1]);
-			else if (cmd->cmds[i][1] == '<' && cmd->cmds[i][2]
-					&& cmd->cmds[i][2] != '<')
-				cmd->infile = mini_heredoc(mini, &cmd->cmds[i][2]);
-			else if (cmd->cmds[i][1] == '<'
-					&& !cmd->cmds[i][2] && cmd->cmds[i + 1])
-				cmd->infile = mini_heredoc(mini, cmd->cmds[i + 1]);
 			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
 				infile = ft_strdup(cmd->cmds[i + 1]);
 			else

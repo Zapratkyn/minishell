@@ -6,23 +6,35 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 14:38:45 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:10:03 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-// char	*get_end(char *str, char *end)
-// {
-// 	int		i;
+char	*get_eof(char *str, char *eof)
+{
+	int		i;
+	char	c;
 
-// 	i = 0;
-// 	while (str[i] == ' ')
-// 		i++;
-// 	while (str[i] && str[i] != ' ')
-// 		end = ft_strjoin2(ft_strdup(end), str[i++]);
-// 	return (end);
-// }
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	while (str[i] && str[i] != ' ')
+	{
+		eof = ft_strdup("");
+		if (str[i] == S_QUOTE || str[i] == '"')
+		{
+			c = str[i++];
+			while (str[i] != c)
+				i++;
+			i++;
+		}
+		else
+			eof = ft_strjoin2(eof, str[i++]);
+	}
+	return (eof);
+}
 
 // int	check_input(char *str, char *end)
 // {
@@ -96,33 +108,20 @@ char	*manage_line(t_mini *mini, char *str, char *eof)
 	return (0);
 }
 
-int	read_fd(t_mini *mini, int fd, char *eof)
-{
-	char	*str;
-	
-	str = manage_line(mini, get_next_line(fd), eof);
-	printf("%s", str);
-	free (str);
-	while (1)
-	{
-		str = manage_line(mini, get_next_line(fd), eof);
-		if (!str)
-			break ;
-		printf("%s", str);
-		free (str);
-	}
-	free (eof);
-	return (0);
-}
-
 int	fill_fd(t_mini *mini, char *input, int fd, char *eof)
 {
 	if (!input)
-		return (read_fd(mini, fd, eof));
+	{
+		read(fd, input, INT_MAX);
+		printf("%s", input);
+		free (input);
+		return (0);
+	}
 	else if (!strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof)))
 	{
 		free (input);
 		free (eof);
+		eof = NULL;
 		return (0);
 	}
 	else
@@ -131,12 +130,25 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *eof)
 		write (fd, input, ft_strlen(input));
 		write (fd, "\n", 1);
 		free (input);
-		fd = open("Makefile", O_RDONLY);
-		input = get_next_line(fd);
-		printf("%s\n", input);
-		free (input);
 		return (1);
 	}
+}
+
+int	manage_fd(t_mini *mini, int fd, char *eof)
+{
+	while (1)
+	{
+		signal(SIGINT, mini_new_line);
+		signal(SIGQUIT, SIG_IGN);
+		if (g_status == 1 || !fill_fd(mini, readline("> "), fd, eof))
+			break ;
+	}
+	if (eof)
+	{
+		free (eof);
+		return (-1);
+	}
+	return (fd);
 }
 
 int	add_heredoc(void)
@@ -163,25 +175,32 @@ int	add_heredoc(void)
 	return (fd);
 }
 
-int	mini_heredoc(t_mini *mini, char *str)
+int	mini_heredoc(t_mini *mini, char *str, int fd)
 {
-	int		fd;
 	char	*eof;
-	
-	fd = add_heredoc();
-	eof = ft_strdup(str);
-	while (1)
+	int		i;
+
+	i = 0;
+	while (str[i])
 	{
-		signal(SIGINT, mini_new_line);
-		signal(SIGQUIT, SIG_IGN);
-		if (g_status == 1 || !fill_fd(mini, readline("> "), fd, eof))
-			break ;
-	}
-	if (g_status == 1 || eof)
-	{
-		if (eof)
-			free (eof);
-		return (-1);
+		if ((i == 0 && str[i] == '<') || (i > 0 && str[i - 1] == ' '))
+		{
+			fd = STDIN_FILENO;
+			if (str[++i] == '<')
+			{
+				if (str[i + 1] == '<')
+					return (-1);
+				eof = get_eof(&str[i + 1], NULL);
+				if (!eof)
+					return (-1);
+				fd = add_heredoc();
+				fd = manage_fd(mini, fd, eof);
+				if (fd == -1)
+					return (fd);
+			}
+		}
+		else
+			i++;
 	}
 	return (fd);
 }

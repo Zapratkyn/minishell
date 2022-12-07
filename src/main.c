@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 14:44:27 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:12:37 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,24 +104,12 @@ int	mini_parser(t_mini *mini, char *str)
 	return (1);
 }
 
-void	gnl(void)
-{
-	int		fd;
-	char	*str;
-
-	fd = open("../Makefile", O_RDONLY);
-	str = get_next_line(fd);
-	printf("%s\n", str);
-	free(str);
-}
-
 int	main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
 
 	mini = mini_init(env);
 	g_status = 0;
-	gnl();
 	while (argc && argv[0])
 	{
 		signal(SIGQUIT, SIG_IGN);
