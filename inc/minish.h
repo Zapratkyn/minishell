@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 17:58:13 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:14:13 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	g_status;
 # define S_QUOTE 39
 # define D_QUOTE 34
 # define PIPE 124
+# define NO_NEW_L 0
+# define NEW_L 1
 
 /*
 ** Structures
@@ -170,7 +172,7 @@ void					pipe_and_fork(t_mini *mini, t_cmd *cmd);
 int						ch_builtin(t_mini *mini, t_cmd *cmd);
 void					do_builtin(t_mini *mini, t_cmd *cmd);
 void					ft_cd(t_mini *mini, t_cmd *cmd);
-void					ft_echo(t_cmd *cmd);
+void					ft_echo(t_mini *mini, t_cmd *cmd);
 void					ft_env(t_mini *mini);
 void					ft_exit(t_mini *mini, t_cmd *cmd);
 void					ft_export(t_mini *mini, t_cmd *cmd);
