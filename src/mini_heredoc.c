@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:10:03 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:30:10 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ char	*get_eof(char *str, char *eof)
 	i = 0;
 	while (str[i] == ' ')
 		i++;
+	if (str[i])
+		eof = ft_strdup("");
 	while (str[i] && str[i] != ' ')
 	{
-		eof = ft_strdup("");
 		if (str[i] == S_QUOTE || str[i] == '"')
 		{
 			c = str[i++];
@@ -111,12 +112,7 @@ char	*manage_line(t_mini *mini, char *str, char *eof)
 int	fill_fd(t_mini *mini, char *input, int fd, char *eof)
 {
 	if (!input)
-	{
-		read(fd, input, INT_MAX);
-		printf("%s", input);
-		free (input);
 		return (0);
-	}
 	else if (!strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof)))
 	{
 		free (input);
