@@ -116,8 +116,6 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *eof)
 	else if (!strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof)))
 	{
 		free (input);
-		free (eof);
-		eof = NULL;
 		return (0);
 	}
 	else
@@ -130,30 +128,14 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *eof)
 	}
 }
 
-int	manage_fd(t_mini *mini, int fd, char *eof)
-{
-	while (1)
-	{
-		signal(SIGINT, mini_new_line);
-		signal(SIGQUIT, SIG_IGN);
-		if (g_status == 1 || !fill_fd(mini, readline("> "), fd, eof))
-			break ;
-	}
-	if (eof)
-	{
-		free (eof);
-		return (-1);
-	}
-	return (fd);
-}
-
-int	add_heredoc(void)
+int	add_heredoc(t_mini *mini)
 {
 	int		i;
 	int		fd;
 	char	*nb;
 	char	*file;
 
+	(void)mini;
 	i = 1;
 	nb = ft_itoa(i);
 	file = ft_strjoin(ft_strdup("/tmp/heredoc_"), nb);
@@ -171,37 +153,44 @@ int	add_heredoc(void)
 	return (fd);
 }
 
-int	mini_heredoc(t_mini *mini, char *str, int fd, int i)
+int	add_fd(t_mini *mini, char *eof)
+{
+	int	fd;
+	
+	fd = add_heredoc(mini);
+	while (1)
+	{
+		signal(SIGINT, mini_new_line);
+		signal(SIGQUIT, SIG_IGN);
+		if (!fill_fd(mini, readline("> "), fd, eof))
+			break ;
+	}
+	return (fd);
+}
+
+int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 {
 	char	*eof;
-	char	c;
-
-	while (str[i])
+	
+	while (cmd->cmds[i])
 	{
-		if (str[i] == S_QUOTE || str[i] == '"')
-		{
-			c = str[i++];
-			while (str[i] != c)
-				i++;
-			i++;
-		}
-		else if (str[i] == '<')
+		if (cmd->cmds[i][0] == '<')
 		{
 			fd = STDIN_FILENO;
-			i++;
-			if (str[i] == '<')
+			if (cmd->cmds[i][1] == '<')
 			{
-				eof = get_eof(&str[i + 1], NULL);
-				if (!eof)
-					return (-1);
-				fd = add_heredoc();
-				fd = manage_fd(mini, fd, eof);
+				if (cmd->cmds[i][2])
+					eof = &cmd->cmds[i][2];
+				else if (!cmd->cmds[i][2] && cmd->cmds[i + 1])
+					eof = cmd->cmds[i + 1];
+				else if (!cmd->cmds[i][2] && !cmd->cmds[i + 1])
+					return (get_infos_error(cmd, 1, NULL));
+				fd = add_fd(mini, eof);
 				if (fd == -1)
-					return (fd);
+					return (-1);
 			}
 		}
-		else
-			i++;
+		i++;
 	}
 	return (fd);
 }
