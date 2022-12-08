@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:26:01 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/08 12:02:33 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*get_prompt(t_mini *mini, char *prompt)
 
 void	mini_init(t_mini *mini, char **env)
 {
-
 	mini->cmd = NULL;
 	mini->var = NULL;
 	if (!get_var(mini, env))
@@ -88,7 +87,7 @@ int	mini_parser(t_mini *mini, char *str)
 	if (is_input(str))
 	{
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
-			execute(mini);
+		execute(mini);
 		mini->cmd = ft_free_cmd(mini->cmd);
 		mini_unlink(mini, "/tmp/mini_heredocs/heredoc_");
 	}

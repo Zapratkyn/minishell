@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:27:25 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/08 12:03:52 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ char	*manage_line(t_mini *mini, char *str, char *eof)
 		str = get_vars(mini, str, 0);
 		return (str);
 	}
-	else if ((ft_strchr(eof, '"') || ft_strchr(eof, S_QUOTE)) && ft_quotes(eof, -1, 0, 0))
+	else if ((ft_strchr(eof, '"') || ft_strchr(eof, S_QUOTE))
+		&& ft_quotes(eof, -1, 0, 0))
 		return (str);
 	return (0);
 }
@@ -76,7 +77,8 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *eof)
 {
 	if (!input)
 		return (0);
-	else if (!ft_strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof)))
+	else if (!ft_strncmp(input, eof, ft_strlen(input))
+		&& (ft_strlen(input) == ft_strlen(eof)))
 	{
 		free (input);
 		free (eof);
@@ -126,7 +128,8 @@ int	add_heredoc(t_mini *mini)
 		i++;
 		free (file);
 		nb = ft_itoa(mini, i);
-		file = ft_strjoin(mini, ft_strdup(mini, "/tmp/mini_heredocs/heredoc_"), nb);
+		file = ft_strjoin(mini, ft_strdup(mini, "/tmp/mini_heredocs/heredoc_"),
+				nb);
 		free (nb);
 	}
 	fd = open(file, O_CREAT | O_RDWR, 0777);
