@@ -75,3 +75,19 @@ void	execute(t_mini *mini)
 		cmd = cmd->next;
 	}
 }
+
+int	to_exec(t_mini *mini)
+{
+	t_cmd	*cmd;
+
+	cmd = mini->cmd;
+	while (cmd)
+	{
+		if (cmd->infile == -1 || cmd->outfile == -1)
+			return (0);
+		else if (!ft_strncmp(cmd->path, "none", 4) && ft_strlen(cmd->path) == 4)
+			return (0);
+		cmd = cmd->next;
+	}
+	return (1);
+}

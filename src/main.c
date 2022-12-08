@@ -60,9 +60,7 @@ char	*get_prompt(char *prompt)
 t_mini	mini_init(char **env)
 {
 	t_mini	mini;
-	int		i;
 
-	i = 0;
 	mini.cmd = NULL;
 	mini.var = NULL;
 	if (!get_var(&mini, env))
@@ -70,7 +68,6 @@ t_mini	mini_init(char **env)
 	mini.paths = ft_split(mini_getenv(&mini, "PATH"), ':');
 	if (!mini.paths || !mini.var)
 		exit (EXIT_FAILURE);
-	mini.g_status = 0;
 	mini.prompt = NULL;
 	mini.prompt = get_prompt(mini.prompt);
 	if (!mini.prompt)
@@ -94,9 +91,8 @@ int	mini_parser(t_mini *mini, char *str)
 	if (is_input(str))
 	{
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
-		/*if (mini->cmd)
+		if (to_exec(mini))
 			execute(mini);
-		*/
 		mini->cmd = ft_free_cmd(mini->cmd);
 		mini_unlink("/tmp/heredoc_");
 	}
@@ -109,7 +105,7 @@ int	main(int argc, char **argv, char **env)
 	t_mini	mini;
 
 	mini = mini_init(env);
-	g_status = 0;
+	// g_status = 0;
 	while (argc && argv[0])
 	{
 		signal(SIGQUIT, SIG_IGN);

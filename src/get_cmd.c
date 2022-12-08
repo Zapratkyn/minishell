@@ -18,7 +18,7 @@ char	*ft_var(t_mini *mini, char *str, char *result)
 
 	s = NULL;
 	if (!is_var(mini, str, 0))
-		result = ft_strjoin(result, "");
+		return (result);
 	else if (str[0] == '?')
 	{
 		s = mini_getenv(mini, str);
@@ -79,10 +79,7 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);
 		while (cmd->cmds && cmd->cmds[++i])
-		{
-			printf("'%s'\n", cmd->cmds[i]);
 			cmd->cmds[i] = manage_string(mini, cmd->cmds[i]);
-		}
 		if (cmd->cmds && ft_strchr(str, PIPE))
 		{
 			cmd->next = get_cmd(mini, cmd->next,
