@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:54 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/07 16:42:56 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:17:11 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ void	ft_exit(t_mini *mini, t_cmd *cmd)
 	char	*s;
 
 	write(STDERR_FILENO, "exit\n", 6);
-	s = ft_strdup(mini, "bash: exit: ");
+	s = ft_strdup(mini, "minishell: exit: ");
 	if (is_number(cmd->cmds[1]) && cmd->cmds[2])
 	{
 		s = ft_strjoin(mini, s, ARG_ERR);
-		ft_putendl_fd(s, STDOUT_FILENO);
-		free(s);
+		ft_putendl_fd(type, STDERR_FILENO);
+		free(type);
+		g_status = 1;
 	}
 	else
 	{
@@ -73,9 +74,12 @@ void	ft_exit(t_mini *mini, t_cmd *cmd)
 			s = ft_strjoin(mini, s, ": ");
 			s = ft_strjoin(mini, s, NUM_ERR);
 			ft_putendl_fd(s, STDOUT_FILENO);
+			g_status = 255;
+			free(s);
+			ft_free_all(mini);
+			exit(g_status);
 		}
-		free(s);
-		ft_free_all(mini);
+		g_status = 0;
 		exit(g_status);
 	}
 }
