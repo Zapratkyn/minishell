@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 16:16:37 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/08 12:24:09 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void						mini_new_line(int sig);
 int							is_input(char *str);
 int							start_with_pipe(char *str, int i);
 // get_cmd.c
-char						*ft_var(t_mini *mini, char *str);
+char						*ft_var(t_mini *mini, char *str, char *result);
 char						**transform_parts(t_mini *mini,
 								char **parts, int i, int len);
 char						*join_parts(t_mini *mini, char **parts, int i);
@@ -186,7 +186,7 @@ void						ft_pwd(t_cmd *cmd);
 void						ft_export(t_mini *mini, t_cmd *cmd);
 void						ft_unset(t_mini *mini, t_cmd *cmd);
 // heredoc.c
-int							mini_heredoc(t_mini *mini, char *str, int fd);
+int							mini_heredoc(t_mini *mini, char *str, int fd, int i);
 // ft_split_heredoc.c
 char						**ft_split_heredoc(char *s, int i, int index, int len);
 // split_string.c

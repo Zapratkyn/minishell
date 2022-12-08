@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 16:46:47 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:54:06 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_cmd	*cmd_init(t_mini *mini, char *str, int i)
 	cmd->path = NULL;
 	cmd->cmds = NULL;
 	cmd->infile = STDIN_FILENO;
-	cmd->infile = mini_heredoc(mini, input, cmd->infile);
+	cmd->infile = mini_heredoc(mini, input, cmd->infile, 0);
 	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
 	cmd->cmds = ft_split_cmd(input, 0, 0, 0);
@@ -94,7 +94,7 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != ' ')
 		{
 			i++;
-			result = ft_strjoin(result, ft_var(mini, &str[i]));
+			result = ft_var(mini, &str[i], result);
 			while (ft_isalnum(str[i]) || str[i] == '_')
 				i++;
 		}

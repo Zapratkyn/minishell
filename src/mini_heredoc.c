@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:30:10 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:59:10 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*get_vars(t_mini *mini, char *str, int i)
 		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != ' ')
 		{
 			i++;
-			result = ft_strjoin(result, ft_var(mini, &str[i]));
+			result = ft_var(mini, &str[i], result);
 			while (ft_isalnum(str[i]) || str[i] == '_')
 				i++;
 		}
@@ -156,14 +156,14 @@ int	add_heredoc(void)
 
 	i = 1;
 	nb = ft_itoa(i);
-	file = ft_strjoin(ft_strdup("/tmp/mini_heredocs/heredoc_"), nb);
+	file = ft_strjoin(ft_strdup("/tmp/heredoc_"), nb);
 	free (nb);
 	while (!access(file, F_OK))
 	{
 		i++;
 		free (file);
 		nb = ft_itoa(i);
-		file = ft_strjoin(ft_strdup("/tmp/mini_heredocs/heredoc_"), nb);
+		file = ft_strjoin(ft_strdup("/tmp/heredoc_"), nb);
 		free (nb);
 	}
 	fd = open(file, O_CREAT | O_RDWR, 0777);
@@ -171,21 +171,26 @@ int	add_heredoc(void)
 	return (fd);
 }
 
-int	mini_heredoc(t_mini *mini, char *str, int fd)
+int	mini_heredoc(t_mini *mini, char *str, int fd, int i)
 {
 	char	*eof;
-	int		i;
+	char	c;
 
-	i = 0;
 	while (str[i])
 	{
-		if ((i == 0 && str[i] == '<') || (i > 0 && str[i - 1] == ' '))
+		if (str[i] == S_QUOTE || str[i] == '"')
+		{
+			c = str[i++];
+			while (str[i] != c)
+				i++;
+			i++;
+		}
+		else if (str[i] == '<')
 		{
 			fd = STDIN_FILENO;
-			if (str[++i] == '<')
+			i++;
+			if (str[i] == '<')
 			{
-				if (str[i + 1] == '<')
-					return (-1);
 				eof = get_eof(&str[i + 1], NULL);
 				if (!eof)
 					return (-1);

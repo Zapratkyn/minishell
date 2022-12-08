@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 12:21:26 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:37:34 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,17 @@ char	*mini_getenv(t_mini *mini, char *var)
 {
 	t_var	*tmp;
 	int		i;
+	char	*s;
 
 	tmp = mini->var;
-	if (var[0] == '?')
-		return (ft_itoa(g_status));
 	i = 0;
+	if (var[0] == '?')
+	{
+		s = ft_itoa(g_status);
+		while (var[++i])
+			s = ft_strjoin2(s, var[i]);
+		return (s);
+	}
 	while (ft_isalnum(var[i]) || var[i] == '_')
 		i++;
 	while (tmp->next)
