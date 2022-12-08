@@ -81,7 +81,7 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 		{
 			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
 				infile = ft_strdup(&cmd->cmds[i][1]);
-			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1])
+			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
 				infile = ft_strdup(cmd->cmds[i + 1]);
 			else
 				cmd->infile = get_infos_error(cmd, 1, NULL);
@@ -106,7 +106,7 @@ void	get_outfile(t_cmd *cmd, int i, int j)
 				j++;
 			if (cmd->cmds[i][j])
 				outfile = ft_strdup(&cmd->cmds[i][j]);
-			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1])
+			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
 				outfile = ft_strdup(cmd->cmds[i + 1]);
 			else
 				cmd->outfile = get_infos_error(cmd, 1, NULL);

@@ -181,9 +181,9 @@ int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 			{
 				if (cmd->cmds[i][2])
 					eof = &cmd->cmds[i][2];
-				else if (!cmd->cmds[i][2] && cmd->cmds[i + 1])
+				else if (!cmd->cmds[i][2] && cmd->cmds[i + 1] && cmd->cmds[i + 1] != '<' && cmd->cmds[i + 1][0] != '>')
 					eof = cmd->cmds[i + 1];
-				else if (!cmd->cmds[i][2] && !cmd->cmds[i + 1])
+				else
 					return (get_infos_error(cmd, 1, NULL));
 				fd = add_fd(mini, eof);
 				if (fd == -1)
