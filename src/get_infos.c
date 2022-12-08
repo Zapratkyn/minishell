@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:25:52 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:37:00 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 		i++;
 	if (cmd->cmds[i])
 	{
-		exec = ft_strdup(cmd->cmds[i]);
+		exec = ft_strdup(mini, cmd->cmds[i]);
 		exec = manage_string(mini, exec);
 	}
 	return (exec);
@@ -55,7 +55,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 		free (exec);
 	}
 	else
-		cmd->path = ft_strdup("none");
+		cmd->path = ft_strdup(mini, "none");
 	if (ft_strncmp(cmd->path, "none", 4))
 		get_infile(mini, cmd, ft_tablen(cmd->cmds));
 }
@@ -66,7 +66,7 @@ void	set_infile(t_mini *mini, t_cmd *cmd, char *infile)
 	if (!access(infile, F_OK))
 		cmd->infile = open(infile, O_RDONLY);
 	else
-		cmd->infile = get_infos_error(cmd, 2, infile);
+		cmd->infile = get_infos_error(mini, cmd, 2, infile);
 	free (infile);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:23:11 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:36:14 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ char					*fill_parts(t_mini *mini, char **parts,
 							char *str, int i);
 int						ft_quotes(char *str, int i, int quotes,
 							int double_quotes);
-char					*manage_string(t_mini *mini, char *str, int i);
+char					*manage_string(t_mini *mini, char *str);
 void					mini_exit(t_mini *mini);
 char					*mini_getenv(t_mini *mini, char *var);
 void					mini_new_line(int sig);
@@ -146,6 +146,8 @@ char					**transform_parts(t_mini *mini, char **parts,
 char					**clean_files(t_mini *mini, char **cmds,
 							int i, int j);
 t_cmd					*cmd_init(t_mini *mini, char *str, int i);
+char					*delete_double_quotes(t_mini *mini, char *str, int i);
+char					*delete_quotes(t_mini *mini, char *str, int i, int j);
 int						dol(char *str);
 char					**ft_split_cmd(t_mini *mini, char *s, int i,
 							int index);
