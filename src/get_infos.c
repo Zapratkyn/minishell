@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 18:17:04 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:25:52 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 		i++;
 	if (cmd->cmds[i])
 	{
-		exec = ft_strdup(mini, cmd->cmds[i]);
-		exec = get_vars(mini, exec, -1);
+		exec = ft_strdup(cmd->cmds[i]);
+		exec = manage_string(mini, exec);
 	}
 	return (exec);
 }
@@ -39,6 +39,8 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 	exec = get_exec(mini, cmd);
 	if (exec)
 	{
+		if (!access(exec, F_OK))
+			cmd->path = exec;
 		while (mini->paths[i] && !cmd->path)
 		{
 			path = ft_strjoin(mini, ft_strdup(mini, ""), mini->paths[i++]);
@@ -53,9 +55,19 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 		free (exec);
 	}
 	else
-		cmd->path = ft_strdup(mini, "none");
+		cmd->path = ft_strdup("none");
 	if (ft_strncmp(cmd->path, "none", 4))
 		get_infile(mini, cmd, ft_tablen(cmd->cmds));
+}
+
+void	set_infile(t_mini *mini, t_cmd *cmd, char *infile)
+{
+	infile = manage_string(mini, infile);
+	if (!access(infile, F_OK))
+		cmd->infile = open(infile, O_RDONLY);
+	else
+		cmd->infile = get_infos_error(cmd, 2, infile);
+	free (infile);
 }
 
 void	get_infile(t_mini *mini, t_cmd *cmd, int i)
@@ -76,13 +88,7 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 		}
 	}
 	if (infile)
-	{
-		if (!access(infile, F_OK))
-			cmd->infile = open(infile, O_RDONLY);
-		else
-			cmd->infile = get_infos_error(mini, cmd, 2, infile);
-		free (infile);
-	}
+		set_infile(mini, cmd, infile);
 	if (cmd->infile != -1)
 		get_outfile(mini, cmd, ft_tablen(cmd->cmds), 1);
 }

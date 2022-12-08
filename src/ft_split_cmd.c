@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/06 14:41:19 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:25:08 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 
 static int	count_words(char *s, int i, int count, char c)
 {
-	while (s[i] && s[i] == ' ')
-			i++;
-	while (s[i] && s[i] != PIPE)
+	while (s[i])
 	{
-		while (s[i] && s[i] == ' ')
-			i++;
-		if (s[i] && s[i] != ' ' && s[i] != PIPE)
+		if (s[i] && s[i] != ' ')
 		{
 			count++;
-			while (s[i] && s[i] != PIPE && s[i] != ' ')
+			while (s[i] && s[i] != ' ')
 			{
 				if (s[i] == '"' || s[i] == S_QUOTE)
 				{
@@ -34,15 +30,15 @@ static int	count_words(char *s, int i, int count, char c)
 				i++;
 			}
 		}
+		while (s[i] && s[i] == ' ')
+			i++;
 	}
 	return (count);
 }
 
 static int	find_next_len(char *str, int len, int i, char c)
 {
-	while (str[i] && str[i] == ' ')
-		i++;
-	while (str[i] && str[i] != PIPE && str[i] != ' ')
+	while (str[i] && str[i] != ' ')
 	{
 		if (str[i] == '"' || str[i] == S_QUOTE)
 		{
@@ -53,8 +49,6 @@ static int	find_next_len(char *str, int len, int i, char c)
 				i++;
 				len++;
 			}
-			len++;
-			i++;
 		}
 		i++;
 		len++;
@@ -90,8 +84,10 @@ char	**ft_split_cmd(t_mini *mini, char *s, int i, int index)
 	int		wc;
 	int		len;
 
-	wc = count_words(s, 0, 0, 0);
-	tab = malloc(sizeof(char *) * (wc + 1));
+	while (s[index] == ' ')
+		index++;
+	wc = count_words(&s[index], 0, 0, 0);
+	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
 		ft_error(mini, MALLOC_ERR, EXIT);
 	while (i < wc)

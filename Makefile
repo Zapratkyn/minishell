@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/06 13:17:45 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/08 11:22:15 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ SRC							=	src/builtins/builtin.c \
 								src/get_infos.c \
 								src/ft_split_cmd.c \
 								src/mini_heredoc.c \
-								src/ft_split_string.c
+								src/ft_split_string.c 
 
 LIBFT						=	./libft/libft.a
 

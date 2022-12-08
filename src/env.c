@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:35:05 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:23:47 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,11 @@ char	*mini_getenv(t_mini *mini, char *var)
 	i = 0;
 	while (ft_isalnum(var[i]) || var[i] == '_')
 		i++;
-	while (tmp->next && (var[i] == ' ' || var[i] == '"' || var[i] == '\0'))
+	while (tmp->next)
 	{
 		if (!ft_strncmp(var, tmp->content, i) && tmp->content[i] == '=')
-			return (&tmp->content[ft_strlen(var)] + 1);
+			return (&tmp->content[i + 1]);
 		tmp = tmp->next;
 	}
 	return (NULL);
 }
-
