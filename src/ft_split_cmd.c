@@ -17,15 +17,15 @@ int	quotes(char *str, char c, int i)
 	c = str[i++];
 	while (str[i] != c)
 		i++;
-	return (i + 2);
+	return (i + 1);
 }
 
 int	spike(char *str, char c, int i)
 {
 	c = str[i++];
-	while (str[i] == c)
+	while (str[i] && str[i] == c)
 		i++;
-	while (str[i] != ' ')
+	while (str[i] && str[i] != ' ')
 	{
 		if (str[i] == '"' || str[i] == S_QUOTE)
 			i += quotes(&str[i], 0, 0);
@@ -35,31 +35,22 @@ int	spike(char *str, char c, int i)
 	return (i);
 }
 
-static int	count_words(char *s, int i, int count, char c)
+int	count_words(char *s, int i, int count)
 {
 	while (s[i])
 	{
 		count++;
-		while (s[i] && s[i] != ' ')
+		if (s[i] == '<' || s[i] == '>')
+			i += spike(&s[i], 0, 0);
+		else
 		{
-			if (s[i] == S_QUOTE || s[i] == '"')
-				i += quotes(&str[i], 0, 0)
-			else if (s[i] == '<' || s[i] == '>')
-				i += spike(&str[i], 0, 0);
-			// {
-			// 	c = s[i++];
-			// 	while (s[i] == c)
-			// 		i++;
-			// 	while (s[i] != '<' && s[i] != '>' && s[i] != ' ')
-			// 	{
-			// 		if (s[i] == '"' || s[i] == S_QUOTE)
-			// 			i += quotes(&str[i], 0, 0);
-			// 		else
-			// 			i++;
-			// 	}
-			// }
-			else
-				i++;
+			while (s[i] && s[i] != ' ' && s[i] != '<' && s[i] != '>')
+			{
+				if (s[i] == S_QUOTE || s[i] == '"')
+					i += quotes(&s[i], 0, 0);
+				else
+					i++;
+			}
 		}
 		while (s[i] && s[i] == ' ')
 			i++;
@@ -67,17 +58,19 @@ static int	count_words(char *s, int i, int count, char c)
 	return (count);
 }
 
-static int	find_next_len(char *str, int i, char c)
+int	find_next_len(char *s, int i)
 {
-	while (str[i] && str[i] != ' ' && str[i] != '<' && str[i] != '>')
+	if (s[i] == '<' || s[i] == '>')
+		i += spike(&s[i], 0, 0);
+	else
 	{
-		if (str[i] == '"' || str[i] == S_QUOTE)
+		while (s[i] && s[i] != ' ' && s[i] != '<' && s[i] != '>')
 		{
-			c = str[i++];
-			while (str[i] != c)
+			if (s[i] == S_QUOTE || s[i] == '"')
+				i += quotes(&s[i], 0, 0);
+			else
 				i++;
 		}
-		i++;
 	}
 	return (i);
 }
@@ -89,10 +82,6 @@ static char	*find_next_word(char *s, int i, int len)
 	result = malloc (sizeof(char) * len + 1);
 	if (!result)
 		return (NULL);
-	while (s[i] == ' ')
-		i++;
-	s = &s[i];
-	i = 0;
 	while (i < len)
 	{
 		result[i] = s[i];
@@ -109,14 +98,13 @@ char	**ft_split_cmd(char *s, int i, int index, int len)
 
 	while (s[index] == ' ')
 		index++;
-	wc = count_words(&s[index], 0, 0, 0);
-	ICI
+	wc = count_words(&s[index], 0, 0);
 	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
 		return (NULL);
 	while (i < wc)
 	{
-		len = find_next_len(&s[index], 0, 0);
+		len = find_next_len(&s[index], 0);
 		tab[i] = find_next_word(&s[index], 0, len);
 		if (!tab[i])
 			return (NULL);
