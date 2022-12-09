@@ -18,6 +18,7 @@ void	ft_lstdelone(t_var **l_var, int i)
 	t_var	*var;
 	t_var	*next;
 
+	(void)var;
 	prev = ft_lstget(*l_var, i - 1);
 	var = ft_lstget(*l_var, i);
 	next = ft_lstget(*l_var, i + 1);

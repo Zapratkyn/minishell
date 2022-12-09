@@ -60,13 +60,21 @@ char	*manage_eof(t_mini *mini, char *str, int i, int len)
 	return (result);
 }
 
-int	fill_fd(t_mini *mini, char *input, int fd, char *eof, int mode)
+int	fill_fd(t_mini *mini, char *input, int fd, char *str)
 {
+	char	*eof;
+	int		mode;
+	
+	mode = 0;
+	if (!ft_strchr(str, '"') && !ft_strchr(str, S_QUOTE))
+		mode = 1;
+	eof = manage_eof(mini, str, -1, 0);
 	if (!input || (!strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof))))
 	{
 		if (input)
 			free (input);
 		close (fd);
+		free (eof);
 		return (0);
 	}
 	else
@@ -76,6 +84,7 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *eof, int mode)
 		write (fd, input, ft_strlen(input));
 		write (fd, "\n", 1);
 		free (input);
+		free (eof);
 		return (1);
 	}
 }
@@ -103,30 +112,45 @@ char	*add_heredoc(t_mini *mini, int i)
 	return (file);
 }
 
-int	add_fd(t_mini *mini, char *str)
+int	eof_to_fd(t_mini *mini, char *str, int fd, char *file)
 {
-	int		fd;
+	str = manage_string(mini, str, 0);
+	write (fd, str, ft_strlen(str));
+	write (fd, "\n", 1);
+	free (str);
+	close (fd);
+	fd = open(file, O_RDONLY);
+	return (fd);
+}
+
+int	spike_error(void)
+{
+	ft_error("syntax error near unexpected token '<'", 0);
+	return (-1);
+}
+
+int	add_fd(t_mini *mini, char *str, int fd)
+{
 	char	*file;
-	int		mode;
-	char 	*eof;
 	
 	// g_status = 0;
 	if (!ft_quotes(str, -1, 0, 0))
 		return (unclosed_quotes());
+	else if (str[0] == '<' && str[1] && str[1] == '<')
+		return (spike_error());
+	else if (str[0] == '<' && !str[1])
+		return (get_infos_error(NULL, 1, NULL));
 	file = add_heredoc(mini, 1);
 	fd = open(file, O_WRONLY);
-	mode = 0;
-	if (!ft_strchr(str, '"') && !ft_strchr(str, S_QUOTE))
-		mode = 1;
-	eof = manage_eof(mini, str, -1, 0);
+	if (str[0] == '<' && str[1] && str[1] != '<')
+		return (eof_to_fd(mini, &str[1], fd, file));
 	while (1)
 	{
 		signal(SIGINT, mini_new_line);
 		signal(SIGQUIT, SIG_IGN);
-		if (!fill_fd(mini, readline("> "), fd, eof, mode))
+		if (!fill_fd(mini, readline("> "), fd, str))
 			break ;
 	}
-	free (eof);
 	// if (g_status == 1)
 	// 	return (-1);
 	fd = open(file, O_RDONLY);
@@ -152,7 +176,7 @@ int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 					eof = cmd->cmds[i + 1];
 				else
 					return (get_infos_error(cmd, 1, NULL));
-				fd = add_fd(mini, eof);
+				fd = add_fd(mini, eof, 0);
 			}
 		}
 		i++;

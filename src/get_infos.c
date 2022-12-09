@@ -26,7 +26,7 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 	if (cmd->cmds[i])
 	{
 		exec = ft_strdup(cmd->cmds[i]);
-		exec = manage_string(mini, exec);
+		exec = manage_string(mini, exec, 1);
 	}
 	return (exec);
 }
@@ -62,7 +62,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 
 void	set_infile(t_mini *mini, t_cmd *cmd, char *infile)
 {
-	infile = manage_string(mini, infile);
+	infile = manage_string(mini, infile, 1);
 	if (!access(infile, F_OK))
 		cmd->infile = open(infile, O_RDONLY);
 	else

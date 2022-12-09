@@ -59,7 +59,7 @@ char	*join_parts(t_mini *mini, char **parts, int i)
 	return (result);
 }
 
-char	*manage_string(t_mini *mini, char *str)
+char	*manage_string(t_mini *mini, char *str, int i)
 {
 	char	**parts;
 	char	*result;
@@ -67,7 +67,8 @@ char	*manage_string(t_mini *mini, char *str)
 	result = NULL;
 	parts = split_string(str, 0, 0, 0);
 	result = join_parts(mini, parts, 0);
-	free (str);
+	if (i == 1)
+		free (str);
 	return (result);
 }
 
@@ -79,7 +80,7 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);
 		while (cmd->cmds && cmd->cmds[++i])
-			cmd->cmds[i] = manage_string(mini, cmd->cmds[i]);
+			cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 1);
 		if (ft_strchr(str, PIPE) && cmd->infile != -1
 			&& cmd->outfile != -1 && ft_strcmp(cmd->path, "none"))
 			cmd->next = get_cmd(mini, cmd->next,

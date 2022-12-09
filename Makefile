@@ -54,18 +54,33 @@ SRC							=	src/builtins/builtin.c \
 
 LIBFT						=	./libft/libft.a
 
-LIBFT_LINUX					=	libft/ft_strlen.c \
-								libft/ft_strnstr.c \
-								libft/ft_strncmp.c \
+LIBFT_LINUX					=	libft/ft_calloc.c \
+								libft/ft_find_index.c \
+								libft/ft_insert.c \
+								libft/ft_isalnum.c \
+								libft/ft_lst_index.c \
+								libft/ft_lst_to_str.c \
+								libft/ft_lstadd_back.c \
+								libft/ft_lstclear.c \
+								libft/ft_lstdelone.c \
+								libft/ft_lstget.c \
+								libft/ft_lstlast.c \
+								libft/ft_lstnew.c \
+								libft/ft_lstsize.c \
+								libft/ft_n_putstr.c \
+								libft/ft_putstr_fd.c \
+								libft/ft_split.c \
+								libft/ft_strchr.c \
+								libft/ft_strcmp.c \
 								libft/ft_strdup.c \
 								libft/ft_strjoin.c \
-								libft/ft_isalnum.c \
-								libft/ft_strchr.c \
-								libft/ft_calloc.c \
-								libft/ft_usleep.c \
-								libft/ft_split.c \
+								libft/ft_strlcpy.c \
+								libft/ft_strlen.c \
+								libft/ft_strncmp.c \
+								libft/ft_strnstr.c \
 								libft/ft_substr.c \
-								libft/ft_usleep.c
+								libft/ft_itoa.c \
+								libft/ft_tablen.c
 
 INC							=	-I./inc
 

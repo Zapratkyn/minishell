@@ -26,12 +26,14 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 /*
 ** Global Variable
 */
 
-int	g_status;
+// int	g_status;
 
 /*
 ** Define constants
@@ -96,14 +98,11 @@ struct s_cmd
 
 struct s_mini
 {
-	int		g_status;
 	char	*prompt;
 	char	**paths;
 	t_var	*var;
 	t_cmd	*cmd;
 };
-
-int	g_status;
 
 /*
 ** Functions
@@ -116,6 +115,7 @@ int                         mini_parser(t_mini *mini, char *str);
 // execute
 void						execute(t_mini *mini);
 void						exec_child(t_mini *mini, t_cmd *cmd);
+int							to_exec(t_mini *mini);
 
 // execute utils
 int							check_cmd(t_cmd *cmd);
@@ -162,7 +162,7 @@ t_cmd						*get_cmd(t_mini *mini,
 t_cmd						*cmd_init(t_mini *mini, char *str, int i);
 char						*delete_quotes(char *str, int i, int j, int len);
 char						*delete_double_quotes(t_mini *mini, char *str, int i);
-char						*manage_string(t_mini *mini, char *str);
+char						*manage_string(t_mini *mini, char *str, int i);
 char						*get_vars(t_mini *mini, char *str, int i);
 // get_infos.c
 char						*get_exec(t_mini *mini, t_cmd *cmd);
@@ -186,7 +186,7 @@ void						ft_pwd(t_cmd *cmd);
 void						ft_export(t_mini *mini, t_cmd *cmd);
 void						ft_unset(t_mini *mini, t_cmd *cmd);
 // heredoc.c
-int							mini_heredoc(t_mini *mini, char *str, int fd, int i);
+int							mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i);
 // ft_split_heredoc.c
 char						**ft_split_heredoc(char *s, int i, int index, int len);
 // split_string.c
@@ -195,5 +195,6 @@ char						**split_string(char *s, int i, int index, int len);
 // error
 void						ft_error(char *type, int is_exit);
 int							get_infos_error(t_cmd *cmd, int i, char *s);
+int							unclosed_quotes(void);
 
 #endif

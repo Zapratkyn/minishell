@@ -44,7 +44,7 @@ char	*mini_getenv(t_mini *mini, char *var)
 	i = 0;
 	if (var[0] == '?')
 	{
-		s = ft_itoa(g_status);
+		// s = ft_itoa(g_status);
 		while (var[++i])
 			s = ft_strjoin2(s, var[i]);
 		return (s);

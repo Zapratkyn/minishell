@@ -51,6 +51,6 @@ int	get_infos_error(t_cmd *cmd, int i, char *s)
 
 int	unclosed_quotes(void)
 {
-	printf("Unclosed quotes forbidden in minishell\n");
+	ft_error("Unclosed quotes forbidden in minishell", 0);
 	return (-1);
 }
