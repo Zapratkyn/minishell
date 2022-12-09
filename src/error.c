@@ -28,7 +28,7 @@ int	get_infos_error(t_cmd *cmd, int i, char *s)
 	if (i == 1)
 	{
 		ft_error("syntax error near unexpected token `newline'", 0);
-		g_status = 258;
+		// g_status = 258;
 	}
 	else if (i == 2)
 	{
@@ -36,15 +36,21 @@ int	get_infos_error(t_cmd *cmd, int i, char *s)
 		str = ft_strjoin(str, ": No such file or directory");
 		ft_error(str, 0);
 		free (str);
-		g_status = 1;
+		// g_status = 1;
 	}
 	else if (i == 3)
 	{
 		str = ft_strjoin(ft_strdup(s), " : command not found");
 		ft_error(str, 0);
 		free (str);
-		g_status = 127;
+		// g_status = 127;
 		cmd->path = ft_strdup("none");
 	}
+	return (-1);
+}
+
+int	unclosed_quotes(void)
+{
+	printf("Unclosed quotes forbidden in minishell\n");
 	return (-1);
 }

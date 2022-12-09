@@ -12,68 +12,6 @@
 
 #include "../inc/minish.h"
 
-char	*get_eof(char *str, char *eof)
-{
-	int		i;
-	char	c;
-
-	i = 0;
-	while (str[i] == ' ')
-		i++;
-	if (str[i])
-		eof = ft_strdup("");
-	while (str[i] && str[i] != ' ')
-	{
-		if (str[i] == S_QUOTE || str[i] == '"')
-		{
-			c = str[i++];
-			while (str[i] != c)
-				i++;
-			i++;
-		}
-		else
-			eof = ft_strjoin2(eof, str[i++]);
-	}
-	return (eof);
-}
-
-// int	check_input(char *str, char *end)
-// {
-// 	if (!str)
-// 		return (-1);
-// 	else if ((!ft_strncmp(str, end, ft_strlen(end))
-// 			&& ft_strlen(str) == ft_strlen(end)))
-// 		return (-2);
-// 	return (1);
-// }
-
-// int	get_input(char *str, char *end, int fd)
-// {
-// 	char	*input;
-// 	int		check;
-
-// 	g_status = 0;
-// 	check = 0;
-// 	input = ft_calloc(1, 1);
-// 	fd = add_heredoc("/tmp/mini_heredocs/heredoc_");
-// 	end = get_end(str, "");
-// 	while (1)
-// 	{
-// 		signal(SIGINT, mini_new_line);
-// 		signal(SIGQUIT, SIG_IGN);
-// 		input = (readline("> "));
-// 		check = check_input(input, end);
-// 		if (check < 0 || g_status == 1)
-// 			break ;
-// 		write (fd, input, ft_strlen(input));
-// 		write (fd, "\n", 1);
-// 		free (input);
-// 	}
-// 	if (g_status == 1 || check == -1 || !end)
-// 		return (0);
-// 	return (fd);
-// }
-
 char	*get_vars(t_mini *mini, char *str, int i)
 {
 	char	*result;
@@ -83,7 +21,7 @@ char	*get_vars(t_mini *mini, char *str, int i)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != ' ')
+		if (str[i] == '$' && str[i + 1])
 		{
 			i++;
 			result = ft_var(mini, &str[i], result);
@@ -97,30 +35,44 @@ char	*get_vars(t_mini *mini, char *str, int i)
 	return (result);
 }
 
-char	*manage_line(t_mini *mini, char *str, char *eof)
+char	*manage_eof(t_mini *mini, char *str, int i, int len)
 {
-	if (!ft_strchr(eof, '"') && !ft_strchr(eof, S_QUOTE))
+	char 	*result;
+	int		j;
+
+	(void)mini;
+	while (str[++i])
 	{
-		str = get_vars(mini, str, 0);
-		return (str);
+		if (str[i] != '"' && str[i] != S_QUOTE)
+			len++;
 	}
-	else if ((ft_strchr(eof, '"') || ft_strchr(eof, S_QUOTE)) && ft_quotes(eof, -1, 0, 0))
-		return (str);
-	return (0);
+	result = malloc (sizeof(char) * len + 1);
+	if (!result)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if (str[i] != '"' && str[i] != S_QUOTE)
+			result[j++] = str[i];
+	}
+	result[j] = '\0';
+	return (result);
 }
 
-int	fill_fd(t_mini *mini, char *input, int fd, char *eof)
+int	fill_fd(t_mini *mini, char *input, int fd, char *eof, int mode)
 {
-	if (!input)
-		return (0);
-	else if (!strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof)))
+	if (!input || (!strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof))))
 	{
-		free (input);
+		if (input)
+			free (input);
+		close (fd);
 		return (0);
 	}
 	else
 	{
-		input = manage_line(mini, input, eof);
+		if (mode == 1)
+			input = get_vars(mini, input, 0);
 		write (fd, input, ft_strlen(input));
 		write (fd, "\n", 1);
 		free (input);
@@ -128,15 +80,13 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *eof)
 	}
 }
 
-int	add_heredoc(t_mini *mini)
+char	*add_heredoc(t_mini *mini, int i)
 {
-	int		i;
 	int		fd;
 	char	*nb;
 	char	*file;
 
 	(void)mini;
-	i = 1;
 	nb = ft_itoa(i);
 	file = ft_strjoin(ft_strdup("/tmp/heredoc_"), nb);
 	free (nb);
@@ -149,22 +99,35 @@ int	add_heredoc(t_mini *mini)
 		free (nb);
 	}
 	fd = open(file, O_CREAT | O_RDWR, 0777);
-	free (file);
-	return (fd);
+	close (fd);
+	return (file);
 }
 
-int	add_fd(t_mini *mini, char *eof)
+int	add_fd(t_mini *mini, char *str)
 {
-	int	fd;
+	int		fd;
+	char	*file;
+	int		mode;
+	char 	*eof;
 	
-	fd = add_heredoc(mini);
+	// g_status = 0;
+	if (!ft_quotes(str, -1, 0, 0))
+		return (unclosed_quotes());
+	file = add_heredoc(mini, 1);
+	fd = open(file, O_WRONLY);
+	mode = 0;
+	if (!ft_strchr(str, '"') && !ft_strchr(str, S_QUOTE))
+		mode = 1;
+	eof = manage_eof(mini, str, -1, 0);
 	while (1)
 	{
 		signal(SIGINT, mini_new_line);
 		signal(SIGQUIT, SIG_IGN);
-		if (!fill_fd(mini, readline("> "), fd, eof))
+		if (!fill_fd(mini, readline("> "), fd, eof, mode))
 			break ;
 	}
+	free (eof);
+	fd = open(file, O_RDONLY);
 	return (fd);
 }
 
@@ -172,7 +135,7 @@ int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 {
 	char	*eof;
 	
-	while (cmd->cmds[i])
+	while (cmd->cmds[i] && fd != -1)
 	{
 		if (cmd->cmds[i][0] == '<')
 		{
@@ -181,13 +144,13 @@ int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 			{
 				if (cmd->cmds[i][2])
 					eof = &cmd->cmds[i][2];
-				else if (!cmd->cmds[i][2] && cmd->cmds[i + 1] && cmd->cmds[i + 1] != '<' && cmd->cmds[i + 1][0] != '>')
+				else if (!cmd->cmds[i][2] && cmd->cmds[i + 1]
+						&& cmd->cmds[i + 1][0] != '<'
+						&& cmd->cmds[i + 1][0] != '>')
 					eof = cmd->cmds[i + 1];
 				else
 					return (get_infos_error(cmd, 1, NULL));
 				fd = add_fd(mini, eof);
-				if (fd == -1)
-					return (-1);
 			}
 		}
 		i++;

@@ -21,7 +21,7 @@ void	mini_exit(t_mini *mini)
 	free (mini->prompt);
 	printf("exit\n");
 	// system("leaks minishell");
-	exit (g_status);
+	exit (0);
 }
 
 int	is_input(char *str)
@@ -29,7 +29,7 @@ int	is_input(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_strlen(str) == 0 || !ft_quotes(str, -1, 0, 0))
+	if (ft_strlen(str) == 0 || ft_quotes(str, -1, 0, 0) == -1)
 		return (0);
 	while (str[i])
 	{
@@ -43,7 +43,7 @@ int	is_input(char *str)
 void	mini_new_line(int sig)
 {
 	(void)sig;
-	g_status = 1;
+	// g_status = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -57,23 +57,23 @@ int	ft_quotes(char *str, int i, int quotes, int double_quotes)
 		{
 			i++;
 			double_quotes++;
-			while (str[i] != '"' && str[i])
+			while (str [i] && str[i] != '"')
 				i++;
 			if (str[i] == '"')
 				double_quotes++;
 		}
-		if (str[i] == S_QUOTE)
+		else if (str[i] == S_QUOTE)
 		{
 			i++;
 			quotes++;
-			while (str[i] != S_QUOTE && str[i])
+			while (str[i] && str[i] != S_QUOTE)
 				i++;
 			if (str[i] == S_QUOTE)
 				quotes++;
 		}
 	}
 	if ((quotes % 2) != 0 || (double_quotes % 2) != 0)
-		return (0);
+		return (unclosed_quotes());
 	return (1);
 }
 
@@ -84,7 +84,7 @@ int	start_with_pipe(char *str, int i)
 	if (str[0] == PIPE && !str[1])
 	{
 		ft_error("syntax error near unexpected token `|'", 0);
-		g_status = 258;
+		// g_status = 258;
 		return (1);
 	}
 	if (ft_strlen(str) != 0)
