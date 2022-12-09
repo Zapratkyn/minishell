@@ -127,6 +127,8 @@ int	add_fd(t_mini *mini, char *str)
 			break ;
 	}
 	free (eof);
+	// if (g_status == 1)
+	// 	return (-1);
 	fd = open(file, O_RDONLY);
 	return (fd);
 }
