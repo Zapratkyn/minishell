@@ -74,19 +74,16 @@ char	*manage_string(t_mini *mini, char *str)
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
 	cmd = cmd_init(mini, str, 0);
-	if (cmd && (str[1] || (str[0] != S_QUOTE && str[0] != '"')))
+	if (cmd->infile != -1)
 	{
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(cmd->cmds, -1, 0, 0);
 		while (cmd->cmds && cmd->cmds[++i])
 			cmd->cmds[i] = manage_string(mini, cmd->cmds[i]);
-		if (cmd->cmds && ft_strchr(str, PIPE))
-		{
+		if (ft_strchr(str, PIPE) && cmd->infile != -1
+			&& cmd->outfile != -1 && ft_strcmp(cmd->path, "none"))
 			cmd->next = get_cmd(mini, cmd->next,
 					&ft_strchr(str, PIPE)[1], -1);
-			if (!cmd->next)
-				return (NULL);
-		}
 	}
 	return (cmd);
 }
