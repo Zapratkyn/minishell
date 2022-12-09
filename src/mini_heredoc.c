@@ -35,28 +35,27 @@ char	*get_vars(t_mini *mini, char *str, int i)
 	return (result);
 }
 
-char	*manage_eof(t_mini *mini, char *str, int i, int len)
+char	*manage_eof(t_mini *mini, char *str, int i)
 {
 	char 	*result;
-	int		j;
+	char	c;
 
 	(void)mini;
-	while (str[++i])
-	{
-		if (str[i] != '"' && str[i] != S_QUOTE)
-			len++;
-	}
-	result = malloc (sizeof(char) * len + 1);
+	result = ft_strdup("");
 	if (!result)
 		return (NULL);
-	i = -1;
-	j = 0;
-	while (str[++i])
+	while (str[i])
 	{
-		if (str[i] != '"' && str[i] != S_QUOTE)
-			result[j++] = str[i];
+		if (str[i] == S_QUOTE || str[i] == '"')
+		{
+			c = str[i++];
+			while (str[i] != c)
+				result = ft_strjoin2(result, str[i++]);
+			i++;
+		}
+		else
+			result = ft_strjoin2(result, str[i++]);
 	}
-	result[j] = '\0';
 	return (result);
 }
 
@@ -68,7 +67,7 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *str)
 	mode = 0;
 	if (!ft_strchr(str, '"') && !ft_strchr(str, S_QUOTE))
 		mode = 1;
-	eof = manage_eof(mini, str, -1, 0);
+	eof = manage_eof(mini, str, 0);
 	if (!input || (!strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof))))
 	{
 		if (input)
