@@ -123,9 +123,21 @@ int	eof_to_fd(t_mini *mini, char *str, int fd, char *file)
 	return (fd);
 }
 
-int	spike_error(void)
+int	spike_error(char *str)
 {
-	ft_error("syntax error near unexpected token '<'", 0);
+	char	*spikes;
+	char	*error;
+	int		i;
+
+	i = 0;
+	spikes = ft_strdup("<");
+	while (str[i] && i < 2 && str[i] == '<')
+		spikes = ft_strjoin2(spikes, str[i++]);
+	error = ft_strjoin(ft_strdup("syntax error near unexpected token '"), spikes);
+	error = ft_strjoin2(error, S_QUOTE);
+	ft_error(error, 0);
+	free (spikes);
+	free (error);
 	return (-1);
 }
 
@@ -137,7 +149,7 @@ int	add_fd(t_mini *mini, char *str, int fd)
 	if (!ft_quotes(str, -1, 0, 0))
 		return (unclosed_quotes());
 	else if (str[0] == '<' && str[1] && str[1] == '<')
-		return (spike_error());
+		return (spike_error(&str[2]));
 	else if (str[0] == '<' && !str[1])
 		return (get_infos_error(NULL, 1, NULL));
 	file = add_heredoc(mini, 1);
