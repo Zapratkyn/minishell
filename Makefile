@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
+#    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/07 17:13:27 by gponcele         ###   ########.fr        #
+#    Updated: 2022/12/08 11:22:15 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ PURPLE		= $(shell tput -Txterm setaf 5)
 BLUE		= $(shell tput -Txterm setaf 6)
 WHITE		= $(shell tput -Txterm setaf 7)
 RESET		= $(shell tput -Txterm sgr0)
-
 
 # Name of the executable
 
@@ -103,8 +102,11 @@ linux:
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 $(NAME):
-					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -L/Users/gponcele/.brew/opt/readline/lib -I/Users/gponcele/.brew/opt/readline/include -o $(NAME)
+					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
+
+libft:
+					@cd libft && make re && make clean && cd ..
 
 clean:
 					@$(RM) $(OBJS)
@@ -114,6 +116,6 @@ fclean: clean
 			@$(RM) $(NAME)
 			@echo "$(LIGHTPURPLE)********* Executable removed. $(RESET)"
 
-re: fclean all
+re: libft fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft

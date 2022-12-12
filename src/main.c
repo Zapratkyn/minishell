@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:29:58 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:10:26 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	get_var(t_mini *mini, char **env)
 	t_var	*var;
 
 	i = 0;
-	mini->var = ft_lstnew(env[i]);
+	mini->var = ft_lstnew(mini, env[i]);
 	while (env[++i])
-		ft_lstadd_back(&mini->var, ft_lstnew(env[i]));
+		ft_lstadd_back(&mini->var, ft_lstnew(mini, ft_strdup(mini, env[i])));
 	var = mini->var;
 	while (var)
 	{
@@ -31,61 +31,57 @@ int	get_var(t_mini *mini, char **env)
 	return (1);
 }
 
-char	*get_prompt(char *prompt)
+char	*get_prompt(t_mini *mini, char *prompt)
 {
 	char	*str;
 
 	if (prompt)
 		free (prompt);
-	prompt = ft_strjoin(ft_strdup(GREEN), getenv("USER"));
+	prompt = ft_strjoin(mini, ft_strdup(mini, GREEN), getenv("USER"));
 	if (prompt)
-		prompt = ft_strjoin(prompt, "@minishell ");
-	str = ft_strnstr2(getenv("PWD"),
-			getenv("USER"), INT_MAX);
+		prompt = ft_strjoin(mini, prompt, "@minishell ");
+	str = ft_strnstr2(mini_getenv(mini, "PWD"),
+			mini_getenv(mini, "USER"), INT_MAX);
 	if (str && prompt)
 	{
-		prompt = ft_strjoin(prompt, "~");
-		if (prompt)
-			prompt = ft_strjoin(prompt, str);
+		prompt = ft_strjoin(mini, prompt, "~");
+		prompt = ft_strjoin(mini, prompt, str);
 	}
 	else if (!str && prompt)
-		prompt = ft_strjoin(prompt, getenv("PWD"));
-	if (prompt)
-		prompt = ft_strjoin(prompt, " % ");
-	if (prompt)
-		prompt = ft_strjoin(prompt, WHITE);
+		prompt = ft_strjoin(mini, prompt, mini_getenv(mini, "PWD"));
+	prompt = ft_strjoin(mini, prompt, " % ");
+	prompt = ft_strjoin(mini, prompt, WHITE);
 	return (prompt);
 }
 
-t_mini	mini_init(char **env)
+void	mini_init(t_mini *mini, char **env)
 {
-	t_mini	mini;
 
-	mini.cmd = NULL;
-	mini.var = NULL;
-	if (!get_var(&mini, env))
-		ft_free_env(mini.var);
-	mini.paths = ft_split(mini_getenv(&mini, "PATH"), ':');
-	if (!mini.paths || !mini.var)
+	mini->cmd = NULL;
+	mini->var = NULL;
+	if (!get_var(mini, env))
+		ft_lstclear(&mini->var);
+	mini->paths = ft_split(mini, mini_getenv(mini, "PATH"), ':');
+	if (!mini->paths || !mini->var)
 		exit (EXIT_FAILURE);
-	mini.prompt = NULL;
-	mini.prompt = get_prompt(mini.prompt);
-	if (!mini.prompt)
+	mini->prompt = NULL;
+	mini->prompt = get_prompt(mini, mini->prompt);
+	if (!mini->prompt)
 	{
-		ft_free_env(mini.var);
-		ft_free_tab(mini.paths);
+		ft_lstclear(&mini->var);
+		ft_free_tab(mini->paths, ft_tablen(mini->paths));
 		exit (EXIT_FAILURE);
 	}
-	return (mini);
 }
 
 int	mini_parser(t_mini *mini, char *str)
 {
 	if (!str)
 		return (0);
-	if (start_with_pipe(str, 0) || !mini)
+	if (start_with_pipe(mini, str, 0) || !mini)
 	{
-		free (str);
+		if (str)
+			free (str);
 		return (1);
 	}
 	if (is_input(str))
@@ -104,8 +100,8 @@ int	main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
 
-	mini = mini_init(env);
-	// g_status = 0;
+	mini_init(&mini, env);
+	g_status = 0;
 	while (argc && argv[0])
 	{
 		signal(SIGQUIT, SIG_IGN);
@@ -113,5 +109,7 @@ int	main(int argc, char **argv, char **env)
 		if (!mini_parser(&mini, readline(mini.prompt)))
 			break ;
 	}
-	mini_exit(&mini);
+	ft_free_all(&mini);
+	write(STDERR_FILENO, "\nexit\n", 6);
+	exit(g_status);
 }

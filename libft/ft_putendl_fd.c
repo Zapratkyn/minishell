@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_putendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 10:52:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 14:54:17 by ademurge         ###   ########.fr       */
+/*   Created: 2022/12/06 17:55:01 by ademurge          #+#    #+#             */
+/*   Updated: 2022/12/06 17:55:42 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minish.h"
+#include "../inc/minish.h"
 
-void	ft_pwd(t_mini *mini)
+void	ft_putendl_fd(char *s, int fd)
 {
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(pwd, 0);
-	if (!pwd)
-		ft_error(mini, PWD_ERR, EXIT);
-	ft_putstr_fd(pwd, STDOUT_FILENO);
-	write(STDOUT_FILENO, "\n", 1);
-	free(pwd);
+	ft_putstr_fd(s, fd);
+	write(fd, "\n", 1);
 }

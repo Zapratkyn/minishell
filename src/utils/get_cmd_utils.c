@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:54:06 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:16:23 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ t_cmd	*cmd_init(t_mini *mini, char *str, int i)
 	cmd->infile = STDIN_FILENO;
 	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
-	input = ft_strdup("");
+	input = ft_strdup(mini, "");
 	while (str[i] && str[i] != PIPE)
 	{
-		input = ft_strjoin2(input, str[i++]);
+		input = ft_strjoin2(mini, input, str[i++]);
 		if (!input)
 			return (NULL);
 	}
-	cmd->cmds = ft_split_cmd(input, 0, 0, 0);
+	cmd->cmds = ft_split_cmd(mini, input, 0, 0);
 	if (!cmd->cmds)
 		return (NULL);
 	cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);
@@ -56,10 +56,12 @@ int	to_clean(char *str)
 	return (0);
 }
 
-char	**clean_files(char **cmds, int i, int j, int len)
+char	**clean_files(t_mini *mini, char **cmds, int i, int j)
 {
 	char	**result;
+	int		len;
 
+	len = 0;
 	while (cmds[++i])
 	{
 		if ((cmds[i][0] != '<' && cmds[i][0] != '>')
@@ -68,16 +70,16 @@ char	**clean_files(char **cmds, int i, int j, int len)
 	}
 	result = malloc (sizeof(char *) * len + 1);
 	if (!result)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	i = -1;
 	while (cmds[++i])
 	{
 		if ((cmds[i][0] != '<' && cmds[i][0] != '>')
 			&& !(i > 0 && to_clean(cmds[i - 1])))
-			result[j++] = ft_strdup(cmds[i]);
+			result[j++] = ft_strdup(mini, cmds[i]);
 	}
 	result[j] = NULL;
-	ft_free_tab (cmds);
+	ft_free_tab (cmds, ft_tablen(cmds));
 	return (result);
 }
 
@@ -85,7 +87,7 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 {
 	char	*result;
 
-	result = ft_strdup("");
+	result = ft_strdup(mini, "");
 	if (!result)
 		return (NULL);
 	while (str[i] != '"')
@@ -98,19 +100,20 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 				i++;
 		}
 		else
-			result = ft_strjoin2(result, str[i++]);
+			result = ft_strjoin2(mini, result, str[i++]);
 	}
 	return (result);
 }
 
-char	*delete_quotes(char *str, int i, int j, int len)
+char	*delete_quotes(t_mini *mini, char *str, int i, int j)
 {
 	char	*result;
+	int		len;
 
 	len = ft_strlen(str);
 	result = malloc (sizeof(char) * len);
 	if (!result)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (str[++i] != S_QUOTE)
 		result[j++] = str[i];
 	result[j] = '\0';

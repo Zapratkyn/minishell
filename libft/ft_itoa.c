@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:29:32 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/05 12:45:39 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:11:47 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minish.h"
 
 static int	ft_strlen_int(int n)
 {
@@ -27,7 +27,7 @@ static int	ft_strlen_int(int n)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(t_mini *mini, int n)
 {
 	int		len;
 	long	nb;
@@ -37,7 +37,7 @@ char	*ft_itoa(int n)
 	nb = n;
 	str = malloc (sizeof(char) * (len + 1));
 	if (!str)
-		return (0);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	str[len--] = '\0';
 	if (nb < 0)
 	{

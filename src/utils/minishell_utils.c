@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:50:58 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:16:49 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@ void	mini_exit(t_mini *mini)
 {
 	if (mini->cmd)
 		ft_free_cmd(mini->cmd);
-	ft_free_env(mini->var);
-	ft_free_tab(mini->paths);
+	ft_lstclear(&mini->var);
+	ft_free_tab(mini->paths, ft_tablen(mini->paths));
 	free (mini->prompt);
 	printf("exit\n");
-	// system("leaks minishell");
-	exit (0);
+	exit (g_status);
 }
 
 int	is_input(char *str)
@@ -43,10 +42,9 @@ int	is_input(char *str)
 void	mini_new_line(int sig)
 {
 	(void)sig;
-	// g_status = 1;
+	g_status = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
-	rl_replace_line("", 0);
 }
 
 int	ft_quotes(char *str, int i, int quotes, int double_quotes)
@@ -77,14 +75,14 @@ int	ft_quotes(char *str, int i, int quotes, int double_quotes)
 	return (1);
 }
 
-int	start_with_pipe(char *str, int i)
+int	start_with_pipe(t_mini *mini, char *str, int i)
 {
 	char	*s;
 
 	if (str[0] == PIPE && !str[1])
 	{
-		ft_error("syntax error near unexpected token `|'", 0);
-		// g_status = 258;
+		ft_error(mini, "syntax error near unexpected token `|'", NO_EXIT);
+		g_status = 258;
 		return (1);
 	}
 	if (ft_strlen(str) != 0)

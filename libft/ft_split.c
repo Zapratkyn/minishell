@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:23:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 17:29:24 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:13:47 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minish.h"
 
 static int	count_words(const char *s, char c)
 {
@@ -39,7 +39,7 @@ static char	**ft_free(int index, char **split)
 	return (NULL);
 }
 
-static char	*find_next_word(char *s, char c, int index)
+static char	*find_next_word(t_mini *mini, char *s, char c, int index)
 {
 	int	i;
 	int	j;
@@ -62,10 +62,10 @@ static char	*find_next_word(char *s, char c, int index)
 		count++;
 		j++;
 	}
-	return (ft_substr(&s[i], 0, count));
+	return (ft_substr(mini, &s[i], 0, count));
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(t_mini *mini, char const *s, char c)
 {
 	char	**str;
 	int		i;
@@ -79,10 +79,10 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	str = malloc(sizeof(char *) * (wc + 1));
 	if (!str)
-		return (NULL);
+		ft_error(mini, MALLOC_ERR, EXIT);
 	while (++i < wc)
 	{
-		str[i] = find_next_word((char *)s, c, i + 1);
+		str[i] = find_next_word(mini, (char *)s, c, i + 1);
 		if (!str[i])
 			return (ft_free(i, str));
 	}

@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 15:43:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 16:19:05 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/24 15:39:40 by ademurge          #+#    #+#             */
+/*   Updated: 2022/12/02 13:55:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minish.h"
 
-void	ft_lstdelone(t_var **l_var, int i)
+t_var	*ft_lstnew(t_mini *mini, char *content)
 {
-	t_var	*prev;
 	t_var	*var;
-	t_var	*next;
 
-	(void)var;
-	prev = ft_lstget(*l_var, i - 1);
-	var = ft_lstget(*l_var, i);
-	next = ft_lstget(*l_var, i + 1);
-	if (prev && next)
-		prev->next = next;
-	else if (prev && !next)
-		prev->next = NULL;
-	else if (!prev && next)
-		var = next;
-	else
-		var = NULL;
+	var = (t_var *)malloc(sizeof(t_var));
+	if (!var)
+		ft_error(mini, MALLOC_ERR, EXIT);
+	var->content = content;
+	var->next = NULL;
+	var->prev = NULL;
+	return (var);
 }

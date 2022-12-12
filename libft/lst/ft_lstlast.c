@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 10:52:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 14:54:17 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/24 13:31:05 by ademurge          #+#    #+#             */
+/*   Updated: 2022/12/02 13:55:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-void	ft_pwd(t_mini *mini)
+t_var	*ft_lstlast(t_var *var)
 {
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(pwd, 0);
-	if (!pwd)
-		ft_error(mini, PWD_ERR, EXIT);
-	ft_putstr_fd(pwd, STDOUT_FILENO);
-	write(STDOUT_FILENO, "\n", 1);
-	free(pwd);
+	while (var && var->next)
+		var = var->next;
+	return (var);
 }

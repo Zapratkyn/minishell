@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:59:10 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:14:32 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*get_vars(t_mini *mini, char *str, int i)
 {
 	char	*result;
 
-	result = ft_strdup("");
+	result = ft_strdup(mini, "");
 	if (!result)
 		return (NULL);
 	while (str[i])
@@ -29,7 +29,7 @@ char	*get_vars(t_mini *mini, char *str, int i)
 				i++;
 		}
 		else
-			result = ft_strjoin2(result, str[i++]);
+			result = ft_strjoin2(mini, result, str[i++]);
 	}
 	free (str);
 	return (result);
@@ -40,8 +40,7 @@ char	*manage_eof(t_mini *mini, char *str, int i)
 	char 	*result;
 	char	c;
 
-	(void)mini;
-	result = ft_strdup("");
+	result = ft_strdup(mini, "");
 	if (!result)
 		return (NULL);
 	while (str[i])
@@ -50,11 +49,11 @@ char	*manage_eof(t_mini *mini, char *str, int i)
 		{
 			c = str[i++];
 			while (str[i] != c)
-				result = ft_strjoin2(result, str[i++]);
+				result = ft_strjoin2(mini, result, str[i++]);
 			i++;
 		}
 		else
-			result = ft_strjoin2(result, str[i++]);
+			result = ft_strjoin2(mini, result, str[i++]);
 	}
 	return (result);
 }
@@ -68,7 +67,7 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *str)
 	if (!ft_strchr(str, '"') && !ft_strchr(str, S_QUOTE))
 		mode = 1;
 	eof = manage_eof(mini, str, 0);
-	if (!input || (!strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof))))
+	if (!input || (!ft_strncmp(input, eof, ft_strlen(input)) && (ft_strlen(input) == ft_strlen(eof))))
 	{
 		if (input)
 			free (input);
@@ -122,19 +121,19 @@ int	eof_to_fd(t_mini *mini, char *str, int fd, char *file)
 	return (fd);
 }
 
-int	spike_error(char *str)
+int	spike_error(t_mini *mini, char *str)
 {
 	char	*spikes;
 	char	*error;
 	int		i;
 
 	i = 0;
-	spikes = ft_strdup("<");
+	spikes = ft_strdup(mini, "<");
 	while (str[i] && i < 2 && str[i] == '<')
-		spikes = ft_strjoin2(spikes, str[i++]);
-	error = ft_strjoin(ft_strdup("syntax error near unexpected token '"), spikes);
-	error = ft_strjoin2(error, S_QUOTE);
-	ft_error(error, 0);
+		spikes = ft_strjoin2(mini, spikes, str[i++]);
+	error = ft_strjoin(mini, ft_strdup(mini, "syntax error near unexpected token '"), spikes);
+	error = ft_strjoin2(mini, error, S_QUOTE);
+	ft_error(mini, error, 0);
 	free (spikes);
 	free (error);
 	return (-1);
@@ -144,13 +143,13 @@ int	add_fd(t_mini *mini, char *str, int fd)
 {
 	char	*file;
 	
-	// g_status = 0;
+	g_status = 0;
 	if (!ft_quotes(str, -1, 0, 0))
 		return (unclosed_quotes());
 	else if (str[0] == '<' && str[1] && str[1] == '<')
-		return (spike_error(&str[2]));
+		return (spike_error(mini, &str[2]));
 	else if (str[0] == '<' && !str[1])
-		return (get_infos_error(NULL, 1, NULL));
+		return (get_infos_error(mini, NULL, 1, NULL));
 	file = add_heredoc(mini, 1);
 	fd = open(file, O_WRONLY);
 	if (str[0] == '<' && str[1] && str[1] != '<')
@@ -159,11 +158,11 @@ int	add_fd(t_mini *mini, char *str, int fd)
 	{
 		signal(SIGINT, mini_new_line);
 		signal(SIGQUIT, SIG_IGN);
-		if (!fill_fd(mini, readline("> "), fd, str))
+		if (g_status == 1 || !fill_fd(mini, readline("> "), fd, str))
 			break ;
 	}
-	// if (g_status == 1)
-	// 	return (-1);
+	if (g_status == 1)
+		return (-1);
 	fd = open(file, O_RDONLY);
 	return (fd);
 }
@@ -186,7 +185,7 @@ int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 						&& cmd->cmds[i + 1][0] != '>')
 					eof = cmd->cmds[i + 1];
 				else
-					return (get_infos_error(cmd, 1, NULL));
+					return (get_infos_error(mini, cmd, 1, NULL));
 				fd = add_fd(mini, eof, 0);
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 17:01:42 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:07:52 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 		i++;
 	if (cmd->cmds[i])
 	{
-		exec = ft_strdup(cmd->cmds[i]);
-		exec = manage_string(mini, exec, 1);
+		exec = ft_strdup(mini, cmd->cmds[i]);
+		exec = manage_string(mini, exec);
 	}
 	return (exec);
 }
@@ -43,19 +43,19 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 			cmd->path = exec;
 		while (mini->paths[i] && !cmd->path)
 		{
-			path = ft_strjoin(ft_strdup(""), mini->paths[i++]);
-			path = ft_strjoin2(path, '/');
-			path = ft_strjoin(path, exec);
+			path = ft_strjoin(mini, ft_strdup(mini, ""), mini->paths[i++]);
+			path = ft_strjoin2(mini, path, '/');
+			path = ft_strjoin(mini, path, exec);
 			if (!access(path, F_OK))
-				cmd->path = ft_strdup(path);
+				cmd->path = ft_strdup(mini, path);
 			free (path);
 		}
-		if (!ch_builtin(cmd) && !par_builtin(cmd) && !cmd->path)
-			get_infos_error(cmd, 3, exec);
+		if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd) && !cmd->path)
+			get_infos_error(mini, cmd, 3, exec);
 		free (exec);
 	}
 	else
-		cmd->path = ft_strdup("none");
+		cmd->path = ft_strdup(mini, "none");
 	if (ft_strncmp(cmd->path, "none", 4))
 		get_infile(mini, cmd, ft_tablen(cmd->cmds));
 }
@@ -66,7 +66,7 @@ void	set_infile(t_mini *mini, t_cmd *cmd, char *infile)
 	if (!access(infile, F_OK))
 		cmd->infile = open(infile, O_RDONLY);
 	else
-		cmd->infile = get_infos_error(cmd, 2, infile);
+		cmd->infile = get_infos_error(mini, cmd, 2, infile);
 	free (infile);
 }
 
@@ -84,16 +84,16 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
 				infile = ft_strdup(cmd->cmds[i + 1]);
 			else
-				cmd->infile = get_infos_error(cmd, 1, NULL);
+				cmd->infile = get_infos_error(mini, cmd, 1, NULL);
 		}
 	}
 	if (infile)
 		set_infile(mini, cmd, infile);
 	if (cmd->infile != -1)
-		get_outfile(cmd, ft_tablen(cmd->cmds), 1);
+		get_outfile(mini, cmd, ft_tablen(cmd->cmds), 1);
 }
 
-void	get_outfile(t_cmd *cmd, int i, int j)
+void	get_outfile(t_mini *mini, t_cmd *cmd, int i, int j)
 {
 	char	*outfile;
 
@@ -109,7 +109,7 @@ void	get_outfile(t_cmd *cmd, int i, int j)
 			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
 				outfile = ft_strdup(cmd->cmds[i + 1]);
 			else
-				cmd->outfile = get_infos_error(cmd, 1, NULL);
+				cmd->outfile = get_infos_error(mini, cmd, 1, NULL);
 		}
 	}
 	if (outfile)

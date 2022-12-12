@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 11:28:01 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/28 11:31:09 by ademurge         ###   ########.fr       */
+/*   Created: 2022/11/24 15:43:28 by ademurge          #+#    #+#             */
+/*   Updated: 2022/12/02 13:55:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minish.h"
 
-int	ft_lstsize(t_var *var)
+void	ft_lstdelone(t_var **l_var, int i)
 {
-	int	i;
+	t_var	*prev;
+	t_var	*var;
+	t_var	*next;
 
-	if (!var)
-		return (0);
-	i = 0;
-	while (var->next)
-	{
-		i++;
-		var = var->next;
-	}
-	return (++i);
+	(void)var;
+	prev = ft_lstget(*l_var, i - 1);
+	var = ft_lstget(*l_var, i);
+	next = ft_lstget(*l_var, i + 1);
+	if (prev && next)
+		prev->next = next;
+	else if (prev && !next)
+		prev->next = NULL;
+	else if (!prev && next)
+		var = next;
+	else
+		var = NULL;
+	(void) var;
 }

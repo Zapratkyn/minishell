@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 15:41:03 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 16:17:36 by ademurge         ###   ########.fr       */
+/*   Created: 2022/03/14 14:43:32 by ademurge          #+#    #+#             */
+/*   Updated: 2022/12/02 13:55:45 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minish.h"
 
-void	ft_lstclear(t_var **var)
+void	ft_lstadd_back(t_var **var, t_var *new)
 {
-	t_var	*tmp;
-
-	while (var && *var)
-	{
-		tmp = (*var)->next;
-		ft_lstdelone(var, ft_lst_index(var, *var));
-		*var = tmp;
-	}
+	if (!var || !new)
+		return ;
+	else if (!*var)
+		*var = new;
+	else
+		ft_lstlast(*var)->next = new;
 }

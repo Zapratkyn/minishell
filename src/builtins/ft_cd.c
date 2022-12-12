@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/30 17:10:54 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:34:42 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	update_oldpwd(t_mini *mini, char *path)
 		if (!ft_strncmp(var->content, o_pwd, ft_strlen(o_pwd)))
 		{
 			free(var->content);
-			var->content = ft_strjoin(o_pwd, path);
+			var->content = ft_strjoin(mini, ft_strdup(mini, o_pwd), path);
 			break ;
 		}
 		var = var->next;
@@ -37,7 +37,7 @@ void	update_pwd(t_mini *mini)
 	char	*tmp;
 	char	*pwd;
 
-	pwd = "PWD=";
+	pwd = ft_strdup(mini, "PWD=");
 	var = mini->var;
 	tmp = NULL;
 	while (var)
@@ -46,9 +46,9 @@ void	update_pwd(t_mini *mini)
 		{
 			tmp = getcwd(tmp, 0);
 			if (!tmp)
-				ft_error(PWD_ERR, EXIT);
+				ft_error(mini, PWD_ERR, EXIT);
 			free(var->content);
-			var->content = ft_strjoin(pwd, tmp);
+			var->content = ft_strjoin(mini, pwd, tmp);
 			free(tmp);
 			break ;
 		}
@@ -56,22 +56,29 @@ void	update_pwd(t_mini *mini)
 	}
 }
 
-char	*find_path(t_cmd *cmd)
+char	*find_path(t_mini *mini, t_cmd *cmd)
 {
 	char	*path;
 	char	*tmp;
 
 	tmp = NULL;
-	if (!cmd->cmds[1])
-		return (ft_strdup(getenv("HOME")));
+	if (!cmd->cmds[1] || !ft_strcmp(cmd->cmds[1], "~")
+			|| !ft_strcmp(cmd->cmds[1], "--"))
+		return (ft_strdup(mini, mini_getenv(mini, "HOME")));
 	if (!ft_strcmp("-", cmd->cmds[1]))
-		return (ft_strdup(getenv("OLDPWD")));
+		return (ft_strdup(mini, mini_getenv(mini, "OLDPWD")));
+	if (!ft_strncmp(cmd->cmds[1], "~/", 2))
+	{
+		path = ft_strdup(mini, mini_getenv(mini, "HOME"));
+		path = ft_strjoin(mini, path, "/");
+		path = ft_strjoin(mini, path, &cmd->cmds[1][2]);
+	}
 	else
 	{
 		tmp = getcwd(tmp, 0);
 		if (!tmp)
-			ft_error(PWD_ERR, EXIT);
-		path = ft_insert(tmp, '/', cmd->cmds[1]);
+			ft_error(mini, PWD_ERR, EXIT);
+		path = ft_insert(mini, tmp, '/', cmd->cmds[1]);
 		free(tmp);
 	}
 	return (path);
@@ -82,14 +89,18 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	char	*path;
 	char	*tmp;
 
-	tmp = getenv("PWD");
-	path = find_path(cmd);
+	tmp = mini_getenv(mini, "PWD");
+	path = find_path(mini, cmd);
 	if (chdir(path) == -1)
 	{
 		free(path);
-		ft_error(DIR_ERR, NO_EXIT);
+		ft_error(mini, DIR_ERR, NO_EXIT);
 	}
-	update_oldpwd(mini, tmp);
-	update_pwd(mini);
-	free(path);
+	else
+	{
+		update_oldpwd(mini, tmp);
+		update_pwd(mini);
+		free(path);
+	}
+	mini->prompt = get_prompt(mini, mini->prompt);
 }

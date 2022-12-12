@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_put_tab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 14:43:32 by ademurge          #+#    #+#             */
-/*   Updated: 2022/11/25 16:11:25 by ademurge         ###   ########.fr       */
+/*   Created: 2022/12/06 13:35:14 by ademurge          #+#    #+#             */
+/*   Updated: 2022/12/06 14:47:37 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minish.h"
 
-void	ft_lstadd_back(t_var **var, t_var *new)
+void	ft_put_tab(char **tab)
 {
-	if (!var || !new)
-		return ;
-	else if (!*var)
-		*var = new;
-	else
-		ft_lstlast(*var)->next = new;
+	int	i;
+
+	i = -1;
+	while (tab && tab[++i])
+	{
+		ft_putstr_fd(tab[i], STDOUT_FILENO);
+		write (STDOUT_FILENO, "\n", 1);
+	}
 }

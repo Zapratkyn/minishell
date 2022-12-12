@@ -3,50 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/07 12:17:40 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:30:21 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
+void	ft_free_all(t_mini *mini)
+{
+	if (mini->prompt)
+		free(mini->prompt);
+	if (mini->var)
+	{
+		ft_lstclear(&mini->var);
+		free(mini->var);
+	}
+	if (mini->cmd && mini->cmd->cmds)
+		mini->cmd = ft_free_cmd(mini->cmd);
+}
+
 t_cmd	*ft_free_cmd(t_cmd *cmd)
 {
-	ft_free_tab(cmd->cmds);
-	free (cmd->path);
+	int	i;
+
+	i = 0;
+	ft_free_tab(cmd->cmds, ft_tablen(cmd->cmds));
+	if (cmd->path)
+		free (cmd->path);
 	if (cmd->next)
 		ft_free_cmd(cmd->next);
 	free (cmd);
 	return (NULL);
 }
 
-void	ft_free_tab(char **tab)
+void	ft_free_tab(char **tab, int len)
 {
 	int	i;
-	int	len;
 
-	len = ft_tablen(tab);
-	i = 0;
-	while (tab && i < len)
-	{
-		if (tab[i])
+	i = -1;
+	while (++i < len)
+		if (tab && tab[i])
 			free (tab[i]);
-		i++;
-	}
 	if (tab)
 		free (tab);
 }
 
-void	ft_free_env(t_var *var)
-{
-	if (var->next)
-		ft_free_env(var->next);
-	free(var);
-}
-
-void	mini_unlink(char *str)
+void	mini_unlink(t_mini *mini, char *str)
 {
 	int		i;
 	char	*nb;
@@ -56,9 +61,9 @@ void	mini_unlink(char *str)
 	file = NULL;
 	while (1)
 	{
-		nb = ft_itoa(i);
-		file = ft_strdup(str);
-		file = ft_strjoin(file, nb);
+		nb = ft_itoa(mini, i);
+		file = ft_strdup(mini, str);
+		file = ft_strjoin(mini, file, nb);
 		free (nb);
 		if (access(file, F_OK))
 			break ;
