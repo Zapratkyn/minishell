@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:36:14 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 10:55:39 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,10 +179,10 @@ int						ch_builtin(t_mini *mini, t_cmd *cmd);
 void					do_builtin(t_mini *mini, t_cmd *cmd);
 void					ft_cd(t_mini *mini, t_cmd *cmd);
 void					ft_echo(t_mini *mini, t_cmd *cmd);
-void					ft_env(t_mini *mini);
+void					ft_env(t_mini *mini, t_cmd *cmd);
 void					ft_exit(t_mini *mini, t_cmd *cmd);
 void					ft_export(t_mini *mini, t_cmd *cmd);
-void					ft_pwd(t_mini *mini);
+void					ft_pwd(t_mini *mini, t_cmd *cmd);
 void					ft_unset(t_mini *mini, t_cmd *cmd, int i);
 int						par_builtin(t_mini *mini, t_cmd *cmd);
 
