@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/07 14:34:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:23:38 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	if (chdir(path) == -1)
 	{
 		free(path);
+		g_status = 1;
 		ft_error(mini, DIR_ERR, NO_EXIT);
 	}
 	else
