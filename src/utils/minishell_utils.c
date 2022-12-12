@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 12:47:47 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:15:10 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,18 @@
 
 int	is_input(char *str)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (ft_strlen(str) == 0 || ft_quotes(str, -1, 0, 0) == -1)
+		return (0);
+	if (str[0] == '/' && (!str[1] || str[1] == ' '))
+	{
+		ft_putendl_fd("/: is a directory", 2);
+		g_status = 126;
+		return (0);
+	}
+	if (str[0] == '/' && !dir(str, 0, 0, 0))
 		return (0);
 	while (str[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 12:59:29 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:14:29 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,31 @@ int	spike_error(t_mini *mini, char *str)
 	free (spikes);
 	free (error);
 	return (-1);
+}
+
+int	dir(char *str, int i, char c, int j)
+{
+	char	dir[50];
+
+	while (str[i] && str[i] != ' ')
+	{
+		if (str[i] == '"' || str[i] == S_QUOTE)
+		{
+			c = str[i++];
+			while (str[i] != c)
+				dir[j++] = str[i++];
+			i++;
+		}
+		else
+			dir[j++] = str[i++];
+	}
+	dir[j] = '\0';
+	if (access(dir, X_OK))
+	{
+		write (2, dir, ft_strlen(dir));
+		ft_putendl_fd(": No such file or directory", 2);
+		g_status = 127;
+		return (0);
+	}
+	return (1);
 }

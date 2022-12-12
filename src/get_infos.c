@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 13:09:32 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:12:52 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 	exec = get_exec(mini, cmd);
 	if (exec)
 	{
-		if (!access(exec, F_OK))
-			cmd->path = exec;
+		if (!access(exec, X_OK))
+			cmd->path = ft_strdup(mini, exec);
 		while (mini->paths[i] && !cmd->path)
 		{
 			path = ft_strjoin(mini, ft_strdup(mini, ""), mini->paths[i++]);
 			path = ft_strjoin2(mini, path, '/');
 			path = ft_strjoin(mini, path, exec);
-			if (!access(path, F_OK))
+			if (!access(path, X_OK))
 				cmd->path = ft_strdup(mini, path);
 			free (path);
 		}

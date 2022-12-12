@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 12:18:55 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:50:05 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ void	ft_free_all(t_mini *mini)
 
 t_cmd	*ft_free_cmd(t_cmd *cmd)
 {
-	int	i;
-
-	i = 0;
-	ft_free_tab(cmd->cmds, ft_tablen(cmd->cmds));
+	if (cmd->cmds)
+		ft_free_tab(cmd->cmds, ft_tablen(cmd->cmds));
 	if (cmd->path)
 		free (cmd->path);
 	if (cmd->next)

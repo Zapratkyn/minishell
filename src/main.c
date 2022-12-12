@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 12:44:30 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:00:12 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ char	*get_prompt(t_mini *mini, char *prompt)
 
 	if (prompt)
 		free (prompt);
+	str = NULL;
 	prompt = ft_strjoin(mini, ft_strdup(mini, GREEN), getenv("USER"));
 	if (prompt)
 		prompt = ft_strjoin(mini, prompt, "@minishell ");
-	str = ft_strnstr2(mini_getenv(mini, "PWD"),
+	str = ft_strnstr(mini_getenv(mini, "PWD"),
 			mini_getenv(mini, "USER"), INT_MAX);
 	if (str && prompt)
 	{

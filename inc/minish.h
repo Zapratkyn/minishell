@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 13:15:56 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:16:12 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ int						unclosed_quotes(void);
 int						get_infos_error(t_mini *mini,
 							t_cmd *cmd, int i, char *s);
 int						spike_error(t_mini *mini, char *str);
+int						dir(char *str, int i, char c, int j);
 
 /* Free */
 void					ft_free_all(t_mini *mini);

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 12:47:53 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:45:46 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	find_next_len(char *s, int i)
 	return (i);
 }
 
-static char	*find_next_word(t_mini *mini, char *s, int len)
+static char	*find_next_word(t_mini *mini, char *input, char *s, int len)
 {
 	char		*result;
 	int			i;
@@ -75,7 +75,10 @@ static char	*find_next_word(t_mini *mini, char *s, int len)
 	i = 0;
 	result = malloc (sizeof(char) * len + 1);
 	if (!result)
+	{
+		free (input);
 		ft_error(mini, MALLOC_ERR, EXIT);
+	}
 	while (i < len)
 	{
 		result[i] = s[i];
@@ -96,11 +99,14 @@ char	**ft_split_cmd(t_mini *mini, char *s, int i, int index)
 	wc = count_words(&s[index], 0, 0);
 	tab = malloc(sizeof(char *) * wc + 1);
 	if (!tab)
+	{
+		free (s);
 		ft_error(mini, MALLOC_ERR, EXIT);
+	}
 	while (i < wc)
 	{
 		len = find_next_len(&s[index], 0);
-		tab[i] = find_next_word(mini, &s[index], len);
+		tab[i] = find_next_word(mini, s, &s[index], len);
 		index += ft_strlen(tab[i]);
 		while (s[index] == ' ')
 			index++;
