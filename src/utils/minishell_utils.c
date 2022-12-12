@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 15:15:10 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:56:47 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,39 @@ int	ft_pipes(char *str, int i)
 		ft_putendl_fd("syntax error near unexpected token `|'", 2);
 		return (1);
 	}
-	if (str[ft_strlen(str) - 1] == PIPE)
+	while (str[i])
+	{
+		while (str[i] && str[i] != PIPE)
+			i++;
+		if (str[i] && str[i] == PIPE)
+		{
+			while (str[i] && str[i] != PIPE)
+				i++;
+			i++;
+			if (str[i] == PIPE)
+			{
+				ft_putendl_fd("syntax error near unexpected token `|'", 2);
+				return (1);
+			}
+		}
+	}
+	return (0);
+}
+
+int	ft_pipes2(char *str, int i)
+{
+	while (str[i] == ' ')
+		i--;
+	if (str[i] == PIPE)
 	{
 		ft_putendl_fd("Unclosed pipes forbidden in minishell", 2);
 		return (1);
 	}
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
+		while (str[i] == ' ')
+			i++;
 		if (str[i] == PIPE)
 		{
 			ft_putendl_fd("syntax error near unexpected token `|'", 2);
@@ -96,12 +122,4 @@ int	ft_pipes(char *str, int i)
 			i++;
 	}
 	return (0);
-}
-
-int	quotes(char *str, char c, int i)
-{
-	c = str[i++];
-	while (str[i] != c)
-		i++;
-	return (i + 1);
 }

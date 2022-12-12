@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 15:14:29 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:30:39 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s)
 	str = NULL;
 	if (i == 1)
 	{
-		ft_error(mini, "syntax error near unexpected token `newline'", NO_EXIT);
+		ft_error(mini, "syntax error near unexpected token", NO_EXIT);
 		g_status = 258;
 	}
 	else if (i == 2)

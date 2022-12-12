@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 13:46:13 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:58:02 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_cmd	*cmd_init(t_mini *mini, char *str, int i)
 	while (str[i] && str[i] != PIPE)
 		input = ft_strjoin2(mini, input, str[i++]);
 	cmd->cmds = ft_split_cmd(mini, input, 0, 0);
+	// cmd->cmds_nb = ft_tablen(cmd->cmds);
 	free (input);
 	cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);
 	return (cmd);

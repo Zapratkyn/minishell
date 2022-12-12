@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:39:40 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/02 13:55:45 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:56:13 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_var	*ft_lstnew(t_mini *mini, char *content)
 {
 	t_var	*var;
 
-	var = (t_var *)malloc(sizeof(t_var));
+	var = malloc(sizeof(t_var));
 	if (!var)
 		ft_error(mini, MALLOC_ERR, EXIT);
 	var->content = content;

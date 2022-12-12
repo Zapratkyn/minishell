@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 14:16:12 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:39:29 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_cmd
 {
 	char			**cmds;
 	char			*path;
+	int				cmds_nb;
 	int				infile;
 	int				outfile;
 	pid_t			pid;
@@ -134,6 +135,7 @@ char					*mini_getenv(t_mini *mini, char *var);
 void					mini_new_line(int sig);
 char					**split_string(t_mini *mini, char *s, int i, int index);
 int						ft_pipes(char *str, int i);
+int						ft_pipes2(char *str, int i);
 char					**transform_parts(t_mini *mini, char **parts,
 							int i, int len);
 int						end_of_heredoc(char *input, char *eof);
@@ -158,7 +160,7 @@ void					get_infile(t_mini *mini, t_cmd *cmd, int i);
 void					get_outfile(t_mini *mini, t_cmd *cmd, int i, int j);
 void					get_path(t_mini *mini, t_cmd *cmd, int i);
 char					*get_vars(t_mini *mini, char *str, int i);
-int						is_var(t_mini *mini, char *var, int j);
+int						is_var(t_mini *mini, char *var);
 void					mini_env(t_mini *mini);
 int						mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i);
 char					*to_empty(char *str);

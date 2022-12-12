@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 13:49:27 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:51:42 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_var(t_mini *mini, char *str, char *result)
 	char	*s;
 
 	s = NULL;
-	if (!is_var(mini, str, 0))
+	if (!is_var(mini, str))
 		return (result);
 	else if (str[0] == '?')
 	{
@@ -38,7 +38,7 @@ char	*join_parts(t_mini *mini, char **parts, int i)
 	result = ft_strdup(mini, "");
 	while (parts && parts[i])
 	{
-		if (parts[i][0] == '$')
+		if (parts[i][0] == '$' && parts[i][1])
 			result = ft_var(mini, &parts[i++][1], result);
 		else if (parts[i][0] == S_QUOTE)
 		{
@@ -80,7 +80,12 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(mini, cmd->cmds, -1, 0);
 		while (cmd->cmds && cmd->cmds[++i])
-			cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 1);
+		{
+			// if (cmd->cmds[i][0] == '$' && !is_var(mini, &cmd->cmds[i][1]))
+			// 	free (cmd->cmds[i]);
+			// else
+				cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 1);
+		}
 		if (ft_strchr(str, PIPE) && cmd->infile != -1
 			&& cmd->outfile != -1 && ft_strcmp(cmd->path, "none"))
 			cmd->next = get_cmd(mini, cmd->next,
