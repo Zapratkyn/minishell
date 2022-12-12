@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/08 12:04:12 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:01:32 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	ft_export(t_mini *mini, t_cmd *cmd)
 
 	if (!cmd->cmds[1])
 		display_exp(mini);
+	if (!check_option(mini, cmd, "export"))
+		return ;
 	else
 	{
 		i = 0;

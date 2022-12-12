@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 10:55:39 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:03:04 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,21 +175,23 @@ int						n_of_cmd(t_cmd *cmd);
 void					pipe_and_fork(t_mini *mini, t_cmd *cmd);
 
 /* Builtin */
+int						check_builtin(t_mini *mini, t_cmd *cmd);
 int						ch_builtin(t_mini *mini, t_cmd *cmd);
 void					do_builtin(t_mini *mini, t_cmd *cmd);
 void					ft_cd(t_mini *mini, t_cmd *cmd);
 void					ft_echo(t_mini *mini, t_cmd *cmd);
-void					ft_env(t_mini *mini, t_cmd *cmd);
-void					ft_exit(t_mini *mini, t_cmd *cmd);
+void					ft_env(t_mini *mini);
+void					ft_exit(t_mini *mini, t_cmd *cmd, char *s);
 void					ft_export(t_mini *mini, t_cmd *cmd);
-void					ft_pwd(t_mini *mini, t_cmd *cmd);
+void					ft_pwd(t_mini *mini);
 void					ft_unset(t_mini *mini, t_cmd *cmd, int i);
 int						par_builtin(t_mini *mini, t_cmd *cmd);
 
 /* Builtin UTILS */
+int						check_option(t_mini *mini, t_cmd *cmd, char *s);
 char					*ft_rev_strchr(t_mini *mini, char *str, char c);
 int						is_env(t_mini *mini, char *s);
-void					remove_quotes(t_cmd *cmd, int index, char *s);
+
 
 /* Error */
 void					ft_error(t_mini *mini, char *type, int is_exit);
