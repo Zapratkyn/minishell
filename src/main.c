@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:25:41 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:31:43 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*get_prompt(t_mini *mini, char *prompt)
 
 void	mini_init(t_mini *mini, char **env)
 {
-
 	mini->cmd = NULL;
 	mini->var = NULL;
 	if (!get_var(mini, env))

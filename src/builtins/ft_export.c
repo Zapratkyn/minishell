@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/06 12:38:32 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/08 12:04:12 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ void	modif_var(t_mini *mini, char *name_var, char *s)
 void	do_export(t_mini *mini, int index, char *s1, char *s2)
 {
 	if (!s1 && !is_env(mini, mini->cmd->cmds[index]))
-		ft_lstadd_back(&mini->var, ft_lstnew(mini, mini->cmd->cmds[index]));
+		ft_lstadd_back(&mini->var, ft_lstnew(mini, ft_strdup(mini,
+					mini->cmd->cmds[index])));
 	if (s1 && s2 && !is_env(mini, mini->cmd->cmds[index]))
-		ft_lstadd_back(&mini->var, ft_lstnew(mini, mini->cmd->cmds[index]));
+		ft_lstadd_back(&mini->var, ft_lstnew(mini, ft_strdup(mini,
+					mini->cmd->cmds[index])));
 	else if (s1 && s2 && is_env(mini, mini->cmd->cmds[index]))
 		modif_var(mini, s1, s2);
 	else if (s1 && !s2 && is_env(mini, mini->cmd->cmds[index]))
