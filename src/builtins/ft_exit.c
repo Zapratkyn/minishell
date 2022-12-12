@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:54 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 13:01:02 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:58:38 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	is_exit_number(char *s)
 
 void	ft_exit(t_mini *mini, t_cmd *cmd, char *s)
 {
-	write(STDERR_FILENO, "exit", 4);
-	s = ft_strdup(mini, "\nminishell: exit: ");
+	ft_putendl_fd("exit", STDERR_FILENO);
+	s = ft_strdup(mini, "minishell: exit: ");
 	if (is_exit_number(cmd->cmds[1]) && cmd->cmds[2])
 	{
 		s = ft_strjoin(mini, s, ARG_ERR);
@@ -68,7 +68,7 @@ void	ft_exit(t_mini *mini, t_cmd *cmd, char *s)
 	}
 	else
 	{
-		if (!is_exit_number(cmd->cmds[1]))
+		if (cmd->cmds[1] && !is_exit_number(cmd->cmds[1]))
 		{
 			s = ft_strjoin(mini, s, cmd->cmds[1]);
 			s = ft_strjoin(mini, s, ": ");
