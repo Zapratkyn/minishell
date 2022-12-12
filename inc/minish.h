@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:26:55 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:33:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,10 +175,10 @@ int						ch_builtin(t_mini *mini, t_cmd *cmd);
 void					do_builtin(t_mini *mini, t_cmd *cmd);
 void					ft_cd(t_mini *mini, t_cmd *cmd);
 void					ft_echo(t_mini *mini, t_cmd *cmd);
-void					ft_env(t_mini *mini);
+void					ft_env(t_mini *mini, t_cmd *cmd);
 void					ft_exit(t_mini *mini, t_cmd *cmd);
 void					ft_export(t_mini *mini, t_cmd *cmd);
-void					ft_pwd(t_mini *mini);
+void					ft_pwd(t_mini *mini, t_cmd *cmd);
 void					ft_unset(t_mini *mini, t_cmd *cmd, int i);
 int						par_builtin(t_mini *mini, t_cmd *cmd);
 
