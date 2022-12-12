@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 12:02:33 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:10:47 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,23 @@ char	*get_prompt(t_mini *mini, char *prompt)
 
 	if (prompt)
 		free (prompt);
-	prompt = ft_strjoin(mini, ft_strdup(mini, GREEN), getenv("USER"));
-	if (prompt)
-		prompt = ft_strjoin(mini, prompt, "@minishell ");
+	prompt = ft_strjoin(mini, ft_strdup(mini, BLUE), getenv("USER"));
+	prompt = ft_strjoin(mini, prompt, "@minishell ");
 	str = ft_strnstr2(mini_getenv(mini, "PWD"),
 			mini_getenv(mini, "USER"), INT_MAX);
 	if (str && prompt)
 	{
+		prompt = ft_strjoin(mini, prompt, GREEN);
 		prompt = ft_strjoin(mini, prompt, "~");
 		prompt = ft_strjoin(mini, prompt, str);
 	}
 	else if (!str && prompt)
 		prompt = ft_strjoin(mini, prompt, mini_getenv(mini, "PWD"));
-	prompt = ft_strjoin(mini, prompt, " % ");
+	if (!g_status)
+		prompt = ft_strjoin(mini, prompt, GREEN);
+	else
+		prompt = ft_strjoin(mini, prompt, RED);
+	prompt = ft_strjoin(mini, prompt, " > ");
 	prompt = ft_strjoin(mini, prompt, WHITE);
 	return (prompt);
 }
@@ -107,6 +111,7 @@ int	main(int argc, char **argv, char **env)
 		signal(SIGINT, mini_new_line);
 		if (!mini_parser(&mini, readline(mini.prompt)))
 			break ;
+		mini.prompt = get_prompt(&mini, mini.prompt);
 	}
 	ft_free_all(&mini);
 	write(STDERR_FILENO, "\nexit\n", 6);
