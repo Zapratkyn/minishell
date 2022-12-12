@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
+#    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/08 11:22:15 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/12 13:10:16 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ SRC							=	src/builtins/builtin.c \
 								src/utils/exec_utils.c \
 								src/utils/minishell_utils.c \
 								src/utils/get_cmd_utils.c \
+								src/utils/mini_heredoc_utils.c \
+								src/utils/get_infos_utils.c \
 								src/error.c \
 								src/exec.c \
 								src/main.c \
@@ -102,7 +104,7 @@ linux:
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 $(NAME):
-					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -o $(NAME)
+					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -L/Users/gponcele/.brew/opt/readline/lib -I/Users/gponcele/.brew/opt/readline/include -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 libft:

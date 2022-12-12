@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 11:23:38 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:58:04 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*find_path(t_mini *mini, t_cmd *cmd)
 
 	tmp = NULL;
 	if (!cmd->cmds[1] || !ft_strcmp(cmd->cmds[1], "~")
-			|| !ft_strcmp(cmd->cmds[1], "--"))
+		|| !ft_strcmp(cmd->cmds[1], "--"))
 		return (ft_strdup(mini, mini_getenv(mini, "HOME")));
 	if (!ft_strcmp("-", cmd->cmds[1]))
 		return (ft_strdup(mini, mini_getenv(mini, "OLDPWD")));

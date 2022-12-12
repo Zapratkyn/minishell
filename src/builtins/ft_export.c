@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/08 12:04:12 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:18:11 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	display_exp(t_mini *mini)
 		write(STDOUT_FILENO, "\n", 1);
 		var = var->next;
 	}
-	ft_lstclear(&tmp);
+	ft_lstclear(tmp);
 }
 
 void	ft_export(t_mini *mini, t_cmd *cmd)

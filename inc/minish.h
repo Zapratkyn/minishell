@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:33:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:12:48 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,14 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <sys/ioctl.h>
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
-# include <fcntl.h>
 # include <sys/ioctl.h>
-# include <sys/types.h>
+// # include <sys/types.h>
 # include <sys/wait.h>
-# include <stddef.h>
-# include <stdio.h>
+// # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -134,9 +133,13 @@ void					mini_exit(t_mini *mini);
 char					*mini_getenv(t_mini *mini, char *var);
 void					mini_new_line(int sig);
 char					**split_string(t_mini *mini, char *s, int i, int index);
-int						start_with_pipe(t_mini *mini, char *str, int i);
+int						ft_pipes(char *str, int i);
 char					**transform_parts(t_mini *mini, char **parts,
 							int i, int len);
+int						end_of_heredoc(char *input, char *eof);
+char					*get_vars(t_mini *mini, char *str, int i);
+int						eof_to_fd(t_mini *mini, char *str, int fd, char *file);
+char					*get_exec(t_mini *mini, t_cmd *cmd);
 
 /* Parsing & Initialization */
 char					**clean_files(t_mini *mini, char **cmds,
@@ -159,6 +162,7 @@ int						is_var(t_mini *mini, char *var, int j);
 void					mini_env(t_mini *mini);
 int						mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i);
 char					*to_empty(char *str);
+int						quotes(char *str, char c, int i);
 
 /* Execution */
 void					execute(t_mini *mini);
@@ -190,7 +194,9 @@ void					remove_quotes(t_cmd *cmd, int index, char *s);
 /* Error */
 void					ft_error(t_mini *mini, char *type, int is_exit);
 int						unclosed_quotes(void);
-int						get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s);
+int						get_infos_error(t_mini *mini,
+							t_cmd *cmd, int i, char *s);
+int						spike_error(t_mini *mini, char *str);
 
 /* Free */
 void					ft_free_all(t_mini *mini);
@@ -203,7 +209,7 @@ void					mini_unlink(t_mini *mini, char *str);
 int						ft_lst_index(t_var **l_var, t_var *var);
 char					**ft_lst_to_str(t_mini *mini, t_var *var);
 void					ft_lstadd_back(t_var **var, t_var *new);
-void					ft_lstclear(t_var **var);
+void					ft_lstclear(t_var *var);
 void					ft_lstdelone(t_var **l_var, int i);
 t_var					*ft_lstdup(t_mini *mini, t_var *var);
 t_var					*ft_lstget(t_var *var, int index);
@@ -231,7 +237,8 @@ char					*ft_strdup2(t_mini *mini, char *str);
 char					*ft_strjoin(t_mini *mini, char const *s1,
 							char const *s2);
 char					*ft_strjoin2(t_mini *mini, char *str, char c);
-char					*ft_strjoin3(t_mini *mini, char const *s1, char const *s2);
+char					*ft_strjoin3(t_mini *mini,
+							char const *s1, char const *s2);
 size_t					ft_strlcpy(char *dest, const char *src, size_t size);
 size_t					ft_strlen(const char *s);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);

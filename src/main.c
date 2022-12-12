@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:31:43 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:44:30 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	get_var(t_mini *mini, char **env)
 	t_var	*var;
 
 	i = 0;
-	mini->var = ft_lstnew(mini, env[i]);
+	mini->var = ft_lstnew(mini, ft_strdup(mini, env[i]));
 	while (env[++i])
 		ft_lstadd_back(&mini->var, ft_lstnew(mini, ft_strdup(mini, env[i])));
 	var = mini->var;
@@ -59,7 +59,7 @@ void	mini_init(t_mini *mini, char **env)
 	mini->cmd = NULL;
 	mini->var = NULL;
 	if (!get_var(mini, env))
-		ft_lstclear(&mini->var);
+		ft_lstclear(mini->var);
 	mini->paths = ft_split(mini, mini_getenv(mini, "PATH"), ':');
 	if (!mini->paths || !mini->var)
 		exit (EXIT_FAILURE);
@@ -67,7 +67,7 @@ void	mini_init(t_mini *mini, char **env)
 	mini->prompt = get_prompt(mini, mini->prompt);
 	if (!mini->prompt)
 	{
-		ft_lstclear(&mini->var);
+		ft_lstclear(mini->var);
 		ft_free_tab(mini->paths, ft_tablen(mini->paths));
 		exit (EXIT_FAILURE);
 	}
@@ -77,7 +77,9 @@ int	mini_parser(t_mini *mini, char *str)
 {
 	if (!str)
 		return (0);
-	if (start_with_pipe(mini, str, 0) || !mini)
+	if (ft_strlen(str) != 0)
+		add_history(str);
+	if (ft_pipes(str, 0))
 	{
 		if (str)
 			free (str);
@@ -109,6 +111,6 @@ int	main(int argc, char **argv, char **env)
 			break ;
 	}
 	ft_free_all(&mini);
-	write(STDERR_FILENO, "\nexit\n", 6);
+	write(STDERR_FILENO, "exit\n", 6);
 	exit(g_status);
 }

@@ -6,30 +6,11 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:25:23 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:09:32 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
-
-char	*get_exec(t_mini *mini, t_cmd *cmd)
-{
-	char	*exec;
-	int		i;
-
-	i = 0;
-	exec = NULL;
-	while (cmd->cmds[i] && (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>'
-		|| (i > 0 && cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
-		|| (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1])))
-		i++;
-	if (cmd->cmds[i])
-	{
-		exec = ft_strdup(mini, cmd->cmds[i]);
-		exec = manage_string(mini, exec, 1);
-	}
-	return (exec);
-}
 
 void	get_path(t_mini *mini, t_cmd *cmd, int i)
 {
@@ -81,7 +62,8 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 		{
 			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
 				infile = ft_strdup(mini, &cmd->cmds[i][1]);
-			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
+			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1]
+					&& cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
 				infile = ft_strdup(mini, cmd->cmds[i + 1]);
 			else
 				cmd->infile = get_infos_error(mini, cmd, 1, NULL);
@@ -91,6 +73,15 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 		set_infile(mini, cmd, infile);
 	if (cmd->infile != -1)
 		get_outfile(mini, cmd, ft_tablen(cmd->cmds), 1);
+}
+
+void	set_outfile(t_cmd *cmd, int j, char *outfile)
+{
+	if (j == 1)
+		cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
+	else if (j == 2)
+		cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0777);
+	free (outfile);
 }
 
 void	get_outfile(t_mini *mini, t_cmd *cmd, int i, int j)
@@ -104,20 +95,16 @@ void	get_outfile(t_mini *mini, t_cmd *cmd, int i, int j)
 		{
 			if (cmd->cmds[i][1] == '>')
 				j++;
-			if (cmd->cmds[i][j])
+			if (cmd->cmds[i][j] && cmd->cmds[i][j] != '>'
+				&& cmd->cmds[i][j] != '<')
 				outfile = ft_strdup(mini, &cmd->cmds[i][j]);
-			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
+			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1]
+					&& cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
 				outfile = ft_strdup(mini, cmd->cmds[i + 1]);
 			else
 				cmd->outfile = get_infos_error(mini, cmd, 1, NULL);
 		}
 	}
 	if (outfile)
-	{
-		if (j == 1)
-			cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
-		else if (j == 2)
-			cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0777);
-		free (outfile);
-	}
+		set_outfile(cmd, j, outfile);
 }

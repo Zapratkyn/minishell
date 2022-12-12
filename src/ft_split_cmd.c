@@ -6,19 +6,11 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:23:37 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:47:53 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
-
-int	quotes(char *str, char c, int i)
-{
-	c = str[i++];
-	while (str[i] != c)
-		i++;
-	return (i + 1);
-}
 
 int	spike(char *str, char c, int i)
 {
