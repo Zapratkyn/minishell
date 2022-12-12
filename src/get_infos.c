@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:07:52 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:25:23 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 	if (cmd->cmds[i])
 	{
 		exec = ft_strdup(mini, cmd->cmds[i]);
-		exec = manage_string(mini, exec);
+		exec = manage_string(mini, exec, 1);
 	}
 	return (exec);
 }
@@ -80,9 +80,9 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 		if (cmd->cmds[i][0] == '<')
 		{
 			if (cmd->cmds[i][1] && cmd->cmds[i][1] != '<')
-				infile = ft_strdup(&cmd->cmds[i][1]);
+				infile = ft_strdup(mini, &cmd->cmds[i][1]);
 			else if (!cmd->cmds[i][1] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
-				infile = ft_strdup(cmd->cmds[i + 1]);
+				infile = ft_strdup(mini, cmd->cmds[i + 1]);
 			else
 				cmd->infile = get_infos_error(mini, cmd, 1, NULL);
 		}
@@ -105,9 +105,9 @@ void	get_outfile(t_mini *mini, t_cmd *cmd, int i, int j)
 			if (cmd->cmds[i][1] == '>')
 				j++;
 			if (cmd->cmds[i][j])
-				outfile = ft_strdup(&cmd->cmds[i][j]);
+				outfile = ft_strdup(mini, &cmd->cmds[i][j]);
 			else if (!cmd->cmds[i][j] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0] != '<' && cmd->cmds[i + 1][0] != '>')
-				outfile = ft_strdup(cmd->cmds[i + 1]);
+				outfile = ft_strdup(mini, cmd->cmds[i + 1]);
 			else
 				cmd->outfile = get_infos_error(mini, cmd, 1, NULL);
 		}

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:06:54 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:20:50 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ char	*ft_var(t_mini *mini, char *str, char *result)
 	else if (str[0] == '?')
 	{
 		s = mini_getenv(mini, str);
-		result = ft_strjoin(result, s);
+		result = ft_strjoin(mini, result, s);
 		free (s);
 	}
 	else
-		result = ft_strjoin(result, mini_getenv(mini, str));
+		result = ft_strjoin(mini, result, mini_getenv(mini, str));
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:04:27 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:26:55 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char					*fill_parts(t_mini *mini, char **parts,
 							char *str, int i);
 int						ft_quotes(char *str, int i, int quotes,
 							int double_quotes);
-char					*manage_string(t_mini *mini, char *str);
+char					*manage_string(t_mini *mini, char *str, int i);
 void					mini_exit(t_mini *mini);
 char					*mini_getenv(t_mini *mini, char *var);
 void					mini_new_line(int sig);
@@ -147,23 +147,23 @@ char					*delete_quotes(t_mini *mini, char *str, int i, int j);
 int						dol(char *str);
 char					**ft_split_cmd(t_mini *mini, char *s, int i,
 							int index);
-char					*ft_var(t_mini *mini, char *str);
+char					*ft_var(t_mini *mini, char *str, char *result);
 t_cmd					*get_cmd(t_mini *mini,
 							t_cmd *cmd, char *str, int i);
 char					*get_exec(t_mini *mini, t_cmd *cmd);
 void					get_infile(t_mini *mini, t_cmd *cmd, int i);
-int						get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s);
 void					get_outfile(t_mini *mini, t_cmd *cmd, int i, int j);
 void					get_path(t_mini *mini, t_cmd *cmd, int i);
 char					*get_vars(t_mini *mini, char *str, int i);
 int						is_var(t_mini *mini, char *var, int j);
 void					mini_env(t_mini *mini);
-int						mini_heredoc(t_mini *mini, char *str, int fd);
+int						mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i);
 char					*to_empty(char *str);
 
 /* Execution */
 void					execute(t_mini *mini);
 void					exec_child(t_mini *mini, t_cmd *cmd);
+int						to_exec(t_mini *mini);
 
 /* Execution UTILS */
 int						check_cmd(t_mini *mini, t_cmd *cmd);
@@ -189,6 +189,8 @@ void					remove_quotes(t_cmd *cmd, int index, char *s);
 
 /* Error */
 void					ft_error(t_mini *mini, char *type, int is_exit);
+int						unclosed_quotes(void);
+int						get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s);
 
 /* Free */
 void					ft_free_all(t_mini *mini);

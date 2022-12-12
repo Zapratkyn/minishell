@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 11:06:25 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:23:37 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	**ft_split_cmd(t_mini *mini, char *s, int i, int index)
 		ft_error(mini, MALLOC_ERR, EXIT);
 	while (i < wc)
 	{
-		len = find_next_len(&s[index], 0, 0, 0);
+		len = find_next_len(&s[index], 0);
 		tab[i] = find_next_word(mini, &s[index], len);
 		index += ft_strlen(tab[i]);
 		while (s[index] == ' ')
