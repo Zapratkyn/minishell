@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 12:56:15 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:54:46 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,16 @@ void	pipe_and_fork(t_mini *mini, t_cmd *cmd)
 		ft_error(mini, FORK_ERR, EXIT);
 	else if (cmd->pid == CHILD_PROC)
 		exec_child(mini, cmd);
-	waitpid(cmd->pid, NULL, 0);
+	wait(&g_status);
+	if (WIFEXITED(g_status))
+		g_status = WEXITSTATUS(g_status);
+	else if (WIFSIGNALED(g_status))
+	{
+		g_status = WTERMSIG(g_status);
+		if (g_status != 1)
+			g_status -= 1;
+	}
 }
-
 int	check_cmd(t_mini *mini, t_cmd *cmd)
 {
 	if (cmd->infile == -1 || cmd->outfile == -1)
