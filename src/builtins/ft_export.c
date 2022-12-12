@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 12:18:11 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:16:35 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	ft_export(t_mini *mini, t_cmd *cmd)
 
 	if (!cmd->cmds[1])
 		display_exp(mini);
+	if (!check_option(mini, cmd, "export"))
+		return ;
 	else
 	{
 		i = 0;

@@ -6,13 +6,13 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:54 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/08 11:34:50 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:01:02 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-static unsigned long long	ft_atoull(const char *str)
+unsigned long long	ft_atoull(const char *str)
 {
 	unsigned long long	sum;
 	int					sign;
@@ -34,12 +34,14 @@ static unsigned long long	ft_atoull(const char *str)
 	return (sum);
 }
 
-static int	is_number(char *s)
+int	is_exit_number(char *s)
 {
 	int					i;
 	unsigned long long	nb;
 
 	i = -1;
+	if (!s)
+		return (0);
 	if (s && (s[0] == '+' || s[0] == '-'))
 		i++;
 	while (s && s[++i])
@@ -53,13 +55,11 @@ static int	is_number(char *s)
 	return (1);
 }
 
-void	ft_exit(t_mini *mini, t_cmd *cmd)
+void	ft_exit(t_mini *mini, t_cmd *cmd, char *s)
 {
-	char	*s;
-
-	write(STDERR_FILENO, "exit\n", 6);
-	s = ft_strdup(mini, "minishell: exit: ");
-	if (is_number(cmd->cmds[1]) && cmd->cmds[2])
+	write(STDERR_FILENO, "exit", 4);
+	s = ft_strdup(mini, "\nminishell: exit: ");
+	if (is_exit_number(cmd->cmds[1]) && cmd->cmds[2])
 	{
 		s = ft_strjoin(mini, s, ARG_ERR);
 		ft_putendl_fd(s, STDERR_FILENO);
@@ -68,7 +68,7 @@ void	ft_exit(t_mini *mini, t_cmd *cmd)
 	}
 	else
 	{
-		if (!is_number(cmd->cmds[1]))
+		if (!is_exit_number(cmd->cmds[1]))
 		{
 			s = ft_strjoin(mini, s, cmd->cmds[1]);
 			s = ft_strjoin(mini, s, ": ");

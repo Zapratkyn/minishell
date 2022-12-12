@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 12:58:04 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:16:31 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	char	*path;
 	char	*tmp;
 
+	if (!check_option(mini, cmd, "cd"))
+		return ;
 	tmp = mini_getenv(mini, "PWD");
 	path = find_path(mini, cmd);
 	if (chdir(path) == -1)

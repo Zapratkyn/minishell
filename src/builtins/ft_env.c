@@ -6,17 +6,16 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 12:53:23 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 11:17:55 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:02:37 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-void	ft_env(t_mini *mini, t_cmd *cmd)
+void	ft_env(t_mini *mini)
 {
 	t_var	*var;
 
-	(void) cmd;
 	var = mini->var;
 	while (var)
 	{

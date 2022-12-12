@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:56 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/06 16:40:13 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:02:56 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_unset(t_mini *mini, t_cmd *cmd, int i)
 	t_var	*var;
 	char	*tmp;
 
-	if (!cmd->cmds[1])
+	if (!cmd->cmds[1] && !check_option(mini, cmd, "unset"))
 		return ;
 	while (cmd->cmds[++i])
 	{

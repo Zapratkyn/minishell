@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/07 17:42:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:56:15 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 	if (cmd->infile == -1 || cmd->outfile == -1)
 		return (0);
 	if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd) && !cmd->path)
+		return (0);
+	if (ch_builtin(mini, cmd) && !check_builtin(mini, cmd))
 		return (0);
 	return (1);
 }
