@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   prompt_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/08 11:23:47 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:07:25 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,44 @@ char	*mini_getenv(t_mini *mini, char *var)
 		tmp = tmp->next;
 	}
 	return (NULL);
+}
+
+
+char	*status_prompt(t_mini *mini, char *prompt)
+{
+	char	*nb;
+
+	if (!g_status)
+		prompt = ft_strjoin(mini, prompt, GREEN);
+	else
+		prompt = ft_strjoin(mini, prompt, RED);
+	prompt = ft_strjoin(mini, prompt, " (");
+	nb = ft_itoa(mini, g_status);
+	prompt = ft_strjoin(mini, prompt, nb);
+	free(nb);
+	prompt = ft_strjoin(mini, prompt, ") > ");
+	prompt = ft_strjoin(mini, prompt, WHITE);
+	return (prompt);
+}
+
+char	*get_prompt(t_mini *mini, char *prompt)
+{
+	char	*str;
+
+	if (prompt)
+		free (prompt);
+	prompt = ft_strjoin(mini, ft_strdup(mini, BLUE), getenv("USER"));
+	prompt = ft_strjoin(mini, prompt, "@minishell ");
+	str = ft_strnstr2(mini_getenv(mini, "PWD"),
+			mini_getenv(mini, "USER"), INT_MAX);
+	if (str && prompt)
+	{
+		prompt = ft_strjoin(mini, prompt, GREEN);
+		prompt = ft_strjoin(mini, prompt, "~");
+		prompt = ft_strjoin(mini, prompt, str);
+	}
+	else if (!str && prompt)
+		prompt = ft_strjoin(mini, prompt, mini_getenv(mini, "PWD"));
+	prompt = status_prompt(mini, prompt);
+	return (prompt);
 }

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 15:10:47 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:01:50 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,6 @@ int	get_var(t_mini *mini, char **env)
 		var = var->next;
 	}
 	return (1);
-}
-
-char	*get_prompt(t_mini *mini, char *prompt)
-{
-	char	*str;
-
-	if (prompt)
-		free (prompt);
-	prompt = ft_strjoin(mini, ft_strdup(mini, BLUE), getenv("USER"));
-	prompt = ft_strjoin(mini, prompt, "@minishell ");
-	str = ft_strnstr2(mini_getenv(mini, "PWD"),
-			mini_getenv(mini, "USER"), INT_MAX);
-	if (str && prompt)
-	{
-		prompt = ft_strjoin(mini, prompt, GREEN);
-		prompt = ft_strjoin(mini, prompt, "~");
-		prompt = ft_strjoin(mini, prompt, str);
-	}
-	else if (!str && prompt)
-		prompt = ft_strjoin(mini, prompt, mini_getenv(mini, "PWD"));
-	if (!g_status)
-		prompt = ft_strjoin(mini, prompt, GREEN);
-	else
-		prompt = ft_strjoin(mini, prompt, RED);
-	prompt = ft_strjoin(mini, prompt, " > ");
-	prompt = ft_strjoin(mini, prompt, WHITE);
-	return (prompt);
 }
 
 void	mini_init(t_mini *mini, char **env)
