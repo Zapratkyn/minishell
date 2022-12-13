@@ -6,47 +6,37 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 17:08:14 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:59:30 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-int	is_var(t_mini *mini, char *var)
+int	mini_get_status(t_mini *mini, char *var, int j)
 {
+	char	*s;
 	int		i;
-	t_var	*temp;
 
+	if (var[0] != '?')
+		return (0);
 	i = 0;
-	temp = mini->var;
-	if (var[0] == '?')
-		return (1);
-	while (var[i] && (ft_isalnum(var[i]) || var[i] == '_'))
-		i++;
-	while (temp)
-	{
-		if (!ft_strncmp(temp->content, var, i) && temp->content[i] == '=')
-			return (1);
-		temp = temp->next;
-	}
-	return (0);
+	s = ft_itoa(mini, g_status);
+	mini->tempstr5 = ft_strdup(mini, s);
+	free (s);
+	while (var[++i])
+		mini->tempstr5 = ft_strjoin2(mini, mini->tempstr5, var[i]);
+	if (j == 1)
+		mini->tempstr5 = ft_free(mini->tempstr5);
+	return (1);
 }
 
 char	*mini_getenv(t_mini *mini, char *var)
 {
 	t_var	*tmp;
 	int		i;
-	char	*s;
 
 	tmp = mini->var;
 	i = 0;
-	if (var[0] == '?')
-	{
-		s = ft_itoa(mini, g_status);
-		while (var[++i])
-			s = ft_strjoin2(mini, s, var[i]);
-		return (s);
-	}
 	while (ft_isalnum(var[i]) || var[i] == '_')
 		i++;
 	while (tmp)

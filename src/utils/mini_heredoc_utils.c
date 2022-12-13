@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:53:53 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 15:39:53 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:29:33 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,13 @@ char	*get_vars(t_mini *mini, char *str, int i)
 int	eof_to_fd(t_mini *mini, char *str, int fd, char *file)
 {
 	mini->tempstr2 = ft_strdup(mini, str);
-	mini->tempstr2 = manage_string(mini, mini->tempstr2, 0);
+	mini->tempstr2 = ft_strdup(mini, manage_string(mini, mini->tempstr2, 1));
+	mini->tempstr3 = ft_free(mini->tempstr3);
 	write (fd, mini->tempstr2, ft_strlen(mini->tempstr2));
 	write (fd, "\n", 1);
-	free (mini->tempstr2);
-	mini->tempstr2 = NULL;
+	mini->tempstr2 = ft_free(mini->tempstr2);
 	close (fd);
 	fd = open(file, O_RDONLY);
-	free (file);
-	file = NULL;
+	mini->tempstr = ft_free(mini->tempstr);
 	return (fd);
 }

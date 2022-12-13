@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 17:18:25 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:59:22 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void	mini_init(t_mini *mini, char **env)
 	mini->var = NULL;
 	mini->tempstr = NULL;
 	mini->tempstr2 = NULL;
+	mini->tempstr3 = NULL;
+	mini->tempstr4 = NULL;
+	mini->tempstr5 = NULL;
 	mini->temptab = NULL;
 	if (!get_var(mini, env))
 		ft_lstclear(mini->var);
@@ -77,10 +80,15 @@ int	mini_parser(t_mini *mini, char *str)
 	}
 	if (is_input(mini, str))
 	{
-		mini->cmd = get_cmd(mini, mini->cmd, str, 0);
+		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
 		execute(mini);
 		mini->cmd = ft_free_cmd(mini->cmd);
 		mini_unlink(mini, "/tmp/heredoc_");
+		mini->tempstr = ft_free(mini->tempstr);
+		mini->tempstr2 = ft_free(mini->tempstr2);
+		mini->tempstr3 = ft_free(mini->tempstr3);
+		mini->tempstr4 = ft_free(mini->tempstr4);
+		mini->tempstr5 = ft_free(mini->tempstr5);
 	}
 	free (str);
 	return (1);

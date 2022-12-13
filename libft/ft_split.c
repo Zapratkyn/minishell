@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:23:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/06 12:13:47 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:31:05 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ static int	count_words(const char *s, char c)
 			i++;
 	}
 	return (count);
-}
-
-static char	**ft_free(int index, char **split)
-{
-	while (--index)
-		free(split[index]);
-	free(split);
-	return (NULL);
 }
 
 static char	*find_next_word(t_mini *mini, char *s, char c, int index)
@@ -84,7 +76,7 @@ char	**ft_split(t_mini *mini, char const *s, char c)
 	{
 		str[i] = find_next_word(mini, (char *)s, c, i + 1);
 		if (!str[i])
-			return (ft_free(i, str));
+			ft_error(mini, MALLOC_ERR, EXIT);
 	}
 	str[i] = NULL;
 	return (str);

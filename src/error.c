@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 15:17:42 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:23:49 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,21 @@ int	get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s)
 	else if (i == 2)
 	{
 		mini->tempstr = ft_strjoin(mini, ft_strdup(mini, "3: cannot open "), s);
-		mini->tempstr = ft_strjoin(mini, mini->tempstr, ": No such file or directory");
+		mini->tempstr = ft_strjoin(mini, mini->tempstr,
+				": No such file or directory");
 		ft_error(mini, mini->tempstr, NO_EXIT);
-		free (mini->tempstr);
+		mini->tempstr = ft_free(mini->tempstr);
 		g_status = 1;
 	}
 	else if (i == 3)
 	{
-		mini->tempstr = ft_strjoin(mini, ft_strdup(mini, s), " : command not found");
+		mini->tempstr = ft_strjoin(mini,
+				ft_strdup(mini, s), " : command not found");
 		ft_error(mini, mini->tempstr, NO_EXIT);
-		free (mini->tempstr);
+		mini->tempstr = ft_free(mini->tempstr);
 		g_status = 127;
 		cmd->path = ft_strdup(mini, "none");
 	}
-	mini->tempstr = NULL;
 	return (-1);
 }
 
@@ -60,20 +61,19 @@ int	unclosed_quotes(void)
 
 int	spike_error(t_mini *mini, char *str)
 {
-	char	*spikes;
-	char	*error;
 	int		i;
 
 	i = 0;
-	spikes = ft_strdup(mini, "<");
+	mini->tempstr3 = ft_strdup(mini, "<");
 	while (str[i] && i < 2 && str[i] == '<')
-		spikes = ft_strjoin2(mini, spikes, str[i++]);
-	error = ft_strjoin(mini,
-			ft_strdup(mini, "syntax error near unexpected token '"), spikes);
-	error = ft_strjoin2(mini, error, S_QUOTE);
-	ft_error(mini, error, 0);
-	free (spikes);
-	free (error);
+		mini->tempstr3 = ft_strjoin2(mini, mini->tempstr3, str[i++]);
+	mini->tempstr4 = ft_strjoin(mini,
+			ft_strdup(mini, "syntax error near unexpected token '"),
+			mini->tempstr3);
+	mini->tempstr4 = ft_strjoin2(mini, mini->tempstr4, S_QUOTE);
+	ft_error(mini, mini->tempstr4, 0);
+	mini->tempstr3 = ft_free(mini->tempstr3);
+	mini->tempstr4 = ft_free(mini->tempstr4);
 	return (-1);
 }
 
