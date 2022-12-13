@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 15:40:47 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:09:05 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ void					mini_init(t_mini *mini, char **env);
 int						mini_parser(t_mini *mini, char *str);
 
 /* Utils.c */
-char					*clean_string(t_mini *mini, char *str, int len, int i);
 int						is_input(t_mini *mini, char *str);
 char					*fill_parts(t_mini *mini, char **parts,
 							char *str, int i);
@@ -172,6 +171,7 @@ int						mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i);
 char					*to_empty(char *str);
 int						quotes(char *str, char c, int i);
 void					get_input(t_mini *mini, char *str, char c);
+void					put_shell(void);
 
 /* Execution */
 void					execute(t_mini *mini);
@@ -231,6 +231,7 @@ int						ft_lstsize(t_var *var);
 t_var					*ft_sortlst(t_var *var);
 
 /* Libft */
+int						ft_atoi(const char *str);
 char					*ft_calloc(t_mini *mini, int count, int size);
 void					ft_error(t_mini *mini, char *type, int is_exit);
 int						ft_find_index(char *s, char c);
