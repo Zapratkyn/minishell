@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 13:01:06 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:05:21 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ void	update_pwd(t_mini *mini)
 	}
 }
 
-char	*find_path(t_mini *mini, t_cmd *cmd)
+char	*find_path(t_mini *mini, t_cmd *cmd, char *s)
 {
 	char	*path;
-	char	*tmp;
 
-	tmp = NULL;
 	if (!cmd->cmds[1] || !ft_strcmp(cmd->cmds[1], "~")
 		|| !ft_strcmp(cmd->cmds[1], "--"))
 		return (ft_strdup(mini, mini_getenv(mini, "HOME")));
+	if (!ft_strncmp("/", cmd->cmds[1], 1))
+		return (ft_strdup(mini, cmd->cmds[1]));
 	if (!ft_strcmp("-", cmd->cmds[1]))
 		return (ft_strdup(mini, mini_getenv(mini, "OLDPWD")));
 	if (!ft_strncmp(cmd->cmds[1], "~/", 2))
@@ -75,11 +75,11 @@ char	*find_path(t_mini *mini, t_cmd *cmd)
 	}
 	else
 	{
-		tmp = getcwd(tmp, 0);
-		if (!tmp)
+		s = getcwd(s, 0);
+		if (!s)
 			ft_error(mini, PWD_ERR, EXIT);
-		path = ft_insert(mini, tmp, '/', cmd->cmds[1]);
-		free(tmp);
+		path = ft_insert(mini, s, '/', cmd->cmds[1]);
+		free(s);
 	}
 	return (path);
 }
@@ -88,11 +88,13 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 {
 	char	*path;
 	char	*tmp;
+	char	*s;
 
 	if (!check_option(mini, cmd, "cd"))
 		return ;
 	tmp = mini_getenv(mini, "PWD");
-	path = find_path(mini, cmd);
+	s = NULL;
+	path = find_path(mini, cmd, s);
 	if (chdir(path) == -1)
 	{
 		free(path);
