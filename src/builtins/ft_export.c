@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 18:38:43 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 22:03:51 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	check_export(t_mini *mini, char *s)
 {
 	int		i;
 
-	if (s && (s[0] == '=' || !s[0]))
+	if (s && (s[0] == '=' || !s[0] || ft_isdigit(s[0])))
 	{
 		g_status = 1;
 		ft_error(mini, EXPORT_ERR, NO_EXIT);
