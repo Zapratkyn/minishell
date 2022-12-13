@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 16:50:18 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:27:03 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 {
 	if (cmd->infile == -1 || cmd->outfile == -1)
 	{
+		if (cmd->outfile == -1)
+			ft_error(mini, DIR_ERR, NO_EXIT);
 		g_status = 1;
 		return (0);
 	}

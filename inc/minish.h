@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 17:09:05 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:49:46 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	g_status;
 /* Managing errors */
 # define ARG_ERR "minishell: exit: too many arguments"
 # define CMD_ERR "minishell : wrong input command"
-# define DIR_ERR "minishell: cd: no such file or directory"
+# define DIR_ERR "minishell: no such file or directory"
 # define DUP_ERR "minishell : error in the dup2."
 # define EXIT 1
-# define EXPORT_ERR "minishell: export: wrong identifier"
+# define EXPORT_ERR "minishell: export: not a valid identifier"
 # define FORK_ERR "minishell : error in the creation of a fork."
 # define MALLOC_ERR "minishell : error in the memory allocation of a malloc."
 # define NUM_ERR "minishell: exit: numeric argument required"
@@ -70,7 +70,7 @@ int	g_status;
 # define PIPE_ERR "minishell : error in the creation of a pipe."
 # define PWD_ERR "minishell : error in the pwd."
 # define UNSET_NAME_ERR "minishell: unset: invalid parameter name"
-# define UNSET_ID_ERR "minishell: unset: wrong identifier"
+# define UNSET_ID_ERR "minishell: unset: not a valid identifier"
 
 /* Characters */
 # define CHILD_PROC 0
