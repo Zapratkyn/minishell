@@ -6,13 +6,13 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 16:05:26 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:32:14 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-char	*export_strchr(t_mini *mini, char *str, char c)
+static char	*export_strchr(t_mini *mini, char *str, char c)
 {
 	int	i;
 
@@ -23,27 +23,7 @@ char	*export_strchr(t_mini *mini, char *str, char c)
 	return (NULL);
 }
 
-void	modif_var(t_mini *mini, char *name_var, char *s)
-{
-	t_var	*var;
-
-	var = mini->var;
-	while (var)
-	{
-		if (!ft_strncmp(var->content, name_var, ft_strlen(name_var)))
-		{
-			free(var->content);
-			if ((s && s[0]) || is_env(mini, name_var))
-				var->content = ft_insert(mini, name_var, '=', s);
-			else
-				var->content = ft_strdup(mini, name_var);
-			break ;
-		}
-		var = var->next;
-	}
-}
-
-void	do_export(t_mini *mini, int index, char *s1, char *s2)
+static void	do_export(t_mini *mini, int index, char *s1, char *s2)
 {
 	if (!s1 && !is_env(mini, mini->cmd->cmds[index]))
 		ft_lstadd_back(&mini->var, ft_lstnew(mini, ft_strdup(mini,
@@ -88,6 +68,30 @@ static void	display_exp(t_mini *mini)
 	ft_lstclear(tmp);
 }
 
+static int	check_export(t_mini *mini, char *s)
+{
+	int		i;
+
+	if (s && (s[0] == '=' || !s[0]))
+	{
+		g_status = 1;
+		ft_error(mini, EXPORT_ERR, NO_EXIT);
+		return (0);
+	}
+	i = 0;
+	while (s && s[i] && s[i] != '=')
+	{
+		if (!ft_isalnum(s[i]) && s[i] != '_')
+		{
+			g_status = 1;
+			ft_error(mini, EXPORT_ERR, NO_EXIT);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 void	ft_export(t_mini *mini, t_cmd *cmd)
 {
 	char	*s1;
@@ -103,6 +107,9 @@ void	ft_export(t_mini *mini, t_cmd *cmd)
 		i = 0;
 		while (cmd->cmds[++i])
 		{
+			if (!check_export(mini, cmd->cmds[i]))
+				continue ;
+			g_status = 0;
 			s1 = ft_rev_strchr(mini, cmd->cmds[i], '=');
 			s2 = export_strchr(mini, cmd->cmds[i], '=');
 			do_export(mini, i, s1, s2);

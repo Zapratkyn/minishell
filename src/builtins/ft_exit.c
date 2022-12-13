@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:54 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 14:58:38 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:23:41 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,24 @@ int	is_exit_number(char *s)
 	return (1);
 }
 
-void	ft_exit(t_mini *mini, t_cmd *cmd, char *s)
+void	ft_exit(t_mini *mini, t_cmd *cmd)
 {
 	ft_putendl_fd("exit", STDERR_FILENO);
-	s = ft_strdup(mini, "minishell: exit: ");
 	if (is_exit_number(cmd->cmds[1]) && cmd->cmds[2])
 	{
-		s = ft_strjoin(mini, s, ARG_ERR);
-		ft_putendl_fd(s, STDERR_FILENO);
-		free(s);
+		ft_error(mini, ARG_ERR, NO_EXIT);
 		g_status = 1;
 	}
 	else
 	{
 		if (cmd->cmds[1] && !is_exit_number(cmd->cmds[1]))
 		{
-			s = ft_strjoin(mini, s, cmd->cmds[1]);
-			s = ft_strjoin(mini, s, ": ");
-			s = ft_strjoin(mini, s, NUM_ERR);
-			ft_putendl_fd(s, STDOUT_FILENO);
+			ft_error(mini, NUM_ERR, NO_EXIT);
 			g_status = 255;
-			free(s);
 			ft_free_all(mini);
 			exit(g_status);
 		}
+		ft_free_all(mini);
 		g_status = 0;
 		exit(g_status);
 	}

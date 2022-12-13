@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 11:05:17 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 12:00:23 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:34:04 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,24 @@ int	check_option(t_mini *mini, t_cmd *cmd, char *s)
 		return (0);
 	}
 	return (1);
+}
+
+void	modif_var(t_mini *mini, char *name_var, char *s)
+{
+	t_var	*var;
+
+	var = mini->var;
+	while (var)
+	{
+		if (!ft_strncmp(var->content, name_var, ft_strlen(name_var)))
+		{
+			free(var->content);
+			if ((s && s[0]) || is_env(mini, name_var))
+				var->content = ft_insert(mini, name_var, '=', s);
+			else
+				var->content = ft_strdup(mini, name_var);
+			break ;
+		}
+		var = var->next;
+	}
 }

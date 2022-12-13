@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 12:30:27 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:32:19 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,21 @@ void	pipe_and_fork(t_mini *mini, t_cmd *cmd)
 int	check_cmd(t_mini *mini, t_cmd *cmd)
 {
 	if (cmd->infile == -1 || cmd->outfile == -1)
+	{
+		g_status = 1;
 		return (0);
-	if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd) && !cmd->path)
+	}
+	if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd)
+		&& !ft_strcmp(cmd->path, "none"))
+	{
+		g_status = 127;
 		return (0);
+	}
 	if (ch_builtin(mini, cmd) && !check_builtin(mini, cmd))
+	{
+		g_status = 1;
 		return (0);
+	}
 	return (1);
 }
 

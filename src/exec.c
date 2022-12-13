@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 15:16:13 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:32:00 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ void	execute(t_mini *mini)
 	cmd = mini->cmd;
 	while (cmd)
 	{
+		g_status = 0;
 		if (!check_cmd(mini, cmd))
 		{
 			cmd = cmd->next;
 			continue ;
 		}
-		g_status = 0;
 		pipe_and_fork(mini, cmd);
 		close_exec(cmd);
 		cmd = cmd->next;
