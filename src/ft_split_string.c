@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:51:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 12:29:18 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:45:22 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ static int	count_words(char *s, int i, int count, char c)
 			i++;
 		}
 		else if (s[i] == '$' && s[i + 1]
-			&& (ft_isalnum(s[i + 1]) || s[i + 1] == '_'))
+			&& (ft_isalnum(s[i + 1]) || s[i + 1] == '_' || s[i + 1] == '?'))
 			i += dollar(&s[i], 1, 0);
 		else
 			while (s[i] && s[i] != S_QUOTE && s[i] != '"' && !(s[i] == '$'
-					&& s[i + 1] && (ft_isalnum(s[i + 1]) || s[i + 1] == '_')))
+					&& s[i + 1] && (ft_isalnum(s[i + 1])
+						|| s[i + 1] == '_' || s[i + 1] == '?')))
 				i++;
 		while (s[i] && s[i] == ' ')
 			i++;
@@ -39,7 +40,7 @@ static int	count_words(char *s, int i, int count, char c)
 
 static int	find_next_len(char *s, int i, char c)
 {
-	if (s[0] == '$' && s[1] && (ft_isalnum(s[1]) || s[1] == '_'))
+	if (s[0] == '$' && s[1] && (ft_isalnum(s[1]) || s[1] == '_' || s[1] == '?'))
 		i += dollar(s, 1, 0);
 	else if (s[0] == S_QUOTE || s[0] == D_QUOTE)
 	{
@@ -51,7 +52,8 @@ static int	find_next_len(char *s, int i, char c)
 	}
 	else
 		while (s[i] && s[i] != S_QUOTE && s[i] != '"' && !(s[i] == '$'
-				&& s[i + 1] && (ft_isalnum(s[i + 1]) || s[i + 1] == '_')))
+				&& s[i + 1] && (ft_isalnum(s[i + 1])
+					|| s[i + 1] == '_' || s[i + 1] == '?')))
 			i++;
 	return (i);
 }

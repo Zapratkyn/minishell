@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 12:30:12 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:48:32 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ char	*join_parts(t_mini *mini, char **parts, char *result, int i)
 	result = ft_strdup(mini, "");
 	while (parts && parts[i])
 	{
-		if (parts[i][0] == '$' && parts[i][1]
-			&& (ft_isalnum(parts[i][1]) || parts[i][1] == '_'))
+		if (parts[i][0] == '$' && parts[i][1] && (ft_isalnum(parts[i][1])
+			|| parts[i][1] == '_' || parts[i][1] == '?'))
 			result = ft_var(mini, &parts[i++][1], result);
 		else if (parts[i][0] == S_QUOTE)
 		{
@@ -84,7 +84,8 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 		while (cmd->cmds && cmd->cmds[i])
 		{
 			if (cmd->cmds[i][0] == '$' && cmd->cmds[i][1]
-				&& (ft_isalnum(cmd->cmds[i][1]) || cmd->cmds[i][1] == '_')
+				&& (ft_isalnum(cmd->cmds[i][1]) || cmd->cmds[i][1] == '_'
+				|| cmd->cmds[i][1] == '?')
 				&& !mini_getenv(mini, &cmd->cmds[i][1]))
 			{
 				free (cmd->cmds[i]);

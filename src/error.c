@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 15:30:39 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:33:43 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s)
 int	unclosed_quotes(void)
 {
 	ft_putendl_fd("Unclosed quotes forbidden in minishell", 2);
+	g_status = 1;
 	return (-1);
 }
 
