@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 18:41:53 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:47:10 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <sys/ioctl.h>
-// # include <sys/types.h>
 # include <sys/wait.h>
-// # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -61,12 +59,10 @@ int	g_status;
 # define CMD_ERR "minishell : wrong input command"
 # define DIR_ERR "minishell: no such file or directory"
 # define DUP_ERR "minishell : error in the dup2."
-# define EXIT 1
 # define EXPORT_ERR "minishell: export: not a valid identifier"
 # define FORK_ERR "minishell : error in the creation of a fork."
 # define MALLOC_ERR "minishell : error in the memory allocation of a malloc."
 # define NUM_ERR "minishell: exit: numeric argument required"
-# define NO_EXIT 0
 # define PIPE_ERR "minishell : error in the creation of a pipe."
 # define PWD_ERR "minishell : error in the pwd."
 # define UNSET_NAME_ERR "minishell: unset: invalid parameter name"
@@ -74,13 +70,15 @@ int	g_status;
 
 /* Characters */
 # define CHILD_PROC 0
+# define EXIT 1
 # define READ 0
 # define WRITE 1
 # define S_QUOTE 39
 # define D_QUOTE 34
 # define PIPE 124
-# define NO_NEW_L 0
 # define NEW_L 1
+# define NO_EXIT 0
+# define NO_NEW_L 0
 
 /*
 ** Structures
