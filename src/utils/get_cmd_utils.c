@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 13:22:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:36:12 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_cmd	*cmd_init(t_mini *mini, char *str)
 {
 	t_cmd	*cmd;
-	char	*input;
 
 	cmd = malloc (sizeof(t_cmd));
 	if (!cmd)
@@ -26,14 +25,14 @@ t_cmd	*cmd_init(t_mini *mini, char *str)
 	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
 	cmd->next = NULL;
-	input = ft_strdup(mini, "");
-	input = get_input(mini, str, NULL, 0);
-	cmd->cmds = ft_split_cmd(mini, input, 0, 0);
+	get_input(mini, str, 0);
+	cmd->cmds = ft_split_cmd(mini, mini->tempstr, 0, 0);
 	cmd->cmds_nb = ft_tablen(cmd->cmds);
-	free (input);
-	cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);
-	if (ft_quotes(input, -1, 0, 0) == -1)
+	if (ft_quotes(mini->tempstr, -1, 0, 0) == -1)
 		cmd->infile = -1;
+	free (mini->tempstr);
+	mini->tempstr = NULL;
+	cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);
 	return (cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 15:37:20 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:41:14 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,19 @@ void	exec_child(t_mini *mini, t_cmd *cmd)
 	exit(g_status);
 }
 
+void	ft_sigint(int sig)
+{
+	(void)sig;
+	g_status = 1;
+	rl_on_new_line();
+}
+
 void	execute(t_mini *mini)
 {
 	t_cmd	*cmd;
 
 	cmd = mini->cmd;
+	signal (SIGINT, ft_sigint);
 	while (cmd)
 	{
 		g_status = 0;

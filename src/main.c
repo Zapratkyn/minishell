@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 15:37:34 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:41:08 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ void	mini_init(t_mini *mini, char **env)
 {
 	mini->cmd = NULL;
 	mini->var = NULL;
+	mini->tempstr = NULL;
+	mini->tempstr2 = NULL;
+	mini->temptab = NULL;
 	if (!get_var(mini, env))
 		ft_lstclear(mini->var);
-	mini->paths = ft_split(mini, mini_getenv(mini, "PATH"), ':');
-	if (!mini->paths || !mini->var)
-		exit (EXIT_FAILURE);
+	ft_split_paths(mini, mini_getenv(mini, "PATH"), ':');
 	mini->prompt = NULL;
 	mini->prompt = get_prompt(mini, mini->prompt);
 	if (!mini->prompt)
@@ -58,11 +59,10 @@ int	mini_parser(t_mini *mini, char *str)
 		add_history(str);
 	if (ft_pipes(str, 0) || ft_pipes2(str, (ft_strlen(str) - 1)))
 	{
-		if (str)
-			free (str);
+		free (str);
 		return (1);
 	}
-	if (is_input(str))
+	if (is_input(mini, str))
 	{
 		mini->cmd = get_cmd(mini, mini->cmd, str, 0);
 		execute(mini);
@@ -90,5 +90,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	ft_free_all(&mini);
 	write(STDERR_FILENO, "exit\n", 6);
+	LEAKS
 	exit(g_status);
 }
