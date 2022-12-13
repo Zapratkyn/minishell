@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 15:23:59 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:52:40 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ typedef struct s_mini
 	char	**paths;
 	char	*tempstr;
 	char	*tempstr2;
+	char	*tempstr3;
+	char	*tempstr4;
+	char	*tempstr5;
 	char	**temptab;
 	t_var	*var;
 	t_cmd	*cmd;
@@ -138,8 +141,9 @@ int						ft_quotes(char *str, int i, int quotes,
 char					*manage_string(t_mini *mini, char *str, int i);
 void					mini_exit(t_mini *mini);
 char					*mini_getenv(t_mini *mini, char *var);
+int						mini_get_status(t_mini *mini, char *var, int j);
 void					mini_new_line(int sig);
-char					**split_string(t_mini *mini, char *s, int i, int index);
+void					split_string(t_mini *mini, char *s, int i, int index);
 int						ft_pipes(char *str, int i);
 int						ft_pipes2(char *str, int i);
 char					**transform_parts(t_mini *mini, char **parts,
@@ -153,8 +157,8 @@ char					*get_exec(t_mini *mini, t_cmd *cmd);
 char					**clean_files(t_mini *mini, char **cmds,
 							int i, int j);
 t_cmd					*cmd_init(t_mini *mini, char *str);
-char					*delete_double_quotes(t_mini *mini, char *str, int i);
-char					*delete_quotes(t_mini *mini, char *str, int i, int j);
+void					delete_double_quotes(t_mini *mini, char *str, int i);
+void					delete_quotes(t_mini *mini, char *str, int i, int j);
 int						dollar(char *str, int i, char c);
 char					**ft_split_cmd(t_mini *mini, char *s, int i,
 							int index);
@@ -214,8 +218,9 @@ int						dir(t_mini *mini, char *str, int i, char c);
 void					ft_free_all(t_mini *mini);
 t_cmd					*ft_free_cmd(t_cmd *cmd);
 void					ft_free_full_cmd(char **tab);
-void					ft_free_tab(char **tab, int len);
+char					**ft_free_tab(char **tab, int len);
 void					mini_unlink(t_mini *mini, char *str);
+char					*ft_free(char *str);
 
 /* Linked List */
 int						ft_lst_index(t_var **l_var, t_var *var);

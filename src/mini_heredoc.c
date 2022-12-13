@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 15:36:23 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:28:09 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *str)
 	{
 		if (input)
 			free (input);
-		close (fd);
-		free (mini->tempstr2);
-		mini->tempstr2 = NULL;
+		mini->tempstr2 = ft_free(mini->tempstr2);
 		return (0);
 	}
 	else
@@ -55,8 +53,7 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *str)
 		write (fd, input, ft_strlen(input));
 		write (fd, "\n", 1);
 		free (input);
-		free (mini->tempstr2);
-		mini->tempstr2 = NULL;
+		mini->tempstr2 = ft_free(mini->tempstr2);
 		return (1);
 	}
 }
@@ -72,8 +69,7 @@ void	add_heredoc(t_mini *mini, int i)
 	while (!access(mini->tempstr, F_OK))
 	{
 		i++;
-		free (mini->tempstr);
-		mini->tempstr = NULL;
+		mini->tempstr = ft_free(mini->tempstr);
 		nb = ft_itoa(mini, i);
 		mini->tempstr = ft_strjoin(mini, ft_strdup(mini, "/tmp/heredoc_"), nb);
 		free (nb);
@@ -84,7 +80,6 @@ void	add_heredoc(t_mini *mini, int i)
 
 int	add_fd(t_mini *mini, char *str, int fd)
 {
-	g_status = 0;
 	if (!ft_quotes(str, -1, 0, 0))
 		return (unclosed_quotes());
 	else if (str[0] == '<' && str[1] && str[1] == '<')
@@ -103,11 +98,11 @@ int	add_fd(t_mini *mini, char *str, int fd)
 		if (g_status == 1 || !fill_fd(mini, readline("> "), fd, str))
 			break ;
 	}
+	close (fd);
 	if (g_status == 1)
 		return (-1);
 	fd = open(mini->tempstr, O_RDONLY);
-	free (mini->tempstr);
-	mini->tempstr = NULL;
+	mini->tempstr = ft_free(mini->tempstr);
 	return (fd);
 }
 
@@ -130,6 +125,7 @@ int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 					eof = cmd->cmds[i + 1];
 				else
 					return (get_infos_error(mini, cmd, 1, NULL));
+				g_status = 0;
 				fd = add_fd(mini, eof, 0);
 			}
 		}

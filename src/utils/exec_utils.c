@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 13:58:15 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:07:20 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,11 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 	if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd)
 		&& !ft_strcmp(cmd->path, "none"))
 	{
-		printf("la\n");
 		g_status = 127;
 		return (0);
 	}
 	if (ch_builtin(mini, cmd) && !check_builtin(mini, cmd))
 	{
-		printf("oui\n");
 		g_status = 1;
 		return (0);
 	}
@@ -72,27 +70,27 @@ int	n_of_cmd(t_cmd *cmd)
 	return (n);
 }
 
-char	*clean_string(t_mini *mini, char *str, int len, int i)
-{
-	char	*result;
-	int		j;
+// char	*clean_string(t_mini *mini, char *str, int len, int i)
+// {
+// 	char	*result;
+// 	int		j;
 
-	j = 0;
-	while (str[++i])
-	{
-		if (str[i] != S_QUOTE && str[i] != '"')
-			len++;
-	}
-	result = malloc (sizeof(char) * len + 1);
-	if (!result)
-		ft_error(mini, MALLOC_ERR, EXIT);
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] != S_QUOTE && str[i] != '"')
-			result[j++] = str[i];
-	}
-	result[j] = '\0';
-	free (str);
-	return (result);
-}
+// 	j = 0;
+// 	while (str[++i])
+// 	{
+// 		if (str[i] != S_QUOTE && str[i] != '"')
+// 			len++;
+// 	}
+// 	result = malloc (sizeof(char) * len + 1);
+// 	if (!result)
+// 		ft_error(mini, MALLOC_ERR, EXIT);
+// 	i = -1;
+// 	while (str[++i])
+// 	{
+// 		if (str[i] != S_QUOTE && str[i] != '"')
+// 			result[j++] = str[i];
+// 	}
+// 	result[j] = '\0';
+// 	free (str);
+// 	return (result);
+// }
