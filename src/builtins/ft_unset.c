@@ -6,51 +6,63 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:56 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 12:02:56 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:12:59 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-int	check_err(t_mini *mini, t_cmd *cmd, int index)
+static int	check_err(t_mini *mini, char *s, int i)
 {
-	char	*tmp;
-
-	if (ft_strchr(cmd->cmds[index], '='))
+	if (s && (s[0] == '=' || !s[0]))
 	{
-		tmp = ft_strdup(mini, "unset: ");
-		tmp = ft_strjoin(mini, tmp, cmd->cmds[index]);
-		tmp = ft_strjoin(mini, tmp, ": invalid parameter name");
-		ft_error(mini, tmp, NO_EXIT);
-		free(tmp);
+		g_status = 1;
+		ft_error(mini, UNSET_NAME_ERR, NO_EXIT);
 		return (0);
+	}
+	if (ft_strcmp(s, "=") && ft_strchr(s, '='))
+	{
+		ft_error(mini, UNSET_ID_ERR, NO_EXIT);
+		g_status = 1;
+		return (0);
+	}
+	while (s && s[i] && s[i] != '=')
+	{
+		if (!ft_isalnum(s[i]) && s[i] != '_')
+		{
+			g_status = 1;
+			ft_error(mini, UNSET_ID_ERR, NO_EXIT);
+			return (0);
+		}
+		i++;
 	}
 	return (1);
 }
 
-void	ft_unset(t_mini *mini, t_cmd *cmd, int i)
+void	ft_unset(t_mini *mini, t_cmd *cmd, int i, char *s)
 {
 	t_var	*var;
-	char	*tmp;
 
 	if (!cmd->cmds[1] && !check_option(mini, cmd, "unset"))
 		return ;
 	while (cmd->cmds[++i])
 	{
-		if (!check_err(mini, cmd, i))
+		if (!check_err(mini, cmd->cmds[i], 0))
 			continue ;
+		g_status = 0;
 		var = mini->var;
 		while (var)
 		{
-			tmp = ft_rev_strchr(mini, var->content, '=');
-			if (!ft_strcmp(tmp, cmd->cmds[i]))
+			s = ft_rev_strchr(mini, var->content, '=');
+			if ((!s && !ft_strcmp(var->content, cmd->cmds[i]))
+				|| !ft_strcmp(s, cmd->cmds[i]))
 			{
 				ft_lstdelone(&mini->var, ft_lst_index(&mini->var, var));
-				free(tmp);
+				free(s);
 				break ;
 			}
-			if (tmp)
-				free(tmp);
+			if (s)
+				free(s);
 			var = var->next;
 		}
 	}
