@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 10:53:30 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:11:52 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	pipe_and_fork(t_mini *mini, t_cmd *cmd)
 			g_status -= 1;
 	}
 }
+
 int	check_cmd(t_mini *mini, t_cmd *cmd)
 {
 	if (cmd->infile == -1 || cmd->outfile == -1)
@@ -41,7 +42,7 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 		return (0);
 	}
 	if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd)
-			&& !ft_strcmp(cmd->path, "none"))
+		&& !ft_strcmp(cmd->path, "none"))
 	{
 		g_status = 127;
 		return (0);
