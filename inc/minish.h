@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 18:47:10 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 22:03:22 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,7 @@ void					ft_error(t_mini *mini, char *type, int is_exit);
 int						ft_find_index(char *s, char c);
 char					*ft_insert(t_mini *mini, char *s1, char c, char *s2);
 int						ft_isalnum(int c);
+int						ft_isdigit(char c);
 char					*ft_itoa(t_mini *mini, int n);
 void					ft_n_putstr(char *s, int n);
 void					ft_putendl_fd(char *s, int fd);
