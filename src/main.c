@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 12:52:20 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:22:59 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	main(int argc, char **argv, char **env)
 	while (argc && argv[0])
 	{
 		signal(SIGQUIT, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
 		signal(SIGINT, mini_new_line);
 		if (!mini_parser(&mini, readline(mini.prompt)))
 			break ;

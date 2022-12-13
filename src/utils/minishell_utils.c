@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 12:58:09 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:27:55 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_quotes(char *str, int i, int quotes, int double_quotes)
 		{
 			i++;
 			double_quotes++;
-			while (str [i] && str[i] != '"')
+			while (str[i] && str[i] != '"')
 				i++;
 			if (str[i] == '"')
 				double_quotes++;

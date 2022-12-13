@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:09:16 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 12:41:14 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:09:23 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	dollar(char *str, int i, char c)
 			i++;
 		}
 		else
-			while (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?')
+			while (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?' ||str[i] == '$')
 				i++;
 	}
 	return (i);

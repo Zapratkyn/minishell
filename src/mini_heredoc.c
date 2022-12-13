@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 12:59:19 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:23:57 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	add_fd(t_mini *mini, char *str, int fd)
 	{
 		signal(SIGINT, mini_new_line);
 		signal(SIGQUIT, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
 		if (g_status == 1 || !fill_fd(mini, readline("> "), fd, str))
 			break ;
 	}

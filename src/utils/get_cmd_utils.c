@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 11:31:59 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:22:01 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_cmd	*cmd_init(t_mini *mini, char *str)
 	cmd->cmds_nb = ft_tablen(cmd->cmds);
 	free (input);
 	cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);
-	if (!ft_quotes(input, 0, 0, 0))
-		cmd->infile = unclosed_quotes();
+	if (ft_quotes(input, -1, 0, 0) == -1)
+		cmd->infile = -1;
 	return (cmd);
 }
 

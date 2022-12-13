@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 12:55:27 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:37:38 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,22 @@ void	exec_child(t_mini *mini, t_cmd *cmd)
 	exit(g_status);
 }
 
+int	to_exec(t_mini *mini)
+{
+	t_cmd	*cmd;
+
+	cmd = mini->cmd;
+	while (cmd)
+	{
+		if (cmd->infile == -1 || cmd->outfile == -1)
+			return (0);
+		else if (!ft_strncmp(cmd->path, "none", 4) && ft_strlen(cmd->path) == 4)
+			return (0);
+		cmd = cmd->next;
+	}
+	return (1);
+}
+
 void	execute(t_mini *mini)
 {
 	t_cmd	*cmd;
@@ -76,20 +92,4 @@ void	execute(t_mini *mini)
 		close_exec(cmd);
 		cmd = cmd->next;
 	}
-}
-
-int	to_exec(t_mini *mini)
-{
-	t_cmd	*cmd;
-
-	cmd = mini->cmd;
-	while (cmd)
-	{
-		if (cmd->infile == -1 || cmd->outfile == -1)
-			return (0);
-		else if (!ft_strncmp(cmd->path, "none", 4) && ft_strlen(cmd->path) == 4)
-			return (0);
-		cmd = cmd->next;
-	}
-	return (1);
 }
