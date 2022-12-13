@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 13:53:00 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:56:31 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,28 +77,25 @@ char	*manage_string(t_mini *mini, char *str, int i)
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
 	cmd = cmd_init(mini, str);
-	if (cmd->infile != -1)
+	get_path(mini, cmd, 0);
+	cmd->cmds = clean_files(mini, cmd->cmds, -1, 0);
+	while (cmd->cmds && cmd->cmds[i])
 	{
-		get_path(mini, cmd, 0);
-		cmd->cmds = clean_files(mini, cmd->cmds, -1, 0);
-		while (cmd->cmds && cmd->cmds[i])
+		if (cmd->cmds[i][0] == '$' && cmd->cmds[i][1]
+			&& (ft_isalnum(cmd->cmds[i][1]) || cmd->cmds[i][1] == '_'
+			|| cmd->cmds[i][1] == '?')
+			&& !mini_getenv(mini, &cmd->cmds[i][1]))
 		{
-			if (cmd->cmds[i][0] == '$' && cmd->cmds[i][1]
-				&& (ft_isalnum(cmd->cmds[i][1]) || cmd->cmds[i][1] == '_'
-				|| cmd->cmds[i][1] == '?')
-				&& !mini_getenv(mini, &cmd->cmds[i][1]))
-			{
-				free (cmd->cmds[i]);
-				cmd->cmds[i] = NULL;
-			}
-			else
-				cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 1);
-			i++;
+			free (cmd->cmds[i]);
+			cmd->cmds[i] = NULL;
 		}
-		if (ft_strchr_minishell(str, PIPE, 0) && cmd->infile != -1
-			&& cmd->outfile != -1 && ft_strcmp(cmd->path, "none"))
-			cmd->next = get_cmd(mini, cmd->next,
-					&ft_strchr_minishell(str, PIPE, 0)[1], -1);
+		else
+			cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 1);
+		i++;
 	}
+	if (ft_strchr_minishell(str, PIPE, 0)
+		&& cmd->outfile != -1 && ft_strcmp(cmd->path, "none"))
+		cmd->next = get_cmd(mini, cmd->next,
+				&ft_strchr_minishell(str, PIPE, 0)[1], 0);
 	return (cmd);
 }

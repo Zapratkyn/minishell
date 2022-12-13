@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 15:41:14 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:57:13 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	exec_child(t_mini *mini, t_cmd *cmd)
 	else if (cmd->path && !par_builtin(mini, cmd))
 		execve(cmd->path, cmd->cmds, ft_lst_to_str(mini, mini->var));
 	ft_free_all(mini);
-	LEAKS
 	exit(g_status);
 }
 
