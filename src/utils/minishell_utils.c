@@ -6,13 +6,13 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 13:27:55 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:51:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-int	is_input(char *str)
+int	is_input(t_mini *mini, char *str)
 {
 	int		i;
 
@@ -25,7 +25,7 @@ int	is_input(char *str)
 		g_status = 126;
 		return (0);
 	}
-	if (str[0] == '/' && !dir(str, 0, 0, 0))
+	if (str[0] == '/' && !dir(mini, str, 0, 0))
 		return (0);
 	while (str[i])
 	{

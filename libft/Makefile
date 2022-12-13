@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
+#    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/08 11:29:00 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/13 15:06:33 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC							=	lst/ft_lst_index.c \
 								ft_putendl_fd.c \
 								ft_put_tab.c \
 								ft_split.c \
+								ft_split_paths.c \
 								ft_strchr.c \
 								ft_strcmp.c \
 								ft_strdup.c \

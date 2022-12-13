@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 12:31:55 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:23:59 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ typedef struct s_mini
 {
 	char	*prompt;
 	char	**paths;
+	char	*tempstr;
+	char	*tempstr2;
+	char	**temptab;
 	t_var	*var;
 	t_cmd	*cmd;
 }	t_mini;
@@ -127,7 +130,7 @@ int						mini_parser(t_mini *mini, char *str);
 
 /* Utils.c */
 char					*clean_string(t_mini *mini, char *str, int len, int i);
-int						is_input(char *str);
+int						is_input(t_mini *mini, char *str);
 char					*fill_parts(t_mini *mini, char **parts,
 							char *str, int i);
 int						ft_quotes(char *str, int i, int quotes,
@@ -168,8 +171,7 @@ void					mini_env(t_mini *mini);
 int						mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i);
 char					*to_empty(char *str);
 int						quotes(char *str, char c, int i);
-char					*get_input(t_mini *mini, char *str,
-							char *result, char c);
+void					get_input(t_mini *mini, char *str, char c);
 
 /* Execution */
 void					execute(t_mini *mini);
@@ -206,7 +208,7 @@ int						unclosed_quotes(void);
 int						get_infos_error(t_mini *mini,
 							t_cmd *cmd, int i, char *s);
 int						spike_error(t_mini *mini, char *str);
-int						dir(char *str, int i, char c, int j);
+int						dir(t_mini *mini, char *str, int i, char c);
 
 /* Free */
 void					ft_free_all(t_mini *mini);
@@ -240,6 +242,7 @@ void					ft_putendl_fd(char *s, int fd);
 void					ft_putstr_fd(char *s, int fd);
 void					ft_put_tab(char **tab);
 char					**ft_split(t_mini *mini, char const *s, char c);
+void					ft_split_paths(t_mini *mini, char const *s, char c);
 char					*ft_strchr(const char *s, int c);
 char					*ft_strchr_minishell(const char *s, int c, char k);
 int						ft_strcmp(char *s1, char *s2);

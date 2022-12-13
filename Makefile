@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/13 12:31:46 by gponcele         ###   ########.fr        #
+#    Updated: 2022/12/13 15:06:42 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,6 @@ LIBFT_LINUX					=	libft/ft_calloc.c \
 								libft/ft_lstsize.c \
 								libft/ft_n_putstr.c \
 								libft/ft_putstr_fd.c \
-								libft/ft_split.c \
 								libft/ft_strchr.c \
 								libft/ft_strcmp.c \
 								libft/ft_strdup.c \
