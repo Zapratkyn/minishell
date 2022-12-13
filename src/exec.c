@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 13:37:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:37:20 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,8 @@ void	exec_child(t_mini *mini, t_cmd *cmd)
 	else if (cmd->path && !par_builtin(mini, cmd))
 		execve(cmd->path, cmd->cmds, ft_lst_to_str(mini, mini->var));
 	ft_free_all(mini);
+	LEAKS
 	exit(g_status);
-}
-
-int	to_exec(t_mini *mini)
-{
-	t_cmd	*cmd;
-
-	cmd = mini->cmd;
-	while (cmd)
-	{
-		if (cmd->infile == -1 || cmd->outfile == -1)
-			return (0);
-		else if (!ft_strncmp(cmd->path, "none", 4) && ft_strlen(cmd->path) == 4)
-			return (0);
-		cmd = cmd->next;
-	}
-	return (1);
 }
 
 void	execute(t_mini *mini)

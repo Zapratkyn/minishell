@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 13:22:59 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:37:34 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ int	mini_parser(t_mini *mini, char *str)
 	if (is_input(str))
 	{
 		mini->cmd = get_cmd(mini, mini->cmd, str, 0);
-		if (to_exec(mini))
-			execute(mini);
+		execute(mini);
 		mini->cmd = ft_free_cmd(mini->cmd);
 		mini_unlink(mini, "/tmp/heredoc_");
 	}

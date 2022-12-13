@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 12:54:31 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:34:47 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,17 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 {
 	if (cmd->infile == -1 || cmd->outfile == -1)
 	{
-		ICI
 		g_status = 1;
 		return (0);
 	}
 	if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd)
 		&& !ft_strcmp(cmd->path, "none"))
 	{
-		printf("la\n");
 		g_status = 127;
 		return (0);
 	}
 	if (ch_builtin(mini, cmd) && !check_builtin(mini, cmd))
 	{
-		printf("oui\n");
 		g_status = 1;
 		return (0);
 	}
