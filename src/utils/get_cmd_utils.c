@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 13:22:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:56:18 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_cmd	*cmd_init(t_mini *mini, char *str)
 	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
 	cmd->next = NULL;
-	input = ft_strdup(mini, "");
 	input = get_input(mini, str, NULL, 0);
 	cmd->cmds = ft_split_cmd(mini, input, 0, 0);
 	cmd->cmds_nb = ft_tablen(cmd->cmds);

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 13:37:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:08:12 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,19 @@ int	to_exec(t_mini *mini)
 	return (1);
 }
 
+void	ft_sigint(int sig)
+{
+	(void)sig;
+	g_status = 1;
+	rl_on_new_line();
+}
+
 void	execute(t_mini *mini)
 {
 	t_cmd	*cmd;
 
 	cmd = mini->cmd;
+	signal (SIGINT, ft_sigint);
 	while (cmd)
 	{
 		g_status = 0;

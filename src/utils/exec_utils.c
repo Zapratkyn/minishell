@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 12:54:31 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:58:15 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 {
 	if (cmd->infile == -1 || cmd->outfile == -1)
 	{
-		ICI
 		g_status = 1;
 		return (0);
 	}
