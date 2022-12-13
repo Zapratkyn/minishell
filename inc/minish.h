@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 12:13:07 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:23:22 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,18 @@ int	g_status;
 # define RESET "\x1B[0m"
 
 /* Managing errors */
-# define ARG_ERR "too many arguments"
-# define CMD_ERR "Wrong input command."
-# define DIR_ERR "No such file or directory."
-# define DUP_ERR "Error in the dup2."
+# define ARG_ERR "minishell: exit: too many arguments"
+# define CMD_ERR "minishell : wrong input command"
+# define DIR_ERR "minishell: cd: no such file or directory"
+# define DUP_ERR "minishell : error in the dup2."
 # define EXIT 1
 # define EXPORT_ERR "minishell: export: wrong identifier"
-# define FORK_ERR "Error in the creation of a fork."
-# define MALLOC_ERR "Error in the memory allocation of a malloc."
-# define NUM_ERR "numeric argument required"
+# define FORK_ERR "minishell : error in the creation of a fork."
+# define MALLOC_ERR "minishell : error in the memory allocation of a malloc."
+# define NUM_ERR "minishell: exit: numeric argument required"
 # define NO_EXIT 0
-# define PIPE_ERR "Error in the creation of a pipe."
-# define PWD_ERR "Error in the pwd."
+# define PIPE_ERR "minishell : error in the creation of a pipe."
+# define PWD_ERR "minishell : error in the pwd."
 # define UNSET_NAME_ERR "minishell: unset: invalid parameter name"
 # define UNSET_ID_ERR "minishell: unset: wrong identifier"
 
@@ -184,7 +184,7 @@ void					do_builtin(t_mini *mini, t_cmd *cmd);
 void					ft_cd(t_mini *mini, t_cmd *cmd);
 void					ft_echo(t_mini *mini, t_cmd *cmd);
 void					ft_env(t_mini *mini);
-void					ft_exit(t_mini *mini, t_cmd *cmd, char *s);
+void					ft_exit(t_mini *mini, t_cmd *cmd);
 void					ft_export(t_mini *mini, t_cmd *cmd);
 void					ft_pwd(t_mini *mini);
 void					ft_unset(t_mini *mini, t_cmd *cmd, int i, char *s);
