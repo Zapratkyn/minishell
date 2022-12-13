@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 16:27:26 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:05:50 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ static char	*export_strchr(t_mini *mini, char *str, char c)
 	return (NULL);
 }
 
- void	do_export(t_mini *mini, int index)
+void	do_export(t_mini *mini, t_cmd *cmd, int i)
 {
-	if (!mini->tempstr && !is_env(mini, mini->cmd->cmds[index]))
+	if (!mini->tempstr && !is_env(mini, cmd->cmds[i]))
 		ft_lstadd_back(&mini->var, ft_lstnew(mini, ft_strdup(mini,
-					mini->cmd->cmds[index])));
-	if (mini->tempstr && mini->tempstr2 && !is_env(mini, mini->cmd->cmds[index]))
+					cmd->cmds[i])));
+	if (mini->tempstr && mini->tempstr2 && !is_env(mini, cmd->cmds[i]))
 		ft_lstadd_back(&mini->var, ft_lstnew(mini, ft_strdup(mini,
-					mini->cmd->cmds[index])));
-	else if (mini->tempstr && mini->tempstr2 && is_env(mini, mini->cmd->cmds[index]))
+					cmd->cmds[i])));
+	else if (mini->tempstr && mini->tempstr2 && is_env(mini, cmd->cmds[i]))
 		modif_var(mini, mini->tempstr, mini->tempstr2);
-	else if (mini->tempstr && !mini->tempstr2 && is_env(mini, mini->cmd->cmds[index]))
+	else if (mini->tempstr && !mini->tempstr2 && is_env(mini, cmd->cmds[i]))
 		modif_var(mini, mini->tempstr, "");
-	else if (mini->tempstr && !mini->tempstr2 && !is_env(mini, mini->cmd->cmds[index]))
+	else if (mini->tempstr && !mini->tempstr2 && !is_env(mini, cmd->cmds[i]))
 		ft_lstadd_back(&mini->var, ft_lstnew(mini,
-				ft_strdup(mini, mini->cmd->cmds[index])));
+				ft_strdup(mini, cmd->cmds[i])));
 	if (mini->tempstr)
 	{
 		free(mini->tempstr);
@@ -116,7 +116,7 @@ void	ft_export(t_mini *mini, t_cmd *cmd)
 			g_status = 0;
 			mini->tempstr = ft_rev_strchr(mini, cmd->cmds[i], '=');
 			mini->tempstr2 = export_strchr(mini, cmd->cmds[i], '=');
-			do_export(mini, i);
+			do_export(mini, cmd, i);
 		}
 	}
 }

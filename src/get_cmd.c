@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 17:59:17 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:04:08 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ void	join_parts(t_mini *mini, int i)
 	mini->tempstr3 = ft_strdup(mini, "");
 	while (mini->temptab && mini->temptab[i])
 	{
-		if (mini->temptab[i][0] == '$' && mini->temptab[i][1] && (ft_isalnum(mini->temptab[i][1])
-			|| mini->temptab[i][1] == '_' || mini->temptab[i][1] == '?'))
-			mini->tempstr3 = ft_var(mini, &mini->temptab[i++][1], mini->tempstr3);
+		if (mini->temptab[i][0] == '$' && mini->temptab[i][1]
+			&& (ft_isalnum(mini->temptab[i][1]) || mini->temptab[i][1] == '_'
+			|| mini->temptab[i][1] == '?'))
+			mini->tempstr3 = ft_var(mini, &mini->temptab[i++][1],
+					mini->tempstr3);
 		else if (mini->temptab[i][0] == S_QUOTE)
 		{
 			delete_quotes(mini, mini->temptab[i++], 0, 0);
@@ -50,7 +52,8 @@ void	join_parts(t_mini *mini, int i)
 			mini->tempstr4 = ft_free(mini->tempstr4);
 		}
 		else
-			mini->tempstr3 = ft_strjoin(mini, mini->tempstr3, mini->temptab[i++]);
+			mini->tempstr3 = ft_strjoin(mini, mini->tempstr3,
+					mini->temptab[i++]);
 	}
 	mini->temptab = ft_free_tab(mini->temptab, ft_tablen(mini->temptab));
 }
