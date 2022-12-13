@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 12:32:09 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:08:14 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,27 @@ char	*status_prompt(t_mini *mini, char *prompt)
 	nb = ft_itoa(mini, g_status);
 	prompt = ft_strjoin(mini, prompt, nb);
 	free(nb);
-	prompt = ft_strjoin(mini, prompt, ") > ");
+	prompt = ft_strjoin(mini, prompt, ") $ ");
 	prompt = ft_strjoin(mini, prompt, WHITE);
 	return (prompt);
+}
+
+void	put_shell(void)
+{
+	printf(GREEN);
+	printf("\n███╗   ███╗██╗███╗   ██╗██╗");
+	printf("███████╗██╗  ██╗███████╗██╗     ██╗     \n");
+	printf("████╗ ████║██║████╗  ██║██║██╔════╝");
+	printf("██║  ██║██╔════╝██║     ██║     \n");
+	printf("██╔████╔██║██║██╔██╗ ██║██║███████╗");
+	printf("███████║█████╗  ██║     ██║     \n");
+	printf("██║╚██╔╝██║██║██║╚██╗██║██║╚════██║");
+	printf("██╔══██║██╔══╝  ██║     ██║     \n");
+	printf("██║ ╚═╝ ██║██║██║ ╚████║██║███████║");
+	printf("██║  ██║███████╗███████╗███████╗\n");
+	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝");
+	printf("╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n\n");
+	printf(RESET);
 }
 
 char	*get_prompt(t_mini *mini, char *prompt)

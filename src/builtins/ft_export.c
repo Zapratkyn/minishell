@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 12:32:14 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:27:26 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,31 @@ static char	*export_strchr(t_mini *mini, char *str, char c)
 	return (NULL);
 }
 
-static void	do_export(t_mini *mini, int index, char *s1, char *s2)
+ void	do_export(t_mini *mini, int index)
 {
-	if (!s1 && !is_env(mini, mini->cmd->cmds[index]))
+	if (!mini->tempstr && !is_env(mini, mini->cmd->cmds[index]))
 		ft_lstadd_back(&mini->var, ft_lstnew(mini, ft_strdup(mini,
 					mini->cmd->cmds[index])));
-	if (s1 && s2 && !is_env(mini, mini->cmd->cmds[index]))
+	if (mini->tempstr && mini->tempstr2 && !is_env(mini, mini->cmd->cmds[index]))
 		ft_lstadd_back(&mini->var, ft_lstnew(mini, ft_strdup(mini,
 					mini->cmd->cmds[index])));
-	else if (s1 && s2 && is_env(mini, mini->cmd->cmds[index]))
-		modif_var(mini, s1, s2);
-	else if (s1 && !s2 && is_env(mini, mini->cmd->cmds[index]))
-		modif_var(mini, s1, "");
-	else if (s1 && !s2 && !is_env(mini, mini->cmd->cmds[index]))
+	else if (mini->tempstr && mini->tempstr2 && is_env(mini, mini->cmd->cmds[index]))
+		modif_var(mini, mini->tempstr, mini->tempstr2);
+	else if (mini->tempstr && !mini->tempstr2 && is_env(mini, mini->cmd->cmds[index]))
+		modif_var(mini, mini->tempstr, "");
+	else if (mini->tempstr && !mini->tempstr2 && !is_env(mini, mini->cmd->cmds[index]))
 		ft_lstadd_back(&mini->var, ft_lstnew(mini,
 				ft_strdup(mini, mini->cmd->cmds[index])));
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
+	if (mini->tempstr)
+	{
+		free(mini->tempstr);
+		mini->tempstr = NULL;
+	}
+	if (mini->tempstr2)
+	{
+		free(mini->tempstr2);
+		mini->tempstr2 = NULL;
+	}
 }
 
 static void	display_exp(t_mini *mini)
@@ -94,8 +100,6 @@ static int	check_export(t_mini *mini, char *s)
 
 void	ft_export(t_mini *mini, t_cmd *cmd)
 {
-	char	*s1;
-	char	*s2;
 	int		i;
 
 	if (!cmd->cmds[1])
@@ -110,9 +114,9 @@ void	ft_export(t_mini *mini, t_cmd *cmd)
 			if (!check_export(mini, cmd->cmds[i]))
 				continue ;
 			g_status = 0;
-			s1 = ft_rev_strchr(mini, cmd->cmds[i], '=');
-			s2 = export_strchr(mini, cmd->cmds[i], '=');
-			do_export(mini, i, s1, s2);
+			mini->tempstr = ft_rev_strchr(mini, cmd->cmds[i], '=');
+			mini->tempstr2 = export_strchr(mini, cmd->cmds[i], '=');
+			do_export(mini, i);
 		}
 	}
 }
