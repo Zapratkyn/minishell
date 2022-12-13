@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 16:51:42 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:30:12 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,30 @@ char	*ft_var(t_mini *mini, char *str, char *result)
 	char	*s;
 
 	s = NULL;
-	if (!is_var(mini, str))
-		return (result);
-	else if (str[0] == '?')
+	if (str[0] == '?')
 	{
 		s = mini_getenv(mini, str);
 		result = ft_strjoin(mini, result, s);
 		free (s);
 	}
-	else
-		result = ft_strjoin(mini, result, mini_getenv(mini, str));
+	else if (mini_getenv(mini, str))
+	{
+		s = ft_strdup(mini, mini_getenv(mini, str));
+		result = ft_strjoin(mini, result, s);
+		free (s);
+	}
 	return (result);
 }
 
-char	*join_parts(t_mini *mini, char **parts, int i)
+char	*join_parts(t_mini *mini, char **parts, char *result, int i)
 {
-	char	*result;
 	char	*s;
 
 	result = ft_strdup(mini, "");
 	while (parts && parts[i])
 	{
-		if (parts[i][0] == '$' && parts[i][1])
+		if (parts[i][0] == '$' && parts[i][1]
+			&& (ft_isalnum(parts[i][1]) || parts[i][1] == '_'))
 			result = ft_var(mini, &parts[i++][1], result);
 		else if (parts[i][0] == S_QUOTE)
 		{
@@ -66,7 +68,7 @@ char	*manage_string(t_mini *mini, char *str, int i)
 
 	result = NULL;
 	parts = split_string(mini, str, 0, 0);
-	result = join_parts(mini, parts, 0);
+	result = join_parts(mini, parts, NULL, 0);
 	if (i == 1)
 		free (str);
 	return (result);
@@ -74,22 +76,28 @@ char	*manage_string(t_mini *mini, char *str, int i)
 
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
-	cmd = cmd_init(mini, str, 0);
+	cmd = cmd_init(mini, str);
 	if (cmd->infile != -1)
 	{
 		get_path(mini, cmd, 0);
 		cmd->cmds = clean_files(mini, cmd->cmds, -1, 0);
-		while (cmd->cmds && cmd->cmds[++i])
+		while (cmd->cmds && cmd->cmds[i])
 		{
-			// if (cmd->cmds[i][0] == '$' && !is_var(mini, &cmd->cmds[i][1]))
-			// 	free (cmd->cmds[i]);
-			// else
+			if (cmd->cmds[i][0] == '$' && cmd->cmds[i][1]
+				&& (ft_isalnum(cmd->cmds[i][1]) || cmd->cmds[i][1] == '_')
+				&& !mini_getenv(mini, &cmd->cmds[i][1]))
+			{
+				free (cmd->cmds[i]);
+				cmd->cmds[i] = NULL;
+			}
+			else
 				cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 1);
+			i++;
 		}
-		if (ft_strchr(str, PIPE) && cmd->infile != -1
+		if (ft_strchr_minishell(str, PIPE, 0) && cmd->infile != -1
 			&& cmd->outfile != -1 && ft_strcmp(cmd->path, "none"))
 			cmd->next = get_cmd(mini, cmd->next,
-					&ft_strchr(str, PIPE)[1], -1);
+					&ft_strchr_minishell(str, PIPE, 0)[1], -1);
 	}
 	return (cmd);
 }

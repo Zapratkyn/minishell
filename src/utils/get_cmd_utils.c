@@ -6,13 +6,13 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 16:58:02 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:31:59 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-t_cmd	*cmd_init(t_mini *mini, char *str, int i)
+t_cmd	*cmd_init(t_mini *mini, char *str)
 {
 	t_cmd	*cmd;
 	char	*input;
@@ -27,12 +27,13 @@ t_cmd	*cmd_init(t_mini *mini, char *str, int i)
 	cmd->pid = -1;
 	cmd->next = NULL;
 	input = ft_strdup(mini, "");
-	while (str[i] && str[i] != PIPE)
-		input = ft_strjoin2(mini, input, str[i++]);
+	input = get_input(mini, str, NULL, 0);
 	cmd->cmds = ft_split_cmd(mini, input, 0, 0);
-	// cmd->cmds_nb = ft_tablen(cmd->cmds);
+	cmd->cmds_nb = ft_tablen(cmd->cmds);
 	free (input);
 	cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);
+	if (!ft_quotes(input, 0, 0, 0))
+		cmd->infile = unclosed_quotes();
 	return (cmd);
 }
 

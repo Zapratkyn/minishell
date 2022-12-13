@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/12 16:39:29 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:31:02 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,10 @@ char					*get_exec(t_mini *mini, t_cmd *cmd);
 /* Parsing & Initialization */
 char					**clean_files(t_mini *mini, char **cmds,
 							int i, int j);
-t_cmd					*cmd_init(t_mini *mini, char *str, int i);
+t_cmd					*cmd_init(t_mini *mini, char *str);
 char					*delete_double_quotes(t_mini *mini, char *str, int i);
 char					*delete_quotes(t_mini *mini, char *str, int i, int j);
-int						dol(char *str);
+int						dollar(char *str, int i, char c);
 char					**ft_split_cmd(t_mini *mini, char *s, int i,
 							int index);
 char					*ft_var(t_mini *mini, char *str, char *result);
@@ -165,6 +165,8 @@ void					mini_env(t_mini *mini);
 int						mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i);
 char					*to_empty(char *str);
 int						quotes(char *str, char c, int i);
+char					*get_input(t_mini *mini, char *str,
+							char *result, char c);
 
 /* Execution */
 void					execute(t_mini *mini);
@@ -193,7 +195,6 @@ int						par_builtin(t_mini *mini, t_cmd *cmd);
 int						check_option(t_mini *mini, t_cmd *cmd, char *s);
 char					*ft_rev_strchr(t_mini *mini, char *str, char c);
 int						is_env(t_mini *mini, char *s);
-
 
 /* Error */
 void					ft_error(t_mini *mini, char *type, int is_exit);
@@ -236,6 +237,7 @@ void					ft_putstr_fd(char *s, int fd);
 void					ft_put_tab(char **tab);
 char					**ft_split(t_mini *mini, char const *s, char c);
 char					*ft_strchr(const char *s, int c);
+char					*ft_strchr_minishell(const char *s, int c, char k);
 int						ft_strcmp(char *s1, char *s2);
 char					*ft_strdup(t_mini *mini, char *str);
 char					*ft_strdup2(t_mini *mini, char *str);
