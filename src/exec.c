@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:21:10 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 17:59:03 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:18:49 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	close_exec(t_cmd *cmd)
 void	exec_child(t_mini *mini, t_cmd *cmd)
 {
 	redir(mini, cmd);
-	if (ch_builtin(mini, cmd))
+	if (ch_builtin(cmd))
 		do_builtin(mini, cmd);
-	else if (cmd->path && !par_builtin(mini, cmd))
+	else if (cmd->path && !par_builtin(cmd))
 		execve(cmd->path, cmd->cmds, ft_lst_to_str(mini, mini->var));
 	ft_free_all(mini);
 	exit(g_status);

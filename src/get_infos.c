@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_infos.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 11:42:09 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:17:44 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 				cmd->path = ft_strdup(mini, path);
 			free (path);
 		}
-		if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd) && !cmd->path)
+		if (!ch_builtin(cmd) && !par_builtin(cmd) && !cmd->path)
 			get_infos_error(mini, cmd, 3, exec);
 		free (exec);
 	}

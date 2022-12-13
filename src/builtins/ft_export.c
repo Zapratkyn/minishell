@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:54:36 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 18:05:50 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:38:43 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	display_exp(t_mini *mini)
 	tmp = var;
 	while (var)
 	{
-		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		ft_n_putstr(var->content, ft_find_index(var->content, '=') + 1);
 		if (ft_strchr(var->content, '='))
 			write(STDOUT_FILENO, "\"", 1);

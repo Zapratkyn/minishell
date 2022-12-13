@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 17:59:41 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:18:36 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	pipe_and_fork(t_mini *mini, t_cmd *cmd)
 {
 	if (pipe(cmd->fd) == -1)
 		ft_error(mini, PIPE_ERR, EXIT);
-	if (n_of_cmd(cmd) == 1 && par_builtin(mini, cmd))
+	if (n_of_cmd(cmd) == 1 && par_builtin(cmd))
 		do_builtin(mini, cmd);
 	cmd->pid = fork();
 	if (cmd->pid == -1)
@@ -43,13 +43,13 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 		g_status = 1;
 		return (0);
 	}
-	if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd)
+	if (!ch_builtin(cmd) && !par_builtin(cmd)
 		&& !ft_strcmp(cmd->path, "none"))
 	{
 		g_status = 127;
 		return (0);
 	}
-	if (ch_builtin(mini, cmd) && !check_builtin(mini, cmd))
+	if (ch_builtin(cmd) && !check_builtin(mini, cmd))
 	{
 		g_status = 1;
 		return (0);
