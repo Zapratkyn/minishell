@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 22:02:13 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 22:02:53 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:34:56 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isdigit(char c)
 {
-	return ((c >= '0' && c <= '9'));
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

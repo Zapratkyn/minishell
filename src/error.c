@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 11:57:58 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:48:09 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	unclosed_quotes(void)
 int	spike_error(t_mini *mini)
 {
 	ft_error(mini, "syntax error near unexpected token", 0);
+	g_status = 258;
 	return (-1);
 }
 

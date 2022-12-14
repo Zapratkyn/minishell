@@ -6,32 +6,37 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 12:04:53 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:16:03 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-int	is_input(t_mini *mini, char *str)
+int	is_input(t_mini *mini, char *str, int i, char *s)
 {
-	int		i;
-
-	i = 0;
 	if (ft_strlen(str) == 0 || ft_quotes(str, -1, 0, 0) == -1)
 		return (0);
-	if (str[0] == '/' && (!str[1] || str[1] == ' '))
+	if (str[0] == '/' && str[1] != ' ')
 	{
-		ft_putendl_fd("minishell: permission denied: /", 2);
-		g_status = 126;
-		return (0);
+		while (str[++i] == '/')
+			s = ft_strjoin2(mini, s, str[i]);
+		if (!str[i])
+		{
+			write (2, "minishell: permission denied: ", 30);
+			ft_putendl_fd(s, 2);
+			free (s);
+			g_status = 126;
+			return (0);
+		}
 	}
+	free (s);
+	i = -1;
 	if (str[0] == '/' && !dir(mini, str, 0, 0))
 		return (0);
-	while (str[i])
+	while (str[++i])
 	{
 		if (str[i] != ' ')
 			return (1);
-		i++;
 	}
 	return (0);
 }
