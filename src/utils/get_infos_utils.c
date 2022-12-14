@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:09:16 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 13:12:53 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:18:18 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	get_input(t_mini *mini, char *str, char c)
 
 	i = 0;
 	mini->tempstr = ft_strdup(mini, "");
+	while (str[i] == ' ')
+		i++;
 	while (str[i] && str[i] != PIPE)
 	{
 		if (str[i] == '"' || str[i] == S_QUOTE)

@@ -6,48 +6,46 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 13:16:03 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:27:43 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
+int	is_input2(char *s)
+{
+	write (2, "minishell: permission denied: ", 30);
+	ft_putendl_fd(s, 2);
+	free (s);
+	g_status = 126;
+	return (0);
+}
+
 int	is_input(t_mini *mini, char *str, int i, char *s)
 {
-	if (ft_strlen(str) == 0 || ft_quotes(str, -1, 0, 0) == -1)
+	int	j;
+
+	while (str[i] == ' ')
+		i++;
+	j = i;
+	if (ft_strlen(str) == 0 || ft_quotes(&str[i], -1, 0, 0) == -1)
+	{
+		free (s);
 		return (0);
-	if (str[0] == '/' && str[1] != ' ')
+	}
+	if (str[i] == '/' && str[i + 1] != ' ')
 	{
 		while (str[++i] == '/')
 			s = ft_strjoin2(mini, s, str[i]);
 		if (!str[i])
-		{
-			write (2, "minishell: permission denied: ", 30);
-			ft_putendl_fd(s, 2);
-			free (s);
-			g_status = 126;
-			return (0);
-		}
+			return (is_input2(s));
 	}
 	free (s);
-	i = -1;
-	if (str[0] == '/' && !dir(mini, str, 0, 0))
+	if (str[i] == '/' && !dir(mini, &str[i], 0, 0))
 		return (0);
-	while (str[++i])
-	{
-		if (str[i] != ' ')
-			return (1);
-	}
+	while (str[++j] != ' ')
+		return (1);
 	return (0);
-}
-
-void	mini_new_line(int sig)
-{
-	(void)sig;
-	g_status = 1;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
 }
 
 int	ft_quotes(char *str, int i, int quotes, int double_quotes)

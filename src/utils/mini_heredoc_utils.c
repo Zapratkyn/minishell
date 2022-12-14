@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:53:53 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 11:59:48 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:41:57 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,15 @@ int	ft_spikes(t_mini *mini, t_cmd *cmd)
 		i++;
 	}
 	return (1);
+}
+
+char	*get_eof(t_cmd *cmd, int i)
+{
+	if (cmd->cmds[i][2])
+		return (&cmd->cmds[i][2]);
+	else if (!cmd->cmds[i][2] && cmd->cmds[i + 1]
+			&& cmd->cmds[i + 1][0] != '<'
+			&& cmd->cmds[i + 1][0] != '>')
+		return (cmd->cmds[i + 1]);
+	return (NULL);
 }

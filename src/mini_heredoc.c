@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 12:01:03 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:41:51 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	add_fd(t_mini *mini, char *str, int fd)
 {
 	char	*file;
 
+	g_status = 0;
 	if (!ft_quotes(str, -1, 0, 0))
 		return (unclosed_quotes());
 	else if (str[0] == '<' && !str[1])
@@ -111,27 +112,25 @@ int	add_fd(t_mini *mini, char *str, int fd)
 int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 {
 	char	*eof;
+	int		fd_c;
 
-	while (cmd->cmds[i] && fd != -1)
+	fd_c = fd;
+	while (cmd->cmds[++i] && fd != -1)
 	{
 		if (cmd->cmds[i][0] == '<')
 		{
 			fd = STDIN_FILENO;
 			if (cmd->cmds[i][1] == '<')
 			{
-				if (cmd->cmds[i][2])
-					eof = &cmd->cmds[i][2];
-				else if (!cmd->cmds[i][2] && cmd->cmds[i + 1]
-						&& cmd->cmds[i + 1][0] != '<'
-						&& cmd->cmds[i + 1][0] != '>')
-					eof = cmd->cmds[i + 1];
-				else
+				eof = get_eof(cmd, i);
+				if (!eof)
 					return (get_infos_error(mini, cmd, 1, NULL));
-				g_status = 0;
-				fd = add_fd(mini, eof, 0);
+				else if (eof[0] != '<')
+					fd = add_fd(mini, eof, 0);
 			}
 		}
-		i++;
 	}
+	if (fd_c != STDIN_FILENO)
+		return (fd_c);
 	return (fd);
 }

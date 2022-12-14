@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 12:22:05 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:04:33 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ t_cmd					*get_cmd(t_mini *mini,
 char					*get_exec(t_mini *mini, t_cmd *cmd);
 void					get_infile(t_mini *mini, t_cmd *cmd, int i);
 void					get_outfile(t_mini *mini, t_cmd *cmd, int i, int j);
-void					get_path(t_mini *mini, t_cmd *cmd, int i);
+void					get_path(t_mini *mini, t_cmd *cmd, char *path, int i);
 char					*get_vars(t_mini *mini, char *str, int i);
 int						is_var(t_mini *mini, char *var);
 void					mini_env(t_mini *mini);
@@ -175,6 +175,7 @@ int						quotes(char *str, char c, int i);
 void					get_input(t_mini *mini, char *str, char c);
 int						ft_spikes(t_mini *mini, t_cmd *cmd);
 void					put_shell(void);
+char					*get_eof(t_cmd *cmd, int i);
 
 /* Execution */
 void					execute(t_mini *mini);

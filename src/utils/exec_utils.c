@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 13:00:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:27:45 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,13 @@ int	n_of_cmd(t_cmd *cmd)
 		tmp = tmp->next;
 	}
 	return (n);
+}
+
+void	mini_new_line(int sig)
+{
+	(void)sig;
+	g_status = 1;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
 }

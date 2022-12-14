@@ -6,23 +6,22 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 12:11:04 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:13:48 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
 
-void	get_path(t_mini *mini, t_cmd *cmd, int i)
+void	get_path(t_mini *mini, t_cmd *cmd, char *path, int i)
 {
 	char	*exec;
-	char	*path;
 
 	exec = get_exec(mini, cmd);
 	if (exec)
 	{
-		if (!access(exec, X_OK))
+		if (!access(exec, X_OK) && exec[0] != '.')
 			cmd->path = ft_strdup(mini, exec);
-		while (mini->paths[i] && !cmd->path)
+		while (mini->paths[i] && !cmd->path && exec[0] != '.')
 		{
 			path = ft_strjoin(mini, ft_strdup(mini, ""), mini->paths[i++]);
 			path = ft_strjoin2(mini, path, '/');
@@ -31,7 +30,8 @@ void	get_path(t_mini *mini, t_cmd *cmd, int i)
 				cmd->path = ft_strdup(mini, path);
 			free (path);
 		}
-		if (!ch_builtin(cmd) && !par_builtin(cmd) && !cmd->path)
+		if ((!ch_builtin(cmd) && !par_builtin(cmd)
+				&& !cmd->path) || exec[0] == '.')
 			get_infos_error(mini, cmd, 3, exec);
 		free (exec);
 	}
