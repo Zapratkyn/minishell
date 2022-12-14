@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 11:47:06 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:10:30 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <sys/ioctl.h>
-// # include <sys/types.h>
 # include <sys/wait.h>
-// # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -59,28 +57,28 @@ int	g_status;
 /* Managing errors */
 # define ARG_ERR "minishell: exit: too many arguments"
 # define CMD_ERR "minishell : wrong input command"
-# define DIR_ERR "minishell: cd: no such file or directory"
+# define DIR_ERR "minishell: no such file or directory"
 # define DUP_ERR "minishell : error in the dup2."
-# define EXIT 1
-# define EXPORT_ERR "minishell: export: wrong identifier"
+# define EXPORT_ERR "minishell: export: not a valid identifier"
 # define FORK_ERR "minishell : error in the creation of a fork."
 # define MALLOC_ERR "minishell : error in the memory allocation of a malloc."
 # define NUM_ERR "minishell: exit: numeric argument required"
-# define NO_EXIT 0
 # define PIPE_ERR "minishell : error in the creation of a pipe."
 # define PWD_ERR "minishell : error in the pwd."
 # define UNSET_NAME_ERR "minishell: unset: invalid parameter name"
-# define UNSET_ID_ERR "minishell: unset: wrong identifier"
+# define UNSET_ID_ERR "minishell: unset: not a valid identifier"
 
 /* Characters */
 # define CHILD_PROC 0
+# define EXIT 1
 # define READ 0
 # define WRITE 1
 # define S_QUOTE 39
 # define D_QUOTE 34
 # define PIPE 124
-# define NO_NEW_L 0
 # define NEW_L 1
+# define NO_EXIT 0
+# define NO_NEW_L 0
 
 /*
 ** Structures
@@ -132,7 +130,6 @@ void					mini_init(t_mini *mini, char **env);
 int						mini_parser(t_mini *mini, char *str);
 
 /* Utils.c */
-char					*clean_string(t_mini *mini, char *str, int len, int i);
 int						is_input(t_mini *mini, char *str);
 char					*fill_parts(t_mini *mini, char **parts,
 							char *str, int i);
@@ -177,6 +174,7 @@ char					*to_empty(char *str);
 int						quotes(char *str, char c, int i);
 void					get_input(t_mini *mini, char *str, char c);
 int						ft_spikes(t_mini *mini, t_cmd *cmd);
+void					put_shell(void);
 
 /* Execution */
 void					execute(t_mini *mini);
@@ -190,7 +188,7 @@ void					pipe_and_fork(t_mini *mini, t_cmd *cmd);
 
 /* Builtin */
 int						check_builtin(t_mini *mini, t_cmd *cmd);
-int						ch_builtin(t_mini *mini, t_cmd *cmd);
+int						ch_builtin(t_cmd *cmd);
 void					do_builtin(t_mini *mini, t_cmd *cmd);
 void					ft_cd(t_mini *mini, t_cmd *cmd);
 void					ft_echo(t_mini *mini, t_cmd *cmd);
@@ -199,7 +197,7 @@ void					ft_exit(t_mini *mini, t_cmd *cmd);
 void					ft_export(t_mini *mini, t_cmd *cmd);
 void					ft_pwd(t_mini *mini);
 void					ft_unset(t_mini *mini, t_cmd *cmd, int i, char *s);
-int						par_builtin(t_mini *mini, t_cmd *cmd);
+int						par_builtin(t_cmd *cmd);
 
 /* Builtin UTILS */
 int						check_option(t_mini *mini, t_cmd *cmd, char *s);
@@ -237,11 +235,13 @@ int						ft_lstsize(t_var *var);
 t_var					*ft_sortlst(t_var *var);
 
 /* Libft */
+int						ft_atoi(const char *str);
 char					*ft_calloc(t_mini *mini, int count, int size);
 void					ft_error(t_mini *mini, char *type, int is_exit);
 int						ft_find_index(char *s, char c);
 char					*ft_insert(t_mini *mini, char *s1, char c, char *s2);
 int						ft_isalnum(int c);
+int						ft_isdigit(char c);
 char					*ft_itoa(t_mini *mini, int n);
 void					ft_n_putstr(char *s, int n);
 void					ft_putendl_fd(char *s, int fd);

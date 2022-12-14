@@ -6,27 +6,45 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:54 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 12:23:41 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 11:07:42 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-unsigned long long	ft_atoull(const char *str)
+static long long	ft_atoll(char *str)
 {
-	unsigned long long	sum;
-	int					sign;
-	int					i;
+	long long	sum;
+	int			i;
+	int			sign;
 
-	sum = 0;
 	sign = 1;
+	sum = 0;
 	i = 0;
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
-			sign *= -1;
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+		sum = sum * 10 + str[i++] - 48;
+	return (sum * sign);
+}
+
+static unsigned long long	ft_atoull(const char *str)
+{
+	unsigned long long	sum;
+	int					i;
+
+	sum = 0;
+	i = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
 		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
@@ -34,10 +52,11 @@ unsigned long long	ft_atoull(const char *str)
 	return (sum);
 }
 
-int	is_exit_number(char *s)
+static int	is_exit_number(char *s)
 {
 	int					i;
 	unsigned long long	nb;
+	unsigned long long	max;
 
 	i = -1;
 	if (!s)
@@ -50,7 +69,10 @@ int	is_exit_number(char *s)
 			return (0);
 	}
 	nb = ft_atoull(s);
-	if (i > 19 || nb > LLONG_MAX)
+	max = 9223372036854775807;
+	if (s[0] != '-' && nb > max)
+		return (0);
+	if (s[0] == '-' && nb > max + 1)
 		return (0);
 	return (1);
 }
@@ -72,8 +94,9 @@ void	ft_exit(t_mini *mini, t_cmd *cmd)
 			ft_free_all(mini);
 			exit(g_status);
 		}
+		if (cmd->cmds[1])
+			g_status = ft_atoll(cmd->cmds[1]);
 		ft_free_all(mini);
-		g_status = 0;
 		exit(g_status);
 	}
 }

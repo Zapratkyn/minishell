@@ -6,7 +6,7 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 11:54:58 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 12:23:28 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:17:19 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,9 @@ void	do_builtin(t_mini *mini, t_cmd *cmd)
 		ft_unset(mini, cmd, 0, s);
 }
 
-int	par_builtin(t_mini *mini, t_cmd *cmd)
+int	par_builtin(t_cmd *cmd)
 {
-	if (!cmd->cmds[0])
-		ft_error(mini, CMD_ERR, EXIT);
-	else if (!ft_strcmp("export", cmd->cmds[0]) && cmd->cmds[1])
+	if (!ft_strcmp("export", cmd->cmds[0]) && cmd->cmds[1])
 		return (1);
 	else if (!ft_strcmp("exit", cmd->cmds[0]))
 		return (1);
@@ -57,11 +55,9 @@ int	par_builtin(t_mini *mini, t_cmd *cmd)
 	return (0);
 }
 
-int	ch_builtin(t_mini *mini, t_cmd *cmd)
+int	ch_builtin(t_cmd *cmd)
 {
-	if (!cmd->cmds[0])
-		ft_error(mini, CMD_ERR, EXIT);
-	else if (!ft_strcmp("echo", cmd->cmds[0]))
+	if (!ft_strcmp("echo", cmd->cmds[0]))
 		return (1);
 	else if (!ft_strcmp("pwd", cmd->cmds[0]))
 		return (1);

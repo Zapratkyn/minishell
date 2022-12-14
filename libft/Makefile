@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
+#    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/13 15:06:33 by gponcele         ###   ########.fr        #
+#    Updated: 2022/12/13 22:03:06 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,12 @@ SRC							=	lst/ft_lst_index.c \
 								lst/ft_lstnew.c \
 								lst/ft_lstsize.c \
 								lst/ft_sortlst.c \
+								ft_atoi.c \
 								ft_calloc.c \
 								ft_find_index.c \
 								ft_insert.c \
 								ft_isalnum.c \
+								ft_isdigit.c \
 								ft_itoa.c \
 								ft_n_putstr.c \
 								ft_putstr_fd.c \

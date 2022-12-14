@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 11:38:16 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:11:13 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,20 @@ int	get_var(t_mini *mini, char **env)
 	return (1);
 }
 
+static void	modif_shlvl(t_mini *mini)
+{
+	int		nb;
+	char	*s;
+
+	nb = ft_atoi(mini_getenv(mini, "SHLVL")) + 1;
+	s = ft_itoa(mini, nb);
+	modif_var(mini, "SHLVL", s);
+	free(s);
+}
+
 void	mini_init(t_mini *mini, char **env)
 {
+	put_shell();
 	mini->cmd = NULL;
 	mini->var = NULL;
 	mini->tempstr = NULL;
@@ -43,6 +55,7 @@ void	mini_init(t_mini *mini, char **env)
 	mini->temptab = NULL;
 	if (!get_var(mini, env))
 		ft_lstclear(mini->var);
+	modif_shlvl(mini);
 	ft_split_paths(mini, mini_getenv(mini, "PATH"), ':');
 	mini->prompt = NULL;
 	mini->prompt = get_prompt(mini, mini->prompt);
@@ -69,7 +82,6 @@ int	mini_parser(t_mini *mini, char *str)
 	{
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
 		execute(mini);
-		mini->cmd = ft_free_cmd(mini->cmd);
 		mini_unlink(mini, "/tmp/heredoc_");
 	}
 	free (str);
@@ -93,6 +105,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	ft_free_all(&mini);
 	write(STDERR_FILENO, "exit\n", 6);
-	LEAKS
+	g_status = 0;
 	exit(g_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_paths.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:23:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 15:09:06 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 21:20:14 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,19 @@ void	ft_split_paths(t_mini *mini, char const *s, char c)
 {
 	int		i;
 	int		wc;
-	int		index;
 
 	if (!s)
 		return ;
-	i = 0;
-	index = 0;
+	i = -1;
 	wc = count_words(s, c);
 	mini->paths = malloc(sizeof(char *) * (wc + 1));
 	if (!mini->paths)
 		ft_error(mini, MALLOC_ERR, EXIT);
-	while (i < wc)
+	while (++i < wc)
 	{
 		mini->paths[i] = find_next_word(mini, (char *)s, c, i + 1);
 		if (!mini->paths[i])
 			ft_error(mini, MALLOC_ERR, EXIT);
-		index += ft_strlen(mini->paths[i++]);
 	}
 	mini->paths[i] = NULL;
 }

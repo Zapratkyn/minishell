@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 11:39:57 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:10:40 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	mini_unlink(t_mini *mini, char *str)
 
 char	*ft_free(char *str)
 {
-	free (str);
+	if (str)
+		free (str);
 	return (NULL);
 }

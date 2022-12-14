@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 17:07:20 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:18:36 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	pipe_and_fork(t_mini *mini, t_cmd *cmd)
 {
 	if (pipe(cmd->fd) == -1)
 		ft_error(mini, PIPE_ERR, EXIT);
-	if (n_of_cmd(cmd) == 1 && par_builtin(mini, cmd))
+	if (n_of_cmd(cmd) == 1 && par_builtin(cmd))
 		do_builtin(mini, cmd);
 	cmd->pid = fork();
 	if (cmd->pid == -1)
@@ -38,16 +38,18 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 {
 	if (cmd->infile == -1 || cmd->outfile == -1)
 	{
+		if (cmd->outfile == -1)
+			ft_error(mini, DIR_ERR, NO_EXIT);
 		g_status = 1;
 		return (0);
 	}
-	if (!ch_builtin(mini, cmd) && !par_builtin(mini, cmd)
+	if (!ch_builtin(cmd) && !par_builtin(cmd)
 		&& !ft_strcmp(cmd->path, "none"))
 	{
 		g_status = 127;
 		return (0);
 	}
-	if (ch_builtin(mini, cmd) && !check_builtin(mini, cmd))
+	if (ch_builtin(cmd) && !check_builtin(mini, cmd))
 	{
 		g_status = 1;
 		return (0);
@@ -69,28 +71,3 @@ int	n_of_cmd(t_cmd *cmd)
 	}
 	return (n);
 }
-
-// char	*clean_string(t_mini *mini, char *str, int len, int i)
-// {
-// 	char	*result;
-// 	int		j;
-
-// 	j = 0;
-// 	while (str[++i])
-// 	{
-// 		if (str[i] != S_QUOTE && str[i] != '"')
-// 			len++;
-// 	}
-// 	result = malloc (sizeof(char) * len + 1);
-// 	if (!result)
-// 		ft_error(mini, MALLOC_ERR, EXIT);
-// 	i = -1;
-// 	while (str[++i])
-// 	{
-// 		if (str[i] != S_QUOTE && str[i] != '"')
-// 			result[j++] = str[i];
-// 	}
-// 	result[j] = '\0';
-// 	free (str);
-// 	return (result);
-// }
