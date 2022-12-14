@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:09:16 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 11:31:55 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:12:53 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ void	get_input(t_mini *mini, char *str, char c)
 
 int	dollar(char *str, int i, char c)
 {
+	(void)c;
+	if (ft_isdigit(str[1]))
+		return (2);
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'
-				|| str[i] == '?'))
+			|| str[i] == '?'))
 	{
 		if (str[i] == '"' || str[i] == S_QUOTE)
 		{
@@ -74,7 +77,7 @@ int	dollar(char *str, int i, char c)
 		}
 		else
 			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'
-				|| str[i] == '?'))
+					|| str[i] == '?'))
 				i++;
 	}
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 11:47:59 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:58:42 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ t_cmd	*cmd_init(t_mini *mini, char *str)
 	get_input(mini, str, 0);
 	cmd->cmds = ft_split_cmd(mini, mini->tempstr, 0, 0);
 	cmd->cmds_nb = ft_tablen(cmd->cmds);
-	if (ft_quotes(mini->tempstr, -1, 0, 0) == -1 || ft_spikes(mini, cmd) == -1)
+	if (ft_quotes(mini->tempstr, -1, 0, 0) == -1)
 		cmd->infile = -1;
+	if (ft_spikes(mini, cmd) == -1)
+		cmd->infile = -2;
 	mini->tempstr = ft_free(mini->tempstr);
 	if (cmd->infile != -1)
 		cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);

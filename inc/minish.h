@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 12:10:30 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:22:05 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void					mini_init(t_mini *mini, char **env);
 int						mini_parser(t_mini *mini, char *str);
 
 /* Utils.c */
-int						is_input(t_mini *mini, char *str);
+int						is_input(t_mini *mini, char *str, int i, char *s);
 char					*fill_parts(t_mini *mini, char **parts,
 							char *str, int i);
 int						ft_quotes(char *str, int i, int quotes,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 18:18:36 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:00:01 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ void	pipe_and_fork(t_mini *mini, t_cmd *cmd)
 
 int	check_cmd(t_mini *mini, t_cmd *cmd)
 {
-	if (cmd->infile == -1 || cmd->outfile == -1)
+	if (cmd->infile < 0 || cmd->outfile < 0)
 	{
 		if (cmd->outfile == -1)
 			ft_error(mini, DIR_ERR, NO_EXIT);
-		g_status = 1;
+		if (cmd->infile == -1)
+			g_status = 1;
 		return (0);
 	}
 	if (!ch_builtin(cmd) && !par_builtin(cmd)
