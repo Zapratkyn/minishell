@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 12:10:30 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:09:38 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	g_status;
 # define PWD_ERR "minishell : error in the pwd."
 # define UNSET_NAME_ERR "minishell: unset: invalid parameter name"
 # define UNSET_ID_ERR "minishell: unset: not a valid identifier"
+# define UNSET_VAR_ERR "minishell: unset: you cannot remove this variable"
 
 /* Characters */
 # define CHILD_PROC 0
