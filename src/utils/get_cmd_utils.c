@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 17:28:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 11:47:59 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ t_cmd	*cmd_init(t_mini *mini, char *str)
 	get_input(mini, str, 0);
 	cmd->cmds = ft_split_cmd(mini, mini->tempstr, 0, 0);
 	cmd->cmds_nb = ft_tablen(cmd->cmds);
-	if (ft_quotes(mini->tempstr, -1, 0, 0) == -1)
+	if (ft_quotes(mini->tempstr, -1, 0, 0) == -1 || ft_spikes(mini, cmd) == -1)
 		cmd->infile = -1;
 	mini->tempstr = ft_free(mini->tempstr);
-	cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);
+	if (cmd->infile != -1)
+		cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);
 	return (cmd);
 }
 
@@ -77,32 +78,37 @@ char	**clean_files(t_mini *mini, char **cmds, int i, int j)
 	return (result);
 }
 
-void	delete_double_quotes(t_mini *mini, char *str, int i)
+char	*delete_double_quotes(t_mini *mini, char *str, int i)
 {
-	mini->tempstr4 = ft_strdup(mini, "");
+	char	*result;
+
+	result = ft_strdup(mini, "");
 	while (str[i] != '"')
 	{
 		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != ' ')
 		{
 			i++;
-			ft_var(mini, &str[i], mini->tempstr4);
+			ft_var(mini, &str[i], result);
 			while (ft_isalnum(str[i]) || str[i] == '_')
 				i++;
 		}
 		else
-			mini->tempstr4 = ft_strjoin2(mini, mini->tempstr4, str[i++]);
+			result = ft_strjoin2(mini, result, str[i++]);
 	}
+	return (result);
 }
 
-void	delete_quotes(t_mini *mini, char *str, int i, int j)
+char	*delete_quotes(t_mini *mini, char *str, int i, int j)
 {
 	int		len;
+	char	*result;
 
 	len = ft_strlen(str);
-	mini->tempstr4 = malloc (sizeof(char) * len);
-	if (!mini->tempstr4)
+	result = malloc (sizeof(char) * len);
+	if (!result)
 		ft_error(mini, MALLOC_ERR, EXIT);
 	while (str[++i] != S_QUOTE)
-		mini->tempstr4[j++] = str[i];
-	mini->tempstr4[j] = '\0';
+		result[j++] = str[i];
+	result[j] = '\0';
+	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:51:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 16:10:50 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 11:43:41 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,24 @@ static char	*find_next_word(t_mini *mini, char *s, int i, int len)
 	return (result);
 }
 
-void	split_string(t_mini *mini, char *s, int i, int index)
+char	**split_string(t_mini *mini, char *s, int i, int index)
 {
 	int		wc;
 	int		len;
+	char	**result;
 
 	len = 0;
 	wc = count_words(s, 0, 0, 0);
-	mini->temptab = malloc(sizeof(char *) * (wc + 1));
-	if (!mini->temptab)
+	result = malloc(sizeof(char *) * (wc + 1));
+	if (!result)
 		ft_error(mini, MALLOC_ERR, EXIT);
 	while (i < wc)
 	{
 		len = find_next_len(&s[index], 0, 0);
-		mini->temptab[i] = find_next_word(mini, &s[index], 0, len);
-		index += ft_strlen(mini->temptab[i]);
+		result[i] = find_next_word(mini, &s[index], 0, len);
+		index += ft_strlen(result[i]);
 		i++;
 	}
-	mini->temptab[i] = NULL;
+	result[i] = NULL;
+	return (result);
 }

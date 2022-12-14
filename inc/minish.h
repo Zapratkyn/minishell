@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 17:52:40 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 11:47:06 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void					mini_exit(t_mini *mini);
 char					*mini_getenv(t_mini *mini, char *var);
 int						mini_get_status(t_mini *mini, char *var, int j);
 void					mini_new_line(int sig);
-void					split_string(t_mini *mini, char *s, int i, int index);
+char					**split_string(t_mini *mini, char *s, int i, int index);
 int						ft_pipes(char *str, int i);
 int						ft_pipes2(char *str, int i);
 char					**transform_parts(t_mini *mini, char **parts,
@@ -157,8 +157,8 @@ char					*get_exec(t_mini *mini, t_cmd *cmd);
 char					**clean_files(t_mini *mini, char **cmds,
 							int i, int j);
 t_cmd					*cmd_init(t_mini *mini, char *str);
-void					delete_double_quotes(t_mini *mini, char *str, int i);
-void					delete_quotes(t_mini *mini, char *str, int i, int j);
+char					*delete_double_quotes(t_mini *mini, char *str, int i);
+char					*delete_quotes(t_mini *mini, char *str, int i, int j);
 int						dollar(char *str, int i, char c);
 char					**ft_split_cmd(t_mini *mini, char *s, int i,
 							int index);
@@ -176,6 +176,7 @@ int						mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i);
 char					*to_empty(char *str);
 int						quotes(char *str, char c, int i);
 void					get_input(t_mini *mini, char *str, char c);
+int						ft_spikes(t_mini *mini, t_cmd *cmd);
 
 /* Execution */
 void					execute(t_mini *mini);
@@ -211,7 +212,7 @@ void					ft_error(t_mini *mini, char *type, int is_exit);
 int						unclosed_quotes(void);
 int						get_infos_error(t_mini *mini,
 							t_cmd *cmd, int i, char *s);
-int						spike_error(t_mini *mini, char *str);
+int						spike_error(t_mini *mini);
 int						dir(t_mini *mini, char *str, int i, char c);
 
 /* Free */

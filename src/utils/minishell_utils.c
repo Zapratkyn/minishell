@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 14:51:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:04:53 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_input(t_mini *mini, char *str)
 		return (0);
 	if (str[0] == '/' && (!str[1] || str[1] == ' '))
 	{
-		ft_putendl_fd("/: is a directory", 2);
+		ft_putendl_fd("minishell: permission denied: /", 2);
 		g_status = 126;
 		return (0);
 	}
@@ -105,7 +105,7 @@ int	ft_pipes2(char *str, int i)
 		i--;
 	if (str[i] == PIPE)
 	{
-		ft_putendl_fd("Unclosed pipes forbidden in minishell", 2);
+		ft_putendl_fd("Pipe as a last character forbidden in minishell", 2);
 		return (1);
 	}
 	i = -1;

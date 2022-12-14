@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 17:28:09 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:01:03 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,38 +58,40 @@ int	fill_fd(t_mini *mini, char *input, int fd, char *str)
 	}
 }
 
-void	add_heredoc(t_mini *mini, int i)
+char	*add_heredoc(t_mini *mini, int i)
 {
 	int		fd;
 	char	*nb;
+	char	*file;
 
 	nb = ft_itoa(mini, i);
-	mini->tempstr = ft_strjoin(mini, ft_strdup(mini, "/tmp/heredoc_"), nb);
+	file = ft_strjoin(mini, ft_strdup(mini, "/tmp/heredoc_"), nb);
 	free (nb);
-	while (!access(mini->tempstr, F_OK))
+	while (!access(file, F_OK))
 	{
 		i++;
-		mini->tempstr = ft_free(mini->tempstr);
+		file = ft_free(file);
 		nb = ft_itoa(mini, i);
-		mini->tempstr = ft_strjoin(mini, ft_strdup(mini, "/tmp/heredoc_"), nb);
+		file = ft_strjoin(mini, ft_strdup(mini, "/tmp/heredoc_"), nb);
 		free (nb);
 	}
-	fd = open(mini->tempstr, O_CREAT | O_RDWR, 0777);
+	fd = open(file, O_CREAT | O_RDWR, 0777);
 	close (fd);
+	return (file);
 }
 
 int	add_fd(t_mini *mini, char *str, int fd)
 {
+	char	*file;
+
 	if (!ft_quotes(str, -1, 0, 0))
 		return (unclosed_quotes());
-	else if (str[0] == '<' && str[1] && str[1] == '<')
-		return (spike_error(mini, &str[2]));
 	else if (str[0] == '<' && !str[1])
 		return (get_infos_error(mini, NULL, 1, NULL));
-	add_heredoc(mini, 1);
-	fd = open(mini->tempstr, O_WRONLY);
+	file = add_heredoc(mini, 1);
+	fd = open(file, O_WRONLY);
 	if (str[0] == '<' && str[1] && str[1] != '<')
-		return (eof_to_fd(mini, &str[1], fd, mini->tempstr));
+		return (eof_to_fd(mini, &str[1], fd, file));
 	while (1)
 	{
 		signal(SIGINT, mini_new_line);
@@ -101,8 +103,8 @@ int	add_fd(t_mini *mini, char *str, int fd)
 	close (fd);
 	if (g_status == 1)
 		return (-1);
-	fd = open(mini->tempstr, O_RDONLY);
-	mini->tempstr = ft_free(mini->tempstr);
+	fd = open(file, O_RDONLY);
+	free (file);
 	return (fd);
 }
 

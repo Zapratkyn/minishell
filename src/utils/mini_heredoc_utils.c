@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:53:53 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 17:29:33 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 11:59:48 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,27 @@ char	*get_vars(t_mini *mini, char *str, int i)
 
 int	eof_to_fd(t_mini *mini, char *str, int fd, char *file)
 {
-	mini->tempstr2 = ft_strdup(mini, str);
-	mini->tempstr2 = ft_strdup(mini, manage_string(mini, mini->tempstr2, 1));
-	mini->tempstr3 = ft_free(mini->tempstr3);
-	write (fd, mini->tempstr2, ft_strlen(mini->tempstr2));
+	str = manage_string(mini, str, 0);
+	write (fd, str, ft_strlen(str));
 	write (fd, "\n", 1);
-	mini->tempstr2 = ft_free(mini->tempstr2);
+	free (str);
 	close (fd);
 	fd = open(file, O_RDONLY);
-	mini->tempstr = ft_free(mini->tempstr);
+	free (file);
 	return (fd);
+}
+
+int	ft_spikes(t_mini *mini, t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd && cmd->cmds[i])
+	{
+		if (!ft_strncmp("<<<<", cmd->cmds[i], 4)
+			|| !ft_strncmp(">>>", cmd->cmds[i], 3))
+			return (spike_error(mini));
+		i++;
+	}
+	return (1);
 }

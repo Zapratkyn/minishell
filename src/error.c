@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 17:23:49 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 11:57:58 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,9 @@ int	unclosed_quotes(void)
 	return (-1);
 }
 
-int	spike_error(t_mini *mini, char *str)
+int	spike_error(t_mini *mini)
 {
-	int		i;
-
-	i = 0;
-	mini->tempstr3 = ft_strdup(mini, "<");
-	while (str[i] && i < 2 && str[i] == '<')
-		mini->tempstr3 = ft_strjoin2(mini, mini->tempstr3, str[i++]);
-	mini->tempstr4 = ft_strjoin(mini,
-			ft_strdup(mini, "syntax error near unexpected token '"),
-			mini->tempstr3);
-	mini->tempstr4 = ft_strjoin2(mini, mini->tempstr4, S_QUOTE);
-	ft_error(mini, mini->tempstr4, 0);
-	mini->tempstr3 = ft_free(mini->tempstr3);
-	mini->tempstr4 = ft_free(mini->tempstr4);
+	ft_error(mini, "syntax error near unexpected token", 0);
 	return (-1);
 }
 
@@ -92,7 +80,7 @@ int	dir(t_mini *mini, char *str, int i, char c)
 		else
 			mini->tempstr = ft_strjoin2(mini, mini->tempstr, str[i++]);
 	}
-	if (access(mini->tempstr, X_OK))
+	if (access(mini->tempstr, F_OK))
 	{
 		write (2, mini->tempstr, ft_strlen(mini->tempstr));
 		ft_putendl_fd(": No such file or directory", 2);

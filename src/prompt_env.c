@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/13 17:53:07 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 11:19:16 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	mini_get_status(t_mini *mini, char *var, int j)
 {
 	char	*s;
 	int		i;
-	
+
 	if (var[0] != '?')
 		return (0);
 	i = 0;
