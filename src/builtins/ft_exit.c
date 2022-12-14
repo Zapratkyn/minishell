@@ -6,13 +6,35 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:54 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 22:58:30 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 11:07:42 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-unsigned long long	ft_atoull(const char *str)
+static long long	ft_atoll(char *str)
+{
+	long long	sum;
+	int			i;
+	int			sign;
+
+	sign = 1;
+	sum = 0;
+	i = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+		sum = sum * 10 + str[i++] - 48;
+	return (sum * sign);
+}
+
+static unsigned long long	ft_atoull(const char *str)
 {
 	unsigned long long	sum;
 	int					i;
@@ -30,7 +52,7 @@ unsigned long long	ft_atoull(const char *str)
 	return (sum);
 }
 
-int	is_exit_number(char *s)
+static int	is_exit_number(char *s)
 {
 	int					i;
 	unsigned long long	nb;
@@ -73,7 +95,7 @@ void	ft_exit(t_mini *mini, t_cmd *cmd)
 			exit(g_status);
 		}
 		if (cmd->cmds[1])
-			g_status = ft_atoull(cmd->cmds[1]);
+			g_status = ft_atoll(cmd->cmds[1]);
 		ft_free_all(mini);
 		exit(g_status);
 	}
