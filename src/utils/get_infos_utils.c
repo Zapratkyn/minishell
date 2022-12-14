@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:09:16 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 14:18:18 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:48:31 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,25 @@ int	dollar(char *str, int i, char c)
 				i++;
 	}
 	return (i);
+}
+
+int	only_dots(char *str)
+{
+	int	i;
+
+	if (ft_strncmp("/Users/gponcele/.brew/bin/.", str, ft_strlen(str)))
+	{
+		// free (str);
+		return (0);
+	}
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] != '.')
+		{
+			// free (str);
+			return (0);
+		}
+	}
+	return (1);
 }

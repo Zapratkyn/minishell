@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 14:30:46 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:42:24 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ int						end_of_heredoc(char *input, char *eof);
 char					*get_vars(t_mini *mini, char *str, int i);
 int						eof_to_fd(t_mini *mini, char *str, int fd, char *file);
 char					*get_exec(t_mini *mini, t_cmd *cmd);
+int						only_dots(char *str);
 
 /* Parsing & Initialization */
 char					**clean_files(t_mini *mini, char **cmds,
