@@ -6,20 +6,14 @@
 /*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:56 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 12:12:59 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:18:05 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minish.h"
 
-static int	check_err(t_mini *mini, char *s, int i)
+static int	check_err2(t_mini *mini, char *s, int i)
 {
-	if (s && (s[0] == '=' || !s[0]))
-	{
-		g_status = 1;
-		ft_error(mini, UNSET_NAME_ERR, NO_EXIT);
-		return (0);
-	}
 	if (ft_strcmp(s, "=") && ft_strchr(s, '='))
 	{
 		ft_error(mini, UNSET_ID_ERR, NO_EXIT);
@@ -37,6 +31,24 @@ static int	check_err(t_mini *mini, char *s, int i)
 		i++;
 	}
 	return (1);
+}
+
+static int	check_err(t_mini *mini, char *s, int i)
+{
+	if (!ft_strcmp(s, "PWD") || !ft_strcmp(s, "OLDPWD")
+		|| !ft_strcmp(s, "HOME"))
+	{
+		g_status = 1;
+		ft_error(mini, UNSET_VAR_ERR, NO_EXIT);
+		return (0);
+	}
+	if (s && (s[0] == '=' || !s[0]))
+	{
+		g_status = 1;
+		ft_error(mini, UNSET_NAME_ERR, NO_EXIT);
+		return (0);
+	}
+	return (check_err2(mini, s, i));
 }
 
 void	ft_unset(t_mini *mini, t_cmd *cmd, int i, char *s)

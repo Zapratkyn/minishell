@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 14:04:33 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:30:46 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	g_status;
 # define PWD_ERR "minishell : error in the pwd."
 # define UNSET_NAME_ERR "minishell: unset: invalid parameter name"
 # define UNSET_ID_ERR "minishell: unset: not a valid identifier"
+# define UNSET_VAR_ERR "minishell: unset: you cannot remove this variable"
 
 /* Characters */
 # define CHILD_PROC 0
