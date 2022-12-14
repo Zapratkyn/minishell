@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 12:58:42 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:19:14 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_cmd	*cmd_init(t_mini *mini, char *str)
 	if (ft_spikes(mini, cmd) == -1)
 		cmd->infile = -2;
 	mini->tempstr = ft_free(mini->tempstr);
-	if (cmd->infile != -1)
+	if (cmd->infile == STDERR_FILENO)
 		cmd->infile = mini_heredoc(mini, cmd, cmd->infile, 0);
 	return (cmd);
 }
