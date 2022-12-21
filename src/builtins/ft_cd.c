@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:40:09 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 16:01:14 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/21 11:52:05 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,5 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 		free(mini->tempstr);
 		mini->tempstr = NULL;
 	}
-	mini->prompt = get_prompt(mini, mini->prompt);
+	mini->prompt = get_prompt(mini, mini->prompt, NULL);
 }

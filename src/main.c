@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 14:21:43 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 11:52:48 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	mini_init(t_mini *mini, char **env)
 	modif_shlvl(mini);
 	ft_split_paths(mini, mini_getenv(mini, "PATH"), ':');
 	mini->prompt = NULL;
-	mini->prompt = get_prompt(mini, mini->prompt);
+	mini->prompt = get_prompt(mini, mini->prompt, NULL);
 	if (!mini->prompt)
 	{
 		ft_lstclear(mini->var);
@@ -78,7 +78,7 @@ int	mini_parser(t_mini *mini, char *str)
 		free (str);
 		return (1);
 	}
-	if (is_input(mini, str, 0, ft_strdup(mini, "/")))
+	if (is_input(str))
 	{
 		mini->cmd = get_cmd(mini, mini->cmd, str, -1);
 		execute(mini);
@@ -102,7 +102,7 @@ int	main(int argc, char **argv, char **env)
 		signal(SIGINT, mini_new_line);
 		if (!mini_parser(&mini, readline(mini.prompt)))
 			break ;
-		mini.prompt = get_prompt(&mini, mini.prompt);
+		mini.prompt = get_prompt(&mini, mini.prompt, NULL);
 	}
 	ft_free_all(&mini);
 	write(STDERR_FILENO, "exit\n", 6);

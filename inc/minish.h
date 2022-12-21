@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 14:42:24 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 11:52:27 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,12 @@ typedef struct s_mini
 */
 
 /* Main */
-char					*get_prompt(t_mini *mini, char *prompt);
+char					*get_prompt(t_mini *mini, char *prompt, char *str);
 void					mini_init(t_mini *mini, char **env);
 int						mini_parser(t_mini *mini, char *str);
 
 /* Utils.c */
-int						is_input(t_mini *mini, char *str, int i, char *s);
+int						is_input(char *str);
 char					*fill_parts(t_mini *mini, char **parts,
 							char *str, int i);
 int						ft_quotes(char *str, int i, int quotes,

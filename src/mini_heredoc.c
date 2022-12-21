@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 13:41:51 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 12:26:40 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	add_fd(t_mini *mini, char *str, int fd)
 	g_status = 0;
 	if (!ft_quotes(str, -1, 0, 0))
 		return (unclosed_quotes());
-	else if (str[0] == '<' && !str[1])
+	else if (str[1] == '<' && !str[1])
 		return (get_infos_error(mini, NULL, 1, NULL));
 	file = add_heredoc(mini, 1);
 	fd = open(file, O_WRONLY);
@@ -125,7 +125,7 @@ int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 				eof = get_eof(cmd, i);
 				if (!eof)
 					return (get_infos_error(mini, cmd, 1, NULL));
-				else if (eof[0] != '<')
+				else if (eof[1] != '<')
 					fd = add_fd(mini, eof, 0);
 			}
 		}

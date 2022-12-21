@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 14:27:43 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 11:22:38 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,16 @@ int	is_input2(char *s)
 	return (0);
 }
 
-int	is_input(t_mini *mini, char *str, int i, char *s)
+int	is_input(char *str)
 {
-	int	j;
+	int	i;
 
+	i = 0;
+	if (ft_strlen(str) == 0 || ft_quotes(&str[i], -1, 0, 0) == -1)
+		return (0);
 	while (str[i] == ' ')
 		i++;
-	j = i;
-	if (ft_strlen(str) == 0 || ft_quotes(&str[i], -1, 0, 0) == -1)
-	{
-		free (s);
-		return (0);
-	}
-	if (str[i] == '/' && str[i + 1] != ' ')
-	{
-		while (str[++i] == '/')
-			s = ft_strjoin2(mini, s, str[i]);
-		if (!str[i])
-			return (is_input2(s));
-	}
-	free (s);
-	if (str[i] == '/' && !dir(mini, &str[i], 0, 0))
-		return (0);
-	while (str[++j] != ' ')
+	if (str[i])
 		return (1);
 	return (0);
 }

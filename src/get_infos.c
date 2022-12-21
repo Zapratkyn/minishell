@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 14:48:12 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 11:23:06 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, char *path, int i)
 	exec = get_exec(mini, cmd);
 	if (exec)
 	{
-		if (!access(exec, X_OK) && !only_dots(exec))
+		if (!access(exec, X_OK))
 			cmd->path = ft_strdup(mini, exec);
 		while (mini->paths[i] && !cmd->path)
 		{
@@ -31,7 +31,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, char *path, int i)
 			free (path);
 		}
 		if ((!ch_builtin(cmd) && !par_builtin(cmd)
-				&& !cmd->path) || (exec[0] == '.' && exec[1] != '/'))
+				&& !cmd->path))
 			get_infos_error(mini, cmd, 3, exec);
 		free (exec);
 	}

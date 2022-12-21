@@ -6,11 +6,26 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:09:16 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 14:48:31 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 12:08:11 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minish.h"
+
+void	ft_dir(char *str)
+{
+	write (2, str, ft_strlen(str));
+	if (!access(str, F_OK) || ft_strlen(str) == 1)
+	{
+		write (2, ": is a file or a directory\n", 27);
+		g_status = 126;
+	}
+	else
+	{
+		write (2, ": No such file or directory\n", 28);
+		g_status = 127;
+	}
+}
 
 char	*get_exec(t_mini *mini, t_cmd *cmd)
 {
@@ -23,6 +38,16 @@ char	*get_exec(t_mini *mini, t_cmd *cmd)
 		|| (i > 0 && cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
 		|| (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1])))
 		i++;
+	if (cmd->cmds[i] && ft_strlen(cmd->cmds[i]) == 1 && cmd->cmds[i][0] == '.')
+	{
+		write (2, ".: usage: . filename [arguments]\n", 34);
+		g_status = 2;
+	}
+	if (cmd->cmds[i] && cmd->cmds[i][0] == '/')
+		ft_dir(cmd->cmds[i]);
+	if (cmd->cmds[i] && ((ft_strlen(cmd->cmds[i]) == 1
+				&& cmd->cmds[i][0] == '.') || cmd->cmds[i][0] == '/'))
+		return (NULL);
 	if (cmd->cmds[i])
 	{
 		exec = ft_strdup(mini, cmd->cmds[i]);
@@ -83,25 +108,4 @@ int	dollar(char *str, int i, char c)
 				i++;
 	}
 	return (i);
-}
-
-int	only_dots(char *str)
-{
-	int	i;
-
-	if (ft_strncmp("/Users/gponcele/.brew/bin/.", str, ft_strlen(str)))
-	{
-		// free (str);
-		return (0);
-	}
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] != '.')
-		{
-			// free (str);
-			return (0);
-		}
-	}
-	return (1);
 }
