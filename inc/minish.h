@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 11:52:27 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 13:10:51 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,9 @@ char					**transform_parts(t_mini *mini, char **parts,
 int						end_of_heredoc(char *input, char *eof);
 char					*get_vars(t_mini *mini, char *str, int i);
 int						eof_to_fd(t_mini *mini, char *str, int fd, char *file);
-char					*get_exec(t_mini *mini, t_cmd *cmd);
+char					*get_exec(t_mini *mini, t_cmd *cmd, char *exec, int i);
 int						only_dots(char *str);
+int						only_slash(char *str);
 
 /* Parsing & Initialization */
 char					**clean_files(t_mini *mini, char **cmds,
@@ -164,7 +165,6 @@ char					**ft_split_cmd(t_mini *mini, char *s, int i,
 char					*ft_var(t_mini *mini, char *str, char *result);
 t_cmd					*get_cmd(t_mini *mini,
 							t_cmd *cmd, char *str, int i);
-char					*get_exec(t_mini *mini, t_cmd *cmd);
 void					get_infile(t_mini *mini, t_cmd *cmd, int i);
 void					get_outfile(t_mini *mini, t_cmd *cmd, int i, int j);
 void					get_path(t_mini *mini, t_cmd *cmd, char *path, int i);

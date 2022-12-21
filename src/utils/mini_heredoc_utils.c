@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:53:53 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 12:22:19 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 14:24:02 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,14 @@ int	ft_spikes(t_mini *mini, t_cmd *cmd)
 	int	i;
 
 	i = 0;
+	if (cmd->cmds[0][0] == '>' && (!cmd->cmds[0][1]
+		|| (cmd->cmds[0][1] == '>' && !cmd->cmds[0][2])))
+		return (spike_error(mini));
 	while (cmd && cmd->cmds[i])
 	{
+		if (ft_strlen(cmd->cmds[0]) == 1
+			&& cmd->cmds[0][0] == '<' && !cmd->cmds[1])
+			return (spike_error(mini));
 		if (!ft_strncmp("<<<<", cmd->cmds[i], 4)
 			|| !ft_strncmp(">>>", cmd->cmds[i], 3))
 			return (spike_error(mini));
@@ -72,8 +78,16 @@ int	ft_spikes(t_mini *mini, t_cmd *cmd)
 
 char	*get_eof(t_cmd *cmd, int i)
 {
-	if (cmd->cmds[i][2])
+	if (cmd->cmds[i][2] && cmd->cmds[i][2] == '<'
+		&& !cmd->cmds[i][3] && !cmd->cmds[i + 1])
+		return (NULL);
+	if (cmd->cmds[i][2] && cmd->cmds[i][2] == '<'
+		&& !cmd->cmds[i][3] && cmd->cmds[i + 1])
+		return (cmd->cmds[i + 1]);
+	if (cmd->cmds[i][2] && cmd->cmds[i][2] != '<')
 		return (&cmd->cmds[i][2]);
+	if (cmd->cmds[i][2] && cmd->cmds[i][2] == '<' && cmd->cmds[i][3])
+		return (&cmd->cmds[i][3]);
 	else if (!cmd->cmds[i][2] && cmd->cmds[i + 1]
 			&& cmd->cmds[i + 1][0] != '<'
 			&& cmd->cmds[i + 1][0] != '>')

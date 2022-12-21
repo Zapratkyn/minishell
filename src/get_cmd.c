@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 14:04:18 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 14:30:33 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*manage_string(t_mini *mini, char *str, int i)
 t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 {
 	cmd = cmd_init(mini, str);
-	if (cmd->infile != -1)
+	if (cmd->infile != -1 && cmd->infile != -2)
 	{
 		get_path(mini, cmd, NULL, 0);
 		cmd->cmds = clean_files(mini, cmd->cmds, -1, 0);

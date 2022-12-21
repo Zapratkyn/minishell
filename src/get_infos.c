@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 11:23:06 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 14:20:06 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, char *path, int i)
 {
 	char	*exec;
 
-	exec = get_exec(mini, cmd);
+	exec = get_exec(mini, cmd, NULL, 0);
 	if (exec)
 	{
 		if (!access(exec, X_OK))

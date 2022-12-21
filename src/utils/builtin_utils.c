@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 11:05:17 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 11:34:04 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/21 13:10:43 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,16 @@ void	modif_var(t_mini *mini, char *name_var, char *s)
 		}
 		var = var->next;
 	}
+}
+
+int	only_slash(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == '/')
+		i++;
+	if (str[i])
+		return (0);
+	return (1);
 }

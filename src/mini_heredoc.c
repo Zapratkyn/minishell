@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:09:46 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 12:26:40 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/21 14:14:51 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	*add_heredoc(t_mini *mini, int i)
 	char	*nb;
 	char	*file;
 
+	g_status = 0;
 	nb = ft_itoa(mini, i);
 	file = ft_strjoin(mini, ft_strdup(mini, "/tmp/heredoc_"), nb);
 	free (nb);
@@ -80,30 +81,30 @@ char	*add_heredoc(t_mini *mini, int i)
 	return (file);
 }
 
-int	add_fd(t_mini *mini, char *str, int fd)
+int	add_fd(t_mini *mini, char *str, char *eof, int fd)
 {
 	char	*file;
 
-	g_status = 0;
-	if (!ft_quotes(str, -1, 0, 0))
+	if (!ft_quotes(eof, -1, 0, 0))
 		return (unclosed_quotes());
-	else if (str[1] == '<' && !str[1])
-		return (get_infos_error(mini, NULL, 1, NULL));
 	file = add_heredoc(mini, 1);
 	fd = open(file, O_WRONLY);
-	if (str[0] == '<' && str[1] && str[1] != '<')
-		return (eof_to_fd(mini, &str[1], fd, file));
+	if (str[2] == '<')
+		return (eof_to_fd(mini, eof, fd, file));
 	while (1)
 	{
 		signal(SIGINT, mini_new_line);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGTSTP, SIG_IGN);
-		if (g_status == 1 || !fill_fd(mini, readline("> "), fd, str))
+		if (g_status == 1 || !fill_fd(mini, readline("> "), fd, eof))
 			break ;
 	}
 	close (fd);
 	if (g_status == 1)
+	{
+		free (file);
 		return (-1);
+	}
 	fd = open(file, O_RDONLY);
 	free (file);
 	return (fd);
@@ -126,7 +127,7 @@ int	mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i)
 				if (!eof)
 					return (get_infos_error(mini, cmd, 1, NULL));
 				else if (eof[1] != '<')
-					fd = add_fd(mini, eof, 0);
+					fd = add_fd(mini, cmd->cmds[i], eof, 0);
 			}
 		}
 	}
