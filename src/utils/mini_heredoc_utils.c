@@ -6,11 +6,11 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:53:53 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 11:43:02 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 12:23:32 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minish.h"
+#include "../../inc/minish.h"
 
 int	end_of_heredoc(char *input, char *eof)
 {
@@ -60,11 +60,15 @@ int	ft_spikes(t_mini *mini, t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	if (cmd->cmds[0][0] == '>' && ((!cmd->cmds[0][1] && !cmd->cmds[1])
-		|| (cmd->cmds[0][1] == '>' && !cmd->cmds[0][2] && !cmd->cmds[1])))
-		return (spike_error(mini));
 	while (cmd && cmd->cmds[i])
 	{
+		if (cmd->cmds[i][0] == '>' && ((!cmd->cmds[i][1]
+			&& (!cmd->cmds[i + 1] || cmd->cmds[i + 1][0] == '<'
+			|| cmd->cmds[i + 1][0] == '>'))
+			|| (cmd->cmds[i][1] == '>' && !cmd->cmds[i][2]
+			&& (!cmd->cmds[i + 1] || cmd->cmds[i + 1][0] == '<'
+			|| cmd->cmds[i + 1][0] == '>'))))
+			return (spike_error(mini));
 		if (ft_strlen(cmd->cmds[0]) == 1
 			&& cmd->cmds[0][0] == '<' && !cmd->cmds[1])
 			return (spike_error(mini));

@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 11:33:35 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 11:54:35 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	outfiles(char **cmds, int i, int j)
 				open(&cmds[i][j], O_CREAT | O_RDWR, 0777);
 				g_status = 0;
 			}
-			else if (cmds[i + 1] && cmds[i + 1][0] != '<' && cmds[i + 1][0] != '>')
+			else if (cmds[i + 1] && cmds[i + 1][0] != '<'
+					&& cmds[i + 1][0] != '>')
 			{
 				open(cmds[i + 1], O_CREAT | O_RDWR, 0777);
 				g_status = 0;
@@ -35,4 +36,3 @@ void	outfiles(char **cmds, int i, int j)
 		i++;
 	}
 }
-

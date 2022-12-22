@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 14:20:06 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:13:41 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ void	get_path(t_mini *mini, t_cmd *cmd, char *path, int i)
 			get_infos_error(mini, cmd, 3, exec);
 		free (exec);
 	}
-	else
-		cmd->path = ft_strdup(mini, "none");
-	if (ft_strncmp(cmd->path, "none", 4))
-		get_infile(mini, cmd, ft_tablen(cmd->cmds));
+	get_infile(mini, cmd, ft_tablen(cmd->cmds));
 }
 
 void	set_infile(t_mini *mini, t_cmd *cmd, char *infile)

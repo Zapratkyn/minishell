@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:43:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/12 12:14:53 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/22 12:25:02 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	ft_lstdelone(t_var **l_var, int i)
 	t_var	*var;
 	t_var	*next;
 
-	(void)var;
-	prev = ft_lstget(*l_var, i - 1);
 	var = ft_lstget(*l_var, i);
 	next = ft_lstget(*l_var, i + 1);
+	prev = ft_lstget(*l_var, i - 1);
+	free(var->content);
+	free(var);
 	if (prev && next)
 		prev->next = next;
 	else if (prev && !next)

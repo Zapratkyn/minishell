@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 14:02:46 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:21:54 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,5 @@ int	main(int argc, char **argv, char **env)
 	ft_free_all(&mini);
 	write(STDERR_FILENO, "exit\n", 6);
 	g_status = 0;
-	LEAKS
 	exit(g_status);
 }

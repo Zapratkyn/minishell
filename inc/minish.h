@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 11:33:31 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:21:51 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <dirent.h>
 
 /*
 ** Global Variable
@@ -39,10 +40,6 @@ int	g_status;
 /*
 ** Define constants
 */
-
-/* Debug */
-# define ICI printf("ici\n");
-# define LEAKS system("leaks minishell");
 
 /* Colors */
 # define RED "\x1B[31m"

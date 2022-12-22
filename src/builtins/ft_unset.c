@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:56 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 13:18:05 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:19:59 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	check_err2(t_mini *mini, char *s, int i)
 static int	check_err(t_mini *mini, char *s, int i)
 {
 	if (!ft_strcmp(s, "PWD") || !ft_strcmp(s, "OLDPWD")
-		|| !ft_strcmp(s, "HOME"))
+		|| !ft_strcmp(s, "HOME") || !ft_strcmp(s, "USER"))
 	{
 		g_status = 1;
 		ft_error(mini, UNSET_VAR_ERR, NO_EXIT);

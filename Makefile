@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/22 11:45:57 by gponcele         ###   ########.fr        #
+#    Updated: 2022/12/22 11:50:52 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,14 +101,14 @@ CC							=	gcc
 all: 		$(NAME)
 
 %o:				%c
-				@gcc ${CFLAGS} -I./includes -c $< -o ${<:.c=.o}
+				@gcc ${CFLAGS} -I/Users/gponcele/.brew/opt/readline/include -I./includes -c $< -o ${<:.c=.o}
 
 linux:
 					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT_LINUX) -lreadline -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 $(NAME): $(OBJS)
-					@$(CC) $(CFLAGS) $(INC) $(OBJS) $(LIBFT) -lreadline -L/Users/ademurge/.brew/opt/readline/lib -I/Users/ademurge/.brew/opt/readline/include -o $(NAME)
+					@$(CC) $(CFLAGS) $(INC) $(OBJS) $(LIBFT) -lreadline -L/Users/gponcele/.brew/opt/readline/lib -I/Users/gponcele/.brew/opt/readline/include -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 libft:

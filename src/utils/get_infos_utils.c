@@ -6,11 +6,11 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:09:16 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 13:33:24 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:06:26 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minish.h"
+#include "../../inc/minish.h"
 
 char	*ft_dir(char *str)
 {
@@ -30,19 +30,25 @@ char	*ft_dir(char *str)
 
 char	*get_exec(t_mini *mini, t_cmd *cmd, char *exec, int i)
 {
+	DIR	*dir;
+
 	while (cmd->cmds[i] && (cmd->cmds[i][0] == '<' || cmd->cmds[i][0] == '>'
 		|| (i > 0 && cmd->cmds[i - 1][0] == '<' && !cmd->cmds[i - 1][1])
 		|| (i > 0 && cmd->cmds[i - 1][0] == '>' && !cmd->cmds[i - 1][1])))
 		i++;
+	dir = opendir(cmd->cmds[i]);
+	if (dir)
+	{
+		get_infos_error(mini, cmd, 3, cmd->cmds[i]);
+		closedir(dir);
+		return (NULL);
+	}
 	if (cmd->cmds[i] && ft_strlen(cmd->cmds[i]) == 1 && cmd->cmds[i][0] == '.')
 	{
 		write (2, ".: usage: . filename [arguments]\n", 34);
 		g_status = 2;
 		return (NULL);
 	}
-	if (cmd->cmds[i] && cmd->cmds[i][0] == '/' && (ft_strlen(cmd->cmds[i]) == 1
-		|| only_slash(cmd->cmds[i]) || !access(cmd->cmds[i], F_OK)))
-		return (ft_dir(cmd->cmds[i]));
 	if (cmd->cmds[i])
 	{
 		exec = ft_strdup(mini, cmd->cmds[i]);

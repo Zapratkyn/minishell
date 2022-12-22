@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/22 11:26:04 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 12:45:23 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,13 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 {
 	if (cmd->infile < 0 || cmd->outfile < 0)
 	{
-		if (cmd->outfile == -1)
-			ft_error(mini, DIR_ERR, NO_EXIT);
 		if (cmd->infile == -1)
 			g_status = 1;
 		return (0);
 	}
 	if (!ch_builtin(cmd) && !par_builtin(cmd)
-		&& !ft_strcmp(cmd->path, "none"))
-	{
-		// g_status = 127;
+		&& !cmd->path)
 		return (0);
-	}
 	if (ch_builtin(cmd) && !check_builtin(mini, cmd))
 	{
 		g_status = 1;

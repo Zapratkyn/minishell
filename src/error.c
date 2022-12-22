@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 14:49:52 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:22:14 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_error(t_mini *mini, char *type, int is_exit)
 
 int	get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s)
 {
+	(void)cmd;
 	if (i == 1)
 	{
 		ft_error(mini, "syntax error near unexpected token", NO_EXIT);
@@ -33,7 +34,8 @@ int	get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s)
 	}
 	else if (i == 2)
 	{
-		mini->tempstr = ft_strjoin(mini, ft_strdup(mini, "3: cannot open "), s);
+		mini->tempstr = ft_strjoin(mini,
+				ft_strdup(mini, "minishell: cannot open "), s);
 		mini->tempstr = ft_strjoin(mini, mini->tempstr,
 				": No such file or directory");
 		ft_error(mini, mini->tempstr, NO_EXIT);
@@ -47,7 +49,6 @@ int	get_infos_error(t_mini *mini, t_cmd *cmd, int i, char *s)
 		ft_error(mini, mini->tempstr, NO_EXIT);
 		mini->tempstr = ft_free(mini->tempstr);
 		g_status = 127;
-		cmd->path = ft_strdup(mini, "none");
 	}
 	return (-1);
 }

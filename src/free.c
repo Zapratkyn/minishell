@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:53:43 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/14 12:45:56 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 12:43:26 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ t_cmd	*ft_free_cmd(t_cmd *cmd)
 {
 	if (cmd->cmds)
 		cmd->cmds = ft_free_tab(cmd->cmds, ft_tablen(cmd->cmds));
-	if (cmd->path)
-		free (cmd->path);
+	free (cmd->path);
 	if (cmd->next)
 		ft_free_cmd(cmd->next);
 	free (cmd);

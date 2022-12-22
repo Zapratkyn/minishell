@@ -6,11 +6,11 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 11:34:09 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 13:11:56 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minish.h"
+#include "../../inc/minish.h"
 
 t_cmd	*cmd_init(t_mini *mini, char *str)
 {

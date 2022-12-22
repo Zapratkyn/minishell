@@ -6,11 +6,11 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 13:23:12 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 11:51:36 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minish.h"
+#include "../../inc/minish.h"
 
 int	is_input2(char *s)
 {
