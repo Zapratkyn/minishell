@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 13:10:51 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 11:33:31 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,9 @@ int						check_option(t_mini *mini, t_cmd *cmd, char *s);
 char					*ft_rev_strchr(t_mini *mini, char *str, char c);
 int						is_env(t_mini *mini, char *s);
 void					modif_var(t_mini *mini, char *name_var, char *s);
+
+/* Specials */
+void					outfiles(char **cmds, int i, int j);
 
 /* Error */
 void					ft_error(t_mini *mini, char *type, int is_exit);
