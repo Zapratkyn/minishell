@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:53:53 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 11:10:04 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 11:43:02 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	ft_spikes(t_mini *mini, t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	if (cmd->cmds[0][0] == '>' && (!cmd->cmds[0][1]
-		|| (cmd->cmds[0][1] == '>' && !cmd->cmds[0][2])))
+	if (cmd->cmds[0][0] == '>' && ((!cmd->cmds[0][1] && !cmd->cmds[1])
+		|| (cmd->cmds[0][1] == '>' && !cmd->cmds[0][2] && !cmd->cmds[1])))
 		return (spike_error(mini));
 	while (cmd && cmd->cmds[i])
 	{
