@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 13:11:56 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:27:50 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ t_cmd	*cmd_init(t_mini *mini, char *str)
 	cmd->outfile = STDOUT_FILENO;
 	cmd->pid = -1;
 	cmd->next = NULL;
-	get_input(mini, str, 0);
-	cmd->cmds = ft_split_cmd(mini, mini->tempstr, 0, 0);
+	cmd->input = get_input(mini, str, 0);
+	cmd->cmds = ft_split_cmd(mini, cmd->input, 0, 0);
 	cmd->cmds_nb = ft_tablen(cmd->cmds);
-	outfiles(cmd->cmds, 0, 0);
-	if (ft_quotes(mini->tempstr, -1, 0, 0) == -1)
+	outfiles(mini, cmd->cmds, 0, 0);
+	if (ft_quotes(cmd->input, -1, 0, 0) == -1)
 		cmd->infile = -1;
 	if (ft_spikes(mini, cmd) == -1)
 		cmd->infile = -2;
-	mini->tempstr = ft_free(mini->tempstr);
-	cmd->infile = mini_heredoc(mini, cmd, cmd->infile, -1);
+	if (cmd->infile != -1 && cmd->infile != -2)
+		cmd->infile = mini_heredoc(mini, cmd, cmd->infile, -1);
 	return (cmd);
 }
 
@@ -87,10 +87,11 @@ char	*delete_double_quotes(t_mini *mini, char *str, int i)
 	result = ft_strdup(mini, "");
 	while (str[i] != '"')
 	{
-		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != ' ')
+		if (str[i] == '$' && (ft_isalnum(str[i + 1])
+				|| str[i + 1] == '?' || str[i + 1] == '_'))
 		{
 			i++;
-			ft_var(mini, &str[i], result);
+			result = ft_var(mini, &str[i], result);
 			while (ft_isalnum(str[i]) || str[i] == '_')
 				i++;
 		}

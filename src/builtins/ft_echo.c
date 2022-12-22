@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:39:51 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/07 14:22:52 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:42:06 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	ft_echo(t_mini *mini, t_cmd *cmd)
 	i = newl[0];
 	while (cmd->cmds[i])
 	{
+		if (i - 1 >= 0 && !cmd->cmds[i - 1][0])
+			write (STDOUT_FILENO, " ", 1);
 		ft_putstr_fd(cmd->cmds[i], STDOUT_FILENO);
 		if (cmd->cmds[i][0] && cmd->cmds[i + 1] && cmd->cmds[i + 1][0])
 			write (STDOUT_FILENO, " ", 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_paths.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:23:28 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/13 21:20:14 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/22 15:53:30 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,31 @@ static char	*find_next_word(t_mini *mini, char *s, char c, int index)
 	return (ft_substr(mini, &s[i], 0, count));
 }
 
-void	ft_split_paths(t_mini *mini, char const *s, char c)
+char	**ft_split_paths(t_mini *mini, char const *s, char c)
 {
 	int		i;
 	int		wc;
+	char	**result;
 
 	if (!s)
-		return ;
+	{
+		result = malloc(sizeof(char *) * 1);
+		if (!result)
+			ft_error(mini, MALLOC_ERR, EXIT);
+		result[0] = NULL;
+		return (result);
+	}
 	i = -1;
 	wc = count_words(s, c);
-	mini->paths = malloc(sizeof(char *) * (wc + 1));
-	if (!mini->paths)
+	result = malloc(sizeof(char *) * (wc + 1));
+	if (!result)
 		ft_error(mini, MALLOC_ERR, EXIT);
 	while (++i < wc)
 	{
-		mini->paths[i] = find_next_word(mini, (char *)s, c, i + 1);
-		if (!mini->paths[i])
+		result[i] = find_next_word(mini, (char *)s, c, i + 1);
+		if (!result[i])
 			ft_error(mini, MALLOC_ERR, EXIT);
 	}
-	mini->paths[i] = NULL;
+	result[i] = NULL;
+	return (result);
 }

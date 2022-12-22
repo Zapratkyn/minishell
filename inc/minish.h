@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 13:21:51 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:15:38 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_var
 /* Command structure */
 typedef struct s_cmd
 {
+	char			*input;
 	char			**cmds;
 	char			*path;
 	int				cmds_nb;
@@ -107,7 +108,6 @@ typedef struct s_cmd
 typedef struct s_mini
 {
 	char	*prompt;
-	char	**paths;
 	char	*tempstr;
 	char	*tempstr2;
 	char	*tempstr3;
@@ -171,7 +171,7 @@ void					mini_env(t_mini *mini);
 int						mini_heredoc(t_mini *mini, t_cmd *cmd, int fd, int i);
 char					*to_empty(char *str);
 int						quotes(char *str, char c, int i);
-void					get_input(t_mini *mini, char *str, char c);
+char					*get_input(t_mini *mini, char *str, char c);
 int						ft_spikes(t_mini *mini, t_cmd *cmd);
 void					put_shell(void);
 char					*get_eof(t_cmd *cmd, int i);
@@ -206,7 +206,7 @@ int						is_env(t_mini *mini, char *s);
 void					modif_var(t_mini *mini, char *name_var, char *s);
 
 /* Specials */
-void					outfiles(char **cmds, int i, int j);
+void					outfiles(t_mini *mini, char **cmds, int i, int j);
 
 /* Error */
 void					ft_error(t_mini *mini, char *type, int is_exit);
@@ -251,7 +251,7 @@ void					ft_putendl_fd(char *s, int fd);
 void					ft_putstr_fd(char *s, int fd);
 void					ft_put_tab(char **tab);
 char					**ft_split(t_mini *mini, char const *s, char c);
-void					ft_split_paths(t_mini *mini, char const *s, char c);
+char					**ft_split_paths(t_mini *mini, char const *s, char c);
 char					*ft_strchr(const char *s, int c);
 char					*ft_strchr_minishell(const char *s, int c, char k);
 int						ft_strcmp(char *s1, char *s2);

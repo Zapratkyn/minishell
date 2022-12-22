@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 13:13:41 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:29:35 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,26 @@
 void	get_path(t_mini *mini, t_cmd *cmd, char *path, int i)
 {
 	char	*exec;
+	char	**paths;
 
+	paths = NULL;
 	exec = get_exec(mini, cmd, NULL, 0);
 	if (exec)
 	{
+		paths = ft_split_paths(mini, mini_getenv(mini, "PATH"), ':');
 		if (!access(exec, X_OK))
 			cmd->path = ft_strdup(mini, exec);
-		while (mini->paths[i] && !cmd->path)
+		while (paths[i] && !cmd->path)
 		{
-			path = ft_strjoin(mini, ft_strdup(mini, ""), mini->paths[i++]);
+			path = ft_strjoin(mini, ft_strdup(mini, ""), paths[i++]);
 			path = ft_strjoin2(mini, path, '/');
 			path = ft_strjoin(mini, path, exec);
 			if (!access(path, X_OK))
 				cmd->path = ft_strdup(mini, path);
 			free (path);
 		}
-		if ((!ch_builtin(cmd) && !par_builtin(cmd)
-				&& !cmd->path))
+		ft_free_tab(paths, ft_tablen(paths));
+		if (!cmd->path && ft_strcmp(exec, "export") && ft_strcmp(exec, "unset"))
 			get_infos_error(mini, cmd, 3, exec);
 		free (exec);
 	}
@@ -72,12 +75,16 @@ void	get_infile(t_mini *mini, t_cmd *cmd, int i)
 		get_outfile(mini, cmd, ft_tablen(cmd->cmds), 1);
 }
 
-void	set_outfile(t_cmd *cmd, int j, char *outfile)
+void	set_outfile(t_mini *mini, t_cmd *cmd, int j, char *outfile)
 {
+	char	*file;
+
+	file = manage_string(mini, outfile, 0);
 	if (j == 1)
-		cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
+		cmd->outfile = open(file, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	else if (j == 2)
-		cmd->outfile = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0777);
+		cmd->outfile = open(file, O_CREAT | O_RDWR | O_APPEND, 0777);
+	free (file);
 	free (outfile);
 }
 
@@ -103,5 +110,5 @@ void	get_outfile(t_mini *mini, t_cmd *cmd, int i, int j)
 		}
 	}
 	if (outfile)
-		set_outfile(cmd, j, outfile);
+		set_outfile(mini, cmd, j, outfile);
 }

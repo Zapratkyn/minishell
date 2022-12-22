@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/21 14:30:33 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:28:20 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,7 @@ t_cmd	*get_cmd(t_mini *mini, t_cmd *cmd, char *str, int i)
 		get_path(mini, cmd, NULL, 0);
 		cmd->cmds = clean_files(mini, cmd->cmds, -1, 0);
 		while (cmd->cmds && cmd->cmds[++i])
-		{
-			if (cmd->cmds[i][0] == '$' && cmd->cmds[i][1]
-				&& ((!ft_isdigit(cmd->cmds[i][1])
-				&& ft_isalnum(cmd->cmds[i][1]))
-				|| cmd->cmds[i][1] == '_' || cmd->cmds[i][1] == '?')
-				&& !mini_getenv(mini, &cmd->cmds[i][1])
-				&& !mini_get_status(mini, &cmd->cmds[i][1], 1))
-				cmd->cmds[i] = ft_free(cmd->cmds[i]);
-			else
-				cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 1);
-		}
+			cmd->cmds[i] = manage_string(mini, cmd->cmds[i], 1);
 	}
 	if (ft_strchr_minishell(str, PIPE, 0))
 		cmd->next = get_cmd(mini, cmd->next,

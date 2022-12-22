@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:13:44 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/22 12:45:23 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:35:00 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	pipe_and_fork(t_mini *mini, t_cmd *cmd)
 	{
 		g_status = WTERMSIG(g_status);
 		if (g_status != 1)
-			g_status -= 1;
+			g_status = 1;
 	}
 }
 
@@ -42,8 +42,8 @@ int	check_cmd(t_mini *mini, t_cmd *cmd)
 			g_status = 1;
 		return (0);
 	}
-	if (!ch_builtin(cmd) && !par_builtin(cmd)
-		&& !cmd->path)
+	if (!cmd->path && ft_strcmp(cmd->cmds[0], "export")
+		&& ft_strcmp(cmd->cmds[0], "unset"))
 		return (0);
 	if (ch_builtin(cmd) && !check_builtin(mini, cmd))
 	{

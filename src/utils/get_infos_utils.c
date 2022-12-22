@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:09:16 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 13:06:26 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:16:05 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,27 +65,29 @@ int	quotes(char *str, char c, int i)
 	return (i + 1);
 }
 
-void	get_input(t_mini *mini, char *str, char c)
+char	*get_input(t_mini *mini, char *str, char c)
 {
-	int	i;
+	int		i;
+	char	*result;
 
 	i = 0;
-	mini->tempstr = ft_strdup(mini, "");
+	result = ft_strdup(mini, "");
 	while (str[i] == ' ')
 		i++;
 	while (str[i] && str[i] != PIPE)
 	{
 		if (str[i] == '"' || str[i] == S_QUOTE)
 		{
-			mini->tempstr = ft_strjoin2(mini, mini->tempstr, str[i]);
+			result = ft_strjoin2(mini, result, str[i]);
 			c = str[i++];
 			while (str[i] != c)
-				mini->tempstr = ft_strjoin2(mini, mini->tempstr, str[i++]);
-			mini->tempstr = ft_strjoin2(mini, mini->tempstr, str[i++]);
+				result = ft_strjoin2(mini, result, str[i++]);
+			result = ft_strjoin2(mini, result, str[i++]);
 		}
 		else
-			mini->tempstr = ft_strjoin2(mini, mini->tempstr, str[i++]);
+			result = ft_strjoin2(mini, result, str[i++]);
 	}
+	return (result);
 }
 
 int	dollar(char *str, int i, char c)
