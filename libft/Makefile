@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
+#    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/13 22:03:06 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/22 11:46:04 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,9 @@ BLUE		= $(shell tput -Txterm setaf 6)
 WHITE		= $(shell tput -Txterm setaf 7)
 RESET		= $(shell tput -Txterm sgr0)
 
-
 # Name of the executable
 
 NAME						=	libft.a
-
 
 # Files
 
@@ -66,17 +64,16 @@ SRC							=	lst/ft_lst_index.c \
 								ft_itoa.c \
 								ft_tablen.c
 
+OBJS						=	$(SRC:.c=.o)
+
 # Flags
 
 CC							=	gcc
 RM							=	rm -rf
 INCLUDES					=	-I./includes
 CFLAGS						=	-Wall -Wextra -Werror
-OBJS						=	$(SRC:.c=.o)
-
 
 # Rules
-
 
 %o:				%c
 				@gcc ${CFLAGS} -I./includes -c $< -o ${<:.c=.o}
