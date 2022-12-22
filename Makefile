@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/13 15:40:35 by ademurge         ###   ########.fr        #
+#    Updated: 2022/12/22 11:38:16 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,8 +82,9 @@ LIBFT_LINUX					=	libft/ft_calloc.c \
 								libft/ft_itoa.c \
 								libft/ft_tablen.c
 
-INC							=	-I./inc
+INC							=	-I./inc/.
 
+OBJS						=	$(SRC:.c=.o)
 
 # Flags
 
@@ -98,12 +99,15 @@ CC							=	gcc
 
 all: 		$(NAME)
 
+%o:				%c
+				@gcc ${CFLAGS} -I./includes -c $< -o ${<:.c=.o}
+
 linux:
 					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT_LINUX) -lreadline -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
-$(NAME):
-					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT) -lreadline -L/Users/ademurge/.brew/opt/readline/lib -I/Users/ademurge/.brew/opt/readline/include -o $(NAME)
+$(NAME): $(OBJS)
+					@$(CC) $(CFLAGS) $(INC) $(OBJS) $(LIBFT) -lreadline -L/Users/ademurge/.brew/opt/readline/lib -I/Users/ademurge/.brew/opt/readline/include -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 libft:
