@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_infos.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:25:41 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 17:29:35 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/25 16:07:25 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,14 @@ void	get_path(t_mini *mini, t_cmd *cmd, char *path, int i)
 			cmd->path = ft_strdup(mini, exec);
 		while (paths[i] && !cmd->path)
 		{
-			path = ft_strjoin(mini, ft_strdup(mini, ""), paths[i++]);
-			path = ft_strjoin2(mini, path, '/');
-			path = ft_strjoin(mini, path, exec);
+			path = ft_insert(mini, paths[i++], '/', exec);
 			if (!access(path, X_OK))
 				cmd->path = ft_strdup(mini, path);
 			free (path);
 		}
 		ft_free_tab(paths, ft_tablen(paths));
-		if (!cmd->path && ft_strcmp(exec, "export") && ft_strcmp(exec, "unset"))
+		if (!cmd->path && ft_strcmp(exec, "export") && ft_strcmp(exec, "unset")
+			&& ft_strcmp(exec, "exit"))
 			get_infos_error(mini, cmd, 3, exec);
 		free (exec);
 	}

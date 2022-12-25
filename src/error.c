@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:52:19 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/22 17:19:45 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/25 14:17:33 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ft_error(t_mini *mini, char *type, int is_exit)
 	write (STDERR_FILENO, "\n", 1);
 	if (is_exit == EXIT)
 	{
-		ft_free_all(mini);
+		if (mini)
+			ft_free_all(mini);
 		write(STDERR_FILENO, "\nexit\n", 6);
 		exit(g_status);
 	}
