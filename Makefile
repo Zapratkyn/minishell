@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:48 by gponcele          #+#    #+#              #
-#    Updated: 2022/12/22 11:50:52 by gponcele         ###   ########.fr        #
+#    Updated: 2022/12/26 12:29:09 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,28 +98,30 @@ CC							=	gcc
 
 # Rules
 
-all: 		$(NAME)
+all: 		libft $(NAME)
 
 %o:				%c
-				@gcc ${CFLAGS} -I/Users/gponcele/.brew/opt/readline/include -I./includes -c $< -o ${<:.c=.o}
+				@$(CC) ${CFLAGS} -I/Users/$(USER)/.brew/opt/readline/include -I./includes -c $< -o ${<:.c=.o}
 
 linux:
 					@$(CC) $(CFLAGS) $(INC) $(SRC) $(LIBFT_LINUX) -lreadline -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 $(NAME): $(OBJS)
-					@$(CC) $(CFLAGS) $(INC) $(OBJS) $(LIBFT) -lreadline -L/Users/gponcele/.brew/opt/readline/lib -I/Users/gponcele/.brew/opt/readline/include -o $(NAME)
+					@$(CC) $(CFLAGS) $(INC) $(OBJS) $(LIBFT)  -lreadline -L/Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew/opt/readline/include -o $(NAME)
 					@echo "$(GREEN)********** Compiled. $(RESET)"
 
 libft:
-					@cd libft && make re && make clean && cd ..
+					@make -C ./libft
 
 clean:
 					@$(RM) $(OBJS)
+					@make clean -C ./libft
 					@echo "$(PURPLE)********* Objects removed. $(RESET)"
 
 fclean: clean
 			@$(RM) $(NAME)
+			@$(RM) $(LIBFT)
 			@echo "$(LIGHTPURPLE)********* Executable removed. $(RESET)"
 
 re: libft fclean all
