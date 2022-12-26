@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:22:21 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 17:15:38 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/26 12:02:17 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_mini
 	char	*tempstr4;
 	char	*tempstr5;
 	char	**temptab;
+	char	*readline;
 	t_var	*var;
 	t_cmd	*cmd;
 }	t_mini;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   specials.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:36:27 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 15:33:47 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/23 21:57:27 by ademurge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	outfiles(t_mini *mini, char **cmds, int i, int j)
 {
 	char	*file;
 
+	file = NULL;
 	while (cmds[i])
 	{
 		if (cmds[i][j] == '>')
@@ -23,7 +24,7 @@ void	outfiles(t_mini *mini, char **cmds, int i, int j)
 			j++;
 			if (cmds[i][j] == '>')
 				j++;
-			if (cmds[i][j])
+			if (cmds[i][j] && cmds[i][j] != '>' && cmds[i][j] != '<')
 			{
 				file = manage_string(mini, &cmds[i][j], 0);
 				open(file, O_CREAT | O_RDWR, 0777);
@@ -34,7 +35,6 @@ void	outfiles(t_mini *mini, char **cmds, int i, int j)
 				file = manage_string(mini, cmds[i + 1], 0);
 				open(file, O_CREAT | O_RDWR, 0777);
 			}
-			g_status = 0;
 			free (file);
 		}
 		i++;

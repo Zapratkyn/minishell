@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:24:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/12/22 17:56:55 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/12/26 12:05:14 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	modif_shlvl(t_mini *mini)
 void	mini_init(t_mini *mini, char **env)
 {
 	put_shell();
+	mini->readline = NULL;
 	mini->cmd = NULL;
 	mini->var = NULL;
 	mini->tempstr = NULL;
@@ -69,6 +70,7 @@ int	mini_parser(t_mini *mini, char *str)
 {
 	if (!str)
 		return (0);
+	mini->readline = str;
 	if (ft_strlen(str) != 0)
 		add_history(str);
 	if (ft_pipes(str, 0) || ft_pipes2(str, (ft_strlen(str) - 1)))
@@ -83,7 +85,7 @@ int	mini_parser(t_mini *mini, char *str)
 		mini->cmd = ft_free_cmd(mini->cmd);
 		mini_unlink(mini, "/tmp/heredoc_");
 	}
-	free (str);
+	free (mini->readline);
 	return (1);
 }
 
@@ -104,6 +106,5 @@ int	main(int argc, char **argv, char **env)
 	}
 	ft_free_all(&mini);
 	write(STDERR_FILENO, "exit\n", 6);
-	g_status = 0;
 	exit(g_status);
 }

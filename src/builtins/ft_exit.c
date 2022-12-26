@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ademurge <ademurge@student.s19.be>         +#+  +:+       +#+        */
+/*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:55:54 by ademurge          #+#    #+#             */
-/*   Updated: 2022/12/14 11:07:42 by ademurge         ###   ########.fr       */
+/*   Updated: 2022/12/26 12:05:10 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	ft_exit(t_mini *mini, t_cmd *cmd)
 		if (cmd->cmds[1])
 			g_status = ft_atoll(cmd->cmds[1]);
 		ft_free_all(mini);
+		free(mini->readline);
 		exit(g_status);
 	}
 }

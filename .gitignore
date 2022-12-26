@@ -6,3 +6,4 @@ outfile
 libft.a
 infile
 test
+*.o
